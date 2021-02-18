@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:franja_rojapp/big_button_page.dart';
-import 'package:franja_rojapp/login.dart';
+import 'package:franja_rojapp/screens/big_button_page.dart';
+import 'package:franja_rojapp/screens/login.dart';
 import 'package:franja_rojapp/services/auth.dart';
-import 'package:franja_rojapp/splash_screen.dart';
+import 'package:franja_rojapp/screens/splash_screen.dart';
 import 'package:flutter/services.dart';
-import 'package:franja_rojapp/wrapper.dart';
+import 'package:franja_rojapp/screens/wrapper.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-import 'models/user_model.dart';
+import '../models/user_model.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();

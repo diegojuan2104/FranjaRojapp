@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:franja_rojapp/home.dart';
-import 'package:franja_rojapp/login.dart';
+import 'package:franja_rojapp/screens/home.dart';
+import 'package:franja_rojapp/screens/login.dart';
 import 'package:franja_rojapp/models/user_model.dart';
 import 'package:provider/provider.dart';
 
