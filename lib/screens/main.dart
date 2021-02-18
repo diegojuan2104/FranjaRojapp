@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:franja_rojapp/screens/big_button_page.dart';
-import 'package:franja_rojapp/screens/login.dart';
+import 'package:franja_rojapp/screens/initial_screens/big_button_page.dart';
+import 'package:franja_rojapp/screens/authentication/login.dart';
 import 'package:franja_rojapp/services/auth.dart';
-import 'package:franja_rojapp/screens/splash_screen.dart';
+import 'package:franja_rojapp/screens/initial_screens/splash_screen.dart';
 import 'package:flutter/services.dart';
-import 'package:franja_rojapp/screens/wrapper.dart';
+import 'package:franja_rojapp/screens/authentication/wrapper.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 
