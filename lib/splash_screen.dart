@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:franja_rojapp/login_page.dart';
-import 'package:franja_rojapp/main.dart';
+
 
 class SplashScreeen extends StatefulWidget {
   @override
@@ -11,7 +10,7 @@ class _SplashScreeenState extends State<SplashScreeen> {
   
   @override
   void initState() {
-    Future.delayed(Duration(milliseconds: 3500), ()=> Navigator.pushReplacement(context, MaterialPageRoute(builder : (context)=> LoginPage())));
+    Future.delayed(Duration(milliseconds: 3500), ()=> _showBigButtonPage());
     super.initState();
   }
   
@@ -65,5 +64,10 @@ class _SplashScreeenState extends State<SplashScreeen> {
         ),
       ],
     ));
+  }
+  void _showBigButtonPage() {
+    Navigator.of(context).pushReplacementNamed(
+      '/bigButtonPage',
+    );
   }
 }
