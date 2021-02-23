@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:franja_rojapp/screens/authentication/register.dart';
+import 'package:franja_rojapp/screens/authentication/reset_password.dart';
+import 'package:franja_rojapp/screens/home.dart';
 import 'package:franja_rojapp/screens/initial_screens/big_button_page.dart';
 import 'package:franja_rojapp/screens/authentication/login.dart';
 import 'package:franja_rojapp/services/auth.dart';
@@ -44,6 +46,8 @@ class MyApp extends StatelessWidget {
           title: 'Flutter Demo',
           theme: ThemeData(
             primarySwatch: kPrimaryColor,
+            primaryColor:kPrimaryColor ,
+            accentColor: kPrimaryColor,
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
           onGenerateRoute: (RouteSettings settings) {
@@ -51,15 +55,18 @@ class MyApp extends StatelessWidget {
               switch (settings.name) {
                 case "/":
                   return SplashScreeen();
-
                 case "/bigButtonPage":
                   return BigButtonPage();
-
                 case "/auth":
                   return Wrapper();
-                  
+                case "login":
+                  return Login();
                 case "/register":
                   return Register();
+                case "/home":
+                  return Home();
+                case "/reset_password":
+                  return ResetPassword();
               }
             });
           }),

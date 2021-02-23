@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:franja_rojapp/components/loading.dart';
 import 'package:franja_rojapp/services/auth.dart';
@@ -12,6 +10,22 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+
+  final MaterialColor kPrimaryColor = const MaterialColor(
+    0xFFfC2c2C,
+    const <int, Color>{
+      50: Color(0xFFFFEBEE),
+      100: Color(0xFFFFCDD2),
+      200: Color(0xFFEF9A9A),
+      300: Color(0xFFE57373),
+      400: Color(0xFFEF5350),
+      500: Color(0xFFfC2c2C),
+      600: Color(0xFFE53935),
+      700: Color(0xFFD32F2F),
+      800: Color(0xFFC62828),
+      900: Color(0xFFB71C1C),
+    },
+  );
   var termsAndConditions = false;
   bool _loading = false;
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -24,24 +38,39 @@ class _LoginState extends State<Login> {
     return _loading
         ? Loading()
         : MaterialApp(
+           theme: ThemeData(
+            primarySwatch: kPrimaryColor,
+            primaryColor:kPrimaryColor ,
+            accentColor: kPrimaryColor,
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+          ),
             home: Scaffold(
                 body: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.symmetric(vertical: 30),
-                    decoration: BoxDecoration(color: Color(0xFFfC2c2C)),
-                    child: Container(
-                      margin: EdgeInsets.only(top: 20),
-                      child: Image.asset(
-                        "assets/images/FranjaRojapp_logo_blanco.png",
-                        color: Colors.white,
-                        height: 80,
+                  Stack(children: <Widget>[
+                    Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.symmetric(vertical: 30),
+                      decoration: BoxDecoration(color: Color(0xFFfC2c2C)),
+                      child: Container(
+                        margin: EdgeInsets.only(top: 20),
+                        child: Image.asset(
+                          "assets/images/FranjaRojapp_logo_blanco.png",
+                          color: Colors.white,
+                          height: 80,
+                        ),
                       ),
                     ),
-                  ),
+                    SizedBox(
+                      child: AppBar(
+                        elevation: 0,
+                        backgroundColor: Colors.transparent,
+                      ),
+                      height: kToolbarHeight + 25,
+                    ),
+                  ]),
                   Form(
                       key: _formKey,
                       child: Column(
@@ -129,7 +158,8 @@ class _LoginState extends State<Login> {
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 5),
                                       textColor: Colors.black,
-                                      onPressed: () => _showTermsAndConditions(),
+                                      onPressed: () =>
+                                          _showTermsAndConditions(),
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
@@ -170,6 +200,19 @@ class _LoginState extends State<Login> {
                                           },
                                         )
                                       ]),
+                                  Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        FlatButton(
+                                          textColor:
+                                              Theme.of(context).primaryColor,
+                                          child: Text("Olvidé mi contraseña"),
+                                          onPressed: () {
+                                            _forgotMyPassword();
+                                          },
+                                        )
+                                      ]),
                                 ],
                               ),
                             ),
@@ -183,19 +226,40 @@ class _LoginState extends State<Login> {
   }
 
   _loginEmail() async {
-    print("email" + email);
-    print("password" + password);
     if (_formKey.currentState.validate()) {
       setState(() {
         _loading = true;
       });
       dynamic result = await Auth().signInWithEmailAndPassword(email, password);
+
       print(result);
       if (result == null) {
         setState(() {
           _errorMessage = 'Correo y/o contraseña incorrecta';
         });
-      } else {}
+      } else {
+        if (!Auth().emailIsVerified()) {
+          showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                    title: Text("Aviso"),
+                    content: SingleChildScrollView(
+                        child: Container(
+                            child: Text(
+                                "Debes verificar la email para continuar, revisa tu bandeja de entrada incluyendo correos no deseados o spam, si no encuentras el correo te recomendamos iniciar sesión con Google"))),
+                    actions: [
+                      FlatButton(
+                        child: Text("Aceptar"),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  ));
+          Auth().signOutUser();
+          _errorMessage = "El email no ha sido verificado revise su correo";
+        }
+      }
     }
   }
 
@@ -219,11 +283,11 @@ class _LoginState extends State<Login> {
             });
   }
 
-  _loginWithGoogle() {
+  _loginWithGoogle() async {
     setState(() {
       _loading = true;
     });
-    Auth().signInUserWithGoogle();
+    await Auth().signInUserWithGoogle();
     setState(() {
       _loading = true;
     });
@@ -234,7 +298,6 @@ class _LoginState extends State<Login> {
         context: context,
         builder: (context) => AlertDialog(
               title: Text("Términos y condiciones"),
-              
               content: SingleChildScrollView(
                   child: Container(
                       child: Text(
@@ -261,5 +324,11 @@ class _LoginState extends State<Login> {
                 ),
               ],
             ));
+  }
+
+  void _forgotMyPassword() {
+     Navigator.of(context).pushNamed(
+                '/reset_password',
+    );
   }
 }

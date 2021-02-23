@@ -4,8 +4,26 @@ import 'package:franja_rojapp/models/user_model.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class Auth {
-  FirebaseAuth _auth = FirebaseAuth.instance;
 
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  User firebaseUser = FirebaseAuth.instance.currentUser;
+
+  returnCurrentUser(){
+    return firebaseUser;
+  }
+
+   sendVerificationEmail(){
+    firebaseUser.sendEmailVerification();
+  }
+
+  emailIsVerified(){
+    if(firebaseUser != null){
+      return firebaseUser.emailVerified;
+    }else{
+      return null;
+    }
+  }
+  
   User_model _userFromFirebaseUser(User user) {
     return user != null ? User_model(uid: user.uid) : null;
   }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:franja_rojapp/constants/simpleAlert.dart';
+import 'package:franja_rojapp/services/auth.dart';
 
 class Register extends StatefulWidget {
   Register({Key key}) : super(key: key);
@@ -29,7 +31,7 @@ class _RegisterState extends State<Register> {
             children: [
               Container(
                 width: double.infinity,
-                padding: EdgeInsets.only(top: 20, bottom: 20, left: 20),
+                padding: EdgeInsets.symmetric(vertical: 30),
                 decoration: BoxDecoration(color: Color(0xFFfC2c2C)),
                 child: Container(
                   margin: EdgeInsets.only(top: 20),
@@ -74,31 +76,31 @@ class _RegisterState extends State<Register> {
                             onChanged: (val) {
                               setState(() => email = val);
                             },
-                            validator: (val) => val.isEmpty
-                                ? 'Este campo es obligatorio'
-                                : null,
+                            validator: (val) => val.isValidEmail()
+                                ? null
+                                : "Ingresa un email válido",
                           ),
                           TextFormField(
-                            validator: (val) => val.length > 6
-                                ? 'Este campo debe ser mayor a 6 dígitos'
-                                : null,
                             decoration:
                                 InputDecoration(labelText: "Contraseña"),
                             obscureText: true,
                             onChanged: (val) {
                               setState(() => password = val);
                             },
+                            validator: (val) => val.length < 6
+                                ? 'La contraseña debe ser mayor a 6 dígitos'
+                                : null,
                           ),
                           TextFormField(
-                            validator: (val) => val.length > 6
-                                ? 'Debes confirmar tu contraseña'
-                                : null,
                             decoration: InputDecoration(
                                 labelText: "Confirmar contraseña"),
                             obscureText: true,
                             onChanged: (val) {
-                              setState(() => password = val);
+                              setState(() => password_confirmation = val);
                             },
+                            validator: (val) => val.length < 1
+                                ? 'Debes confirmar tu contraseña'
+                                : null,
                           ),
                           SizedBox(
                             height: 20,
@@ -128,6 +130,17 @@ class _RegisterState extends State<Register> {
                               )
                             ],
                           ),
+                          if (_errorMessage.isNotEmpty)
+                            Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: Text(
+                                _errorMessage,
+                                style: TextStyle(
+                                    color: Colors.red,
+                                    fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
                           SizedBox(
                             height: 20,
                           ),
@@ -150,17 +163,17 @@ class _RegisterState extends State<Register> {
                           SizedBox(
                             height: 20,
                           ),
-                          if (_errorMessage.isNotEmpty)
-                            Padding(
-                              padding: const EdgeInsets.all(8),
-                              child: Text(
-                                _errorMessage,
-                                style: TextStyle(
-                                    color: Colors.red,
-                                    fontWeight: FontWeight.bold),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                FlatButton(
+                                  textColor: Theme.of(context).primaryColor,
+                                  child: Text("Ya tengo una cuenta"),
+                                  onPressed: () {
+                                    _showLogin();
+                                  },
+                                )
+                              ]),
                         ],
                       ),
                     ),
@@ -172,9 +185,31 @@ class _RegisterState extends State<Register> {
     ));
   }
 
-  _registerEmail() {}
+  _registerEmail() async {
+    if (_formKey.currentState.validate()) {
+      if (password == password_confirmation) {
+        if (termsAndConditions) {
+          await Auth().registerWithEmailAndPassword(email, password);
 
-  _registerWithGoogle() {}
+          await Auth().sendVerificationEmail();
+          await Auth().signOutUser();
+          simpleAlert(context, "Aviso", "Usuario registrado exitosamente");
+        } else {
+          simpleAlert(context, "Aviso",
+              "Debes aceptar los términos y condiciones para continuar con el registro");
+          setState(() {
+            _errorMessage =
+                "Debes aceptar los terminos y condiciones para registrarte";
+          });
+        }
+      } else {
+        simpleAlert(context, "Avisto", "Las contraseñas deben de coincidir");
+        setState(() {
+          _errorMessage = "Las contraseñas debende de coincidir";
+        });
+      }
+    }
+  }
 
   void _showTermsAndConditions() {
     showDialog(
@@ -202,7 +237,6 @@ class _RegisterState extends State<Register> {
                         setState(() {
                           termsAndConditions = true;
                         });
-
                         Navigator.of(context).pop();
                       },
                     ),
@@ -210,5 +244,19 @@ class _RegisterState extends State<Register> {
                 ),
               ],
             ));
+  }
+
+  void _showLogin() {
+    Navigator.of(context).pushNamed(
+      '/auth',
+    );
+  }
+}
+
+extension EmailValidator on String {
+  bool isValidEmail() {
+    return RegExp(
+            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+        .hasMatch(this);
   }
 }
