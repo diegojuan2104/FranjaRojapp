@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:franja_rojapp/screens/authentication/register.dart';
 import 'package:franja_rojapp/screens/initial_screens/big_button_page.dart';
 import 'package:franja_rojapp/screens/authentication/login.dart';
 import 'package:franja_rojapp/services/auth.dart';
@@ -56,6 +57,9 @@ class MyApp extends StatelessWidget {
 
                 case "/auth":
                   return Wrapper();
+                  
+                case "/register":
+                  return Register();
               }
             });
           }),

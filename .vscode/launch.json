@@ -6,6 +6,7 @@
     "configurations": [
         {
             "name": "franja_rojapp",
+            "program": "lib/screens/main.dart",
             "request": "launch",
             "type": "dart"
         }
