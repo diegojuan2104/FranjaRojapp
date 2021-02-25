@@ -1,36 +1,46 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:franja_rojapp/constants/constants.dart';
 import 'package:franja_rojapp/models/user_model.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class Auth {
-
   FirebaseAuth _auth = FirebaseAuth.instance;
   User firebaseUser = FirebaseAuth.instance.currentUser;
 
-  returnCurrentUser(){
+  returnCurrentUser() {
     return firebaseUser;
   }
 
-   sendVerificationEmail(){
-    firebaseUser.sendEmailVerification();
+  Future<void> sendVerificationEmail() async {
+    await firebaseUser.sendEmailVerification();
   }
 
-  emailIsVerified(){
-    if(firebaseUser != null){
+  Future<void> sendPasswordreset(_email) async {
+    await _auth.sendPasswordResetEmail(email: _email);
+  }
+
+
+  emailIsVerified() {
+    if (firebaseUser != null) {
       return firebaseUser.emailVerified;
-    }else{
+    } else {
       return null;
     }
   }
-  
+
   User_model _userFromFirebaseUser(User user) {
     return user != null ? User_model(uid: user.uid) : null;
   }
 
   Stream<User_model> get user {
+    try{
     return _auth.authStateChanges().map((User firebaseUser) =>
         (firebaseUser != null) ? User_model(uid: firebaseUser.uid) : null);
+    }catch(e){
+      print("HA OCURRIDO UN ERROR CON LA AUTENTICACION");
+      return null;
+    }
   }
 
   Future<void> signInUserWithGoogle() async {
@@ -66,13 +76,14 @@ class Auth {
     }
   }
 
-   //register in with email and password
+  //register in with email and password
   Future registerWithEmailAndPassword(String email, String password) async {
-    try{
-      UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+    try {
+      UserCredential result = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
       User user = result.user;
       return _userFromFirebaseUser(user);
-    } catch(e){ 
+    } catch (e) {
       print(e.toString());
       return null;
     }

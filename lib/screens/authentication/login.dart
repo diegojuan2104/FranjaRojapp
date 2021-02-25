@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:franja_rojapp/components/loading.dart';
+import 'package:franja_rojapp/constants/constants.dart';
 import 'package:franja_rojapp/services/auth.dart';
 
 class Login extends StatefulWidget {
@@ -10,7 +11,6 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-
   final MaterialColor kPrimaryColor = const MaterialColor(
     0xFFfC2c2C,
     const <int, Color>{
@@ -28,6 +28,9 @@ class _LoginState extends State<Login> {
   );
   var termsAndConditions = false;
   bool _loading = false;
+  bool _showPassword = false;
+
+
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String email = "";
   String password = "";
@@ -38,12 +41,12 @@ class _LoginState extends State<Login> {
     return _loading
         ? Loading()
         : MaterialApp(
-           theme: ThemeData(
-            primarySwatch: kPrimaryColor,
-            primaryColor:kPrimaryColor ,
-            accentColor: kPrimaryColor,
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-          ),
+            theme: ThemeData(
+              primarySwatch: kPrimaryColor,
+              primaryColor: kPrimaryColor,
+              accentColor: kPrimaryColor,
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+            ),
             home: Scaffold(
                 body: SingleChildScrollView(
               child: Column(
@@ -87,9 +90,8 @@ class _LoginState extends State<Login> {
                                   Text(
                                     "Iniciar Sesión",
                                     style: TextStyle(
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold,),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -109,8 +111,18 @@ class _LoginState extends State<Login> {
                                         ? 'Este campo es obligatorio'
                                         : null,
                                     decoration: InputDecoration(
-                                        labelText: "Contraseña"),
-                                    obscureText: true,
+                                        labelText: "Contraseña",
+                                        suffixIcon: IconButton(
+                                          icon: Icon(_showPassword
+                                              ? Icons.visibility
+                                              : Icons.visibility_off),
+                                          onPressed: () {
+                                            setState(() {
+                                              _showPassword = !_showPassword;
+                                            });
+                                          },
+                                        )),
+                                    obscureText: !_showPassword,
                                     onChanged: (val) {
                                       setState(() => password = val);
                                     },
@@ -230,15 +242,18 @@ class _LoginState extends State<Login> {
       setState(() {
         _loading = true;
       });
+
       dynamic result = await Auth().signInWithEmailAndPassword(email, password);
 
       print(result);
       if (result == null) {
         setState(() {
           _errorMessage = 'Correo y/o contraseña incorrecta';
+          _loading = false;
         });
       } else {
         if (!Auth().emailIsVerified()) {
+          _loading = false;
           showDialog(
               context: context,
               builder: (context) => AlertDialog(
@@ -284,13 +299,17 @@ class _LoginState extends State<Login> {
   }
 
   _loginWithGoogle() async {
-    setState(() {
-      _loading = true;
-    });
-    await Auth().signInUserWithGoogle();
-    setState(() {
-      _loading = true;
-    });
+    try {
+      setState(() {
+        _loading = true;
+      });
+      await Auth().signInUserWithGoogle();
+      setState(() {
+        _loading = true;
+      });
+    } catch (e) {
+      simpleAlert(context, "Aviso", "Ha ocurrido un error");
+    }
   }
 
   void _showTermsAndConditions() {
@@ -327,8 +346,8 @@ class _LoginState extends State<Login> {
   }
 
   void _forgotMyPassword() {
-     Navigator.of(context).pushNamed(
-                '/reset_password',
+    Navigator.of(context).pushNamed(
+      '/reset_password',
     );
   }
 }

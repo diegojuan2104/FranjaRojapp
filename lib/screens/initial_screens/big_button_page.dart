@@ -126,7 +126,7 @@ class _BigButtonPageState extends State<BigButtonPage>
   }
 
   void _showLogin() {
-    Navigator.of(context).pushNamed(
+    Navigator.of(context).pushReplacementNamed(
       '/auth',
     );
   }

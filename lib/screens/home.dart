@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:franja_rojapp/constants/constants.dart';
 import 'package:franja_rojapp/services/auth.dart';
 
 class Home extends StatefulWidget {
@@ -15,7 +16,10 @@ class _HomeState extends State<Home> {
       body: Container(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[ Theme(
+          children: <Widget>[ 
+            
+            Text("BIENVENIDO"),
+            Theme(
                 data: Theme.of(context).copyWith(accentColor: Colors.white),
                 child: RaisedButton(
                   color: Theme.of(context).primaryColor,
@@ -37,7 +41,11 @@ class _HomeState extends State<Home> {
   }
 
 
-  _signOut() {
-    Auth().signOutUser();
+  _signOut()  async {
+    try{
+      await Auth().signOutUser();
+    }catch(e){
+      simpleAlert(context, "Aviso", "Ha ocurrido un error");
+    }
   }
 }
