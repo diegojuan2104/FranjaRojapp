@@ -32,6 +32,7 @@ dependencies:
   provider: 
   firebase_auth:
   google_sign_in:
+  cloud_firestore:
 
 dev_dependencies:
   flutter_test:
@@ -71,3 +72,7 @@ flutter:
     - family: BigShouldersDisplay
       fonts:
         - asset: fonts/BigShouldersDisplay-ExtraBold.ttf
+
+    - family: Silvertone
+      fonts:
+        - asset: fonts/Silvertone.ttf

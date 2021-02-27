@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-simpleAlert(context, title, text, [Function okAction()]){
+simpleAlert(context, title, text){
    showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -13,7 +13,6 @@ simpleAlert(context, title, text, [Function okAction()]){
                   child: Text("Aceptar"),
                   onPressed: () {
                     Navigator.of(context).pop();
-                    okAction();
                   },
                 ),
               ],

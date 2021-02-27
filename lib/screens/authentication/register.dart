@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:franja_rojapp/components/loading.dart';
 import 'package:franja_rojapp/constants/constants.dart';
 import 'package:franja_rojapp/services/auth.dart';
+import 'package:franja_rojapp/services/database.dart';
 
 class Register extends StatefulWidget {
   Register({Key key}) : super(key: key);
@@ -41,7 +42,7 @@ class _RegisterState extends State<Register> {
                         child: Image.asset(
                           "assets/images/FranjaRojapp_logo_blanco.png",
                           color: Colors.white,
-                          height: 80,
+                          height: 65,
                         ),
                       ),
                     ),
@@ -79,7 +80,7 @@ class _RegisterState extends State<Register> {
                                   onChanged: (val) {
                                     setState(() => email = val);
                                   },
-                                  validator: (val) => val.isValidEmail()
+                                  validator: (val) => val.trim().isValidEmail()
                                       ? null
                                       : "Ingresa un email válido",
                                 ),
@@ -160,8 +161,10 @@ class _RegisterState extends State<Register> {
                                     child: Text(
                                       _errorMessage,
                                       style: TextStyle(
-                                          color: Colors.red,
-                                          fontWeight: FontWeight.bold),
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontStyle: FontStyle.italic,
+                                          ),
                                       textAlign: TextAlign.center,
                                     ),
                                   ),
@@ -220,9 +223,10 @@ class _RegisterState extends State<Register> {
             setState(() {
               _loading = true;
             });
-            await Auth().registerWithEmailAndPassword(email, password);
+            await Auth().registerWithEmailAndPassword(email.trim(), password);
             await Auth().sendVerificationEmail();
             await Auth().signOutUser();
+
             setState(() {
               _loading = false;
             });
@@ -233,7 +237,7 @@ class _RegisterState extends State<Register> {
                       content: SingleChildScrollView(
                           child: Container(
                               child: Text(
-                                  "Usuario registrado exitosamente, debes validar tu cuenta con tu email, recuerda revisar la bandeja la lista de correos no deseados o spam"))),
+                                  "Usuario registrado exitosamente, debes validar tu cuenta con tu email registrado, recuerda revisar la bandeja la lista de correos no deseados o spam"))),
                       actions: [
                         FlatButton(
                           child: Text("Aceptar"),
@@ -265,7 +269,7 @@ class _RegisterState extends State<Register> {
           });
         }
       } else {
-        simpleAlert(context, "Avisto", "Las contraseñas deben de coincidir");
+        simpleAlert(context, "Avisto", "Las contraseñas deben coincidir");
         setState(() {
           _errorMessage = "Las contraseñas debende de coincidir";
         });

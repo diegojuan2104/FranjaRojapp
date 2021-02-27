@@ -35,7 +35,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                       child: Image.asset(
                         "assets/images/FranjaRojapp_logo_blanco.png",
                         color: Colors.white,
-                        height: 80,
+                        height: 65,
                       ),
                     ),
                   ),

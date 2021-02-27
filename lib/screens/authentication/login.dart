@@ -60,9 +60,9 @@ class _LoginState extends State<Login> {
                       child: Container(
                         margin: EdgeInsets.only(top: 20),
                         child: Image.asset(
-                          "assets/images/FranjaRojapp_logo_blanco.png",
+                          "assets/images/FranjaRojapp_logo_blanco_m.png",
                           color: Colors.white,
-                          height: 80,
+                          height: 65,
                         ),
                       ),
                     ),

@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
-import 'package:franja_rojapp/constants/constants.dart';
 import 'package:franja_rojapp/models/user_model.dart';
+import 'package:franja_rojapp/services/database.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class Auth {
@@ -56,8 +56,15 @@ class Auth {
         idToken: _googleAuth.idToken,
         accessToken: _googleAuth.accessToken,
       );
-      print("CREDENTIALS" + credential.toString());
-      await _auth.signInWithCredential(credential);
+      UserCredential userCredential = await _auth.signInWithCredential(credential);
+
+      bool isNewUser = userCredential.additionalUserInfo.isNewUser;
+      print("IS NEW USER" + isNewUser.toString());
+
+      if(isNewUser){
+        final user = userCredential.user;
+        setUserInitialState(user);
+      }
     } on PlatformException catch (e) {
       print(e.code);
     }
@@ -81,7 +88,11 @@ class Auth {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
+     
       User user = result.user;
+
+      setUserInitialState(user);
+
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());
@@ -95,5 +106,9 @@ class Auth {
     } catch (e) {
       print(e);
     }
+  }
+
+  Future<void> setUserInitialState(User user) async{
+    await DatabaseService(uid: user.uid).updateUserData(0,"FranjaRoja's user");
   }
 }
