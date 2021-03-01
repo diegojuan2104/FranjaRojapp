@@ -22,7 +22,6 @@ class _SplashScreeenState extends State<SplashScreeen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         FractionallySizedBox(
-          widthFactor: .7,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
             child: Image.asset(
@@ -33,7 +32,6 @@ class _SplashScreeenState extends State<SplashScreeen> {
         Padding(
           padding: const EdgeInsets.all(10.0),
           child: RichText(
-            
             textAlign: TextAlign.center,
             text: TextSpan(
               text:

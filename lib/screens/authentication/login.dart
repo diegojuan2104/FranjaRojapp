@@ -149,7 +149,7 @@ class _LoginState extends State<Login> {
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 15),
                                       textColor: Colors.white,
-                                      onPressed: () async => _loginEmail(),
+                                      onPressed: () async => _loginWithEmail(),
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
@@ -237,7 +237,7 @@ class _LoginState extends State<Login> {
           );
   }
 
-  _loginEmail() async {
+  _loginWithEmail() async {
     if (_formKey.currentState.validate()) {
       setState(() {
         _loading = true;
@@ -252,28 +252,34 @@ class _LoginState extends State<Login> {
           _loading = false;
         });
       } else {
+        setState(() {
+        _loading = false;
+        });
         if (!Auth().emailIsVerified()) {
-          _loading = false;
-          showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                    title: Text("Aviso"),
-                    content: SingleChildScrollView(
-                        child: Container(
-                            child: Text(
-                                "Debes verificar la email para continuar, revisa tu bandeja de entrada incluyendo correos no deseados o spam, si no encuentras el correo te recomendamos iniciar sesión con Google"))),
-                    actions: [
-                      FlatButton(
-                        child: Text("Aceptar"),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    ],
-                  ));
-          Auth().signOutUser();
+          
+          // showDialog(
+          //     context: context,
+          //     builder: (context) => AlertDialog(
+          //           title: Text("Aviso"),
+          //           content: SingleChildScrollView(
+          //               child: Container(
+          //                   child: Text(
+          //                       "Debes verificar la email para continuar, revisa tu bandeja de entrada incluyendo correos no deseados o spam, si no encuentras el correo te recomendamos iniciar sesión con Google"))),
+          //           actions: [
+          //             FlatButton(
+          //               child: Text("Aceptar"),
+          //               onPressed: () {
+          //                 Navigator.of(context).pop();
+          //               },
+          //             ),
+          //           ],
+          //         ));
+          // Auth().signOutUser();
           _errorMessage = "El email no ha sido verificado revise su correo";
+        }else{
+          
         }
+        _showHomePage();
       }
     }
   }
@@ -304,6 +310,7 @@ class _LoginState extends State<Login> {
         _loading = true;
       });
       await Auth().signInUserWithGoogle();
+      _showHomePage();
       setState(() {
         _loading = true;
       });
@@ -345,7 +352,14 @@ class _LoginState extends State<Login> {
             ));
   }
 
+  void _showHomePage() {
+     Navigator.of(context).pushReplacementNamed(
+      '/home',
+    );
+  }
+
   void _forgotMyPassword() {
+
     Navigator.of(context).pushNamed(
       '/reset_password',
     );

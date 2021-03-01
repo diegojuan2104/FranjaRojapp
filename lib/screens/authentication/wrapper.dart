@@ -35,15 +35,8 @@ class _WrapperState extends State<Wrapper> {
   Widget build(BuildContext context) {
     final user = Provider.of<User_model>(context);
     User firebaseUser = Auth().returnCurrentUser();
-    
-    if(firebaseUser != null)
-      print("CURRENT USER"+firebaseUser.emailVerified.toString());
-    print("WRAPPER"+user.toString());
     //Return home or authenticate widget 
-    if(user == null){
-        return Login();
-    }else{
-      return Home();
-    }
+    return Login();
+
   }
 }

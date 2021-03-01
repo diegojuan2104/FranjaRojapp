@@ -8,7 +8,7 @@ class Auth {
   FirebaseAuth _auth = FirebaseAuth.instance;
   User firebaseUser = FirebaseAuth.instance.currentUser;
 
-  returnCurrentUser() {
+  returnCurrentUser<User>() {
     return firebaseUser;
   }
 
@@ -33,7 +33,7 @@ class Auth {
     return user != null ? User_model(uid: user.uid) : null;
   }
 
-  Stream<User_model> get user {
+  Stream<User_model> get authStateChanges {
     try{
     return _auth.authStateChanges().map((User firebaseUser) =>
         (firebaseUser != null) ? User_model(uid: firebaseUser.uid) : null);
@@ -59,7 +59,6 @@ class Auth {
       UserCredential userCredential = await _auth.signInWithCredential(credential);
 
       bool isNewUser = userCredential.additionalUserInfo.isNewUser;
-      print("IS NEW USER" + isNewUser.toString());
 
       if(isNewUser){
         final user = userCredential.user;
@@ -109,6 +108,9 @@ class Auth {
   }
 
   Future<void> setUserInitialState(User user) async{
-    await DatabaseService(uid: user.uid).updateUserData(0,"FranjaRoja's user");
+    await DatabaseService(uid: user.uid).updateUserData(0,
+     user.email.toString(),
+     false,
+     false);
   }
 }

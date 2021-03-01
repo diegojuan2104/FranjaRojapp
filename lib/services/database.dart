@@ -1,17 +1,27 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class DatabaseService{
-  	
-  final String uid;
-  DatabaseService({this.uid});
+class DatabaseService {
+  User firebaseUser = FirebaseAuth.instance.currentUser;
+  String uid;
+
+  DocumentReference specificProfileDocument;
+
+  DatabaseService({this.uid}) {
+    specificProfileDocument =
+        FirebaseFirestore.instance.collection('profiles').doc(uid);
+  }
+
+  final profilesCollection = FirebaseFirestore.instance.collection('profiles');
 
   //Collection reference
-  final CollectionReference profile = FirebaseFirestore.instance.collection('profiles');
-
-  Future updateUserData(int franjas,String name) async{
-    return await profile.doc(uid).set({
+  Future updateUserData(int franjas, String email, bool avatarCreated,bool firstReward) async {
+    return await profilesCollection.doc(uid).set({
       'franjas': franjas,
-      'name:': name,
+      'email': email,
+      'AvatarCreated': false,
+      'first_reward': false
     });
   }
 }
+

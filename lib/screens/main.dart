@@ -11,8 +11,6 @@ import 'package:franja_rojapp/screens/authentication/wrapper.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-import '../models/user_model.dart';
-
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -40,13 +38,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<User_model>.value(
-      value: Auth().user,
+    return MultiProvider(
+      providers: [
+        Provider<Auth>(
+          create: (_) => Auth(),
+        ),
+      
+        StreamProvider(
+          create: (context) => context.read<Auth>().authStateChanges,
+        ),
+      ],
       child: MaterialApp(
           title: 'Flutter Demo',
           theme: ThemeData(
             primarySwatch: kPrimaryColor,
-            primaryColor:kPrimaryColor ,
+            primaryColor: kPrimaryColor,
             accentColor: kPrimaryColor,
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
@@ -59,7 +65,7 @@ class MyApp extends StatelessWidget {
                   return BigButtonPage();
                 case "/auth":
                   return Wrapper();
-                case "login":
+                case "/login":
                   return Login();
                 case "/register":
                   return Register();
@@ -72,6 +78,8 @@ class MyApp extends StatelessWidget {
           }),
     );
   }
+
+  getFranjas() {}
 }
 
 class MyHomePage extends StatefulWidget {
@@ -88,8 +96,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(),
+        child: Text(""),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+
 }

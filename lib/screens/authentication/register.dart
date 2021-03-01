@@ -248,6 +248,7 @@ class _RegisterState extends State<Register> {
                                 termsAndConditions = false;
                               });
                             });
+                            Navigator.pop(context);
                             _showLogin();
                           },
                         ),
@@ -313,8 +314,6 @@ class _RegisterState extends State<Register> {
   }
 
   void _showLogin() {
-    Navigator.of(context).pushReplacementNamed(
-      '/auth',
-    );
+    Navigator.pop(context);
   }
 }
