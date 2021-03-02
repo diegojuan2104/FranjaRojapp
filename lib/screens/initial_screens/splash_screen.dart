@@ -22,9 +22,11 @@ class _SplashScreeenState extends State<SplashScreeen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         FractionallySizedBox(
+          widthFactor: .7,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
             child: Image.asset(
+              
               "assets/images/FranjaRojapp_logo_blanco.png",
             ),
           ),
