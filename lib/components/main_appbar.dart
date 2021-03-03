@@ -34,7 +34,14 @@ class _MainAppBarState extends State<MainAppBar> {
           franjas = userDocument["franjas"].toString();
           print(franjas);
           return new AppBar(
-            title: Text("Menu"),
+            title: Text(
+                      "Franja Roja",
+                      style: TextStyle(
+                          fontSize: 40,
+                          fontFamily: 'Silvertone',
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold),
+                    ),
             actions: <Widget>[
               FlatButton.icon(
                   icon: Icon(null),

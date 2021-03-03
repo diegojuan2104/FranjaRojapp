@@ -5,6 +5,7 @@ import 'package:franja_rojapp/screens/avatar.dart';
 import 'package:franja_rojapp/screens/home.dart';
 import 'package:franja_rojapp/screens/initial_screens/big_button_page.dart';
 import 'package:franja_rojapp/screens/authentication/login.dart';
+import 'package:franja_rojapp/screens/question.dart';
 import 'package:franja_rojapp/services/auth.dart';
 import 'package:franja_rojapp/screens/initial_screens/splash_screen.dart';
 import 'package:flutter/services.dart';
@@ -76,6 +77,8 @@ class MyApp extends StatelessWidget {
                   return ResetPassword();
                 case "/avatar":
                   return Avatar();
+                case "/question":
+                  return Question();
               }
             });
           }),

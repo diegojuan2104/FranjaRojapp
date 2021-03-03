@@ -256,7 +256,8 @@ class _LoginState extends State<Login> {
         _loading = false;
         });
         if (!Auth().emailIsVerified()) {
-          
+          //Email verification
+
           // showDialog(
           //     context: context,
           //     builder: (context) => AlertDialog(

@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
-import 'package:franja_rojapp/models/user_model.dart';
+import 'package:franja_rojapp/models/userModel.dart';
 import 'package:franja_rojapp/services/database.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -29,14 +29,14 @@ class Auth {
     }
   }
 
-  User_model _userFromFirebaseUser(User user) {
-    return user != null ? User_model(uid: user.uid) : null;
+  UserModel _userFromFirebaseUser(User user) {
+    return user != null ? UserModel(uid: user.uid) : null;
   }
 
-  Stream<User_model> get authStateChanges {
+  Stream<UserModel> get authStateChanges {
     try{
     return _auth.authStateChanges().map((User firebaseUser) =>
-        (firebaseUser != null) ? User_model(uid: firebaseUser.uid) : null);
+        (firebaseUser != null) ? UserModel(uid: firebaseUser.uid) : null);
     }catch(e){
       print("HA OCURRIDO UN ERROR CON LA AUTENTICACION");
       return null;

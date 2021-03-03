@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:franja_rojapp/screens/home.dart';
 import 'package:franja_rojapp/screens/authentication/login.dart';
-import 'package:franja_rojapp/models/user_model.dart';
+import 'package:franja_rojapp/models/userModel.dart';
 import 'package:franja_rojapp/services/auth.dart';
 import 'package:provider/provider.dart';
 
@@ -33,7 +33,7 @@ class _WrapperState extends State<Wrapper> {
   );
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User_model>(context);
+    final user = Provider.of<UserModel>(context);
     User firebaseUser = Auth().returnCurrentUser();
     //Return home or authenticate widget 
     return Login();
