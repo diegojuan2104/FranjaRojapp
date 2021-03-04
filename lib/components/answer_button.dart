@@ -2,23 +2,30 @@ import 'package:flutter/material.dart';
 
 class AnswerButton extends StatelessWidget {
   final String label;
-  final int id;  // this will save your day
+  final int id;  
+  Function action;
 
   // @required will not let user to skip the specified key to be left null
-  AnswerButton({@required this.label, @required this.id});
+  AnswerButton({@required this.label, @required this.id, @required this.action()});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ) {
     return Container(
-       child: Center(
-        child: RaisedButton(
+      
+        child: SizedBox(
+          width: 200,
+          child: RaisedButton(
+          
             color: Colors.red,
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18.0),
+                borderRadius: BorderRadius.circular(10.0),
             ),
             child: Text(this.label),
-            onPressed: () => print(this.id) // Here you print your id using your button only
+            onPressed: () => this.action() // Here you print your id using your button only
         )
-    ));
+        )
+        
+        
+    );
   }
 }

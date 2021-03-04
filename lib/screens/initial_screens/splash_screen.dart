@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:franja_rojapp/screens/authentication/login.dart';
+import 'package:franja_rojapp/screens/home.dart';
+import 'package:franja_rojapp/services/auth.dart';
 
 class SplashScreeen extends StatefulWidget {
   @override
@@ -7,14 +10,12 @@ class SplashScreeen extends StatefulWidget {
 }
 
 class _SplashScreeenState extends State<SplashScreeen> {
-  
   @override
   void initState() {
-    Future.delayed(Duration(milliseconds: 3500), ()=> _showBigButtonPage());
+    Future.delayed(Duration(milliseconds: 3500), () => _showBigButtonPage());
     super.initState();
   }
-  
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +27,6 @@ class _SplashScreeenState extends State<SplashScreeen> {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
             child: Image.asset(
-              
               "assets/images/FranjaRojapp_logo_blanco.png",
             ),
           ),
@@ -46,15 +46,19 @@ class _SplashScreeenState extends State<SplashScreeen> {
             ),
           ),
         ),
-        SizedBox(height: 120,),
-        CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.red),),
-        SizedBox(height: 20,),
+        SizedBox(
+          height: 120,
+        ),
+        CircularProgressIndicator(
+          valueColor: new AlwaysStoppedAnimation<Color>(Colors.red),
+        ),
+        SizedBox(
+          height: 20,
+        ),
         RichText(
           textAlign: TextAlign.center,
-
           text: TextSpan(
-            text:
-                'Cargando...',
+            text: 'Cargando...',
             style: TextStyle(
                 fontSize: 18,
                 fontFamily: 'BigShouldersDisplay',
@@ -65,9 +69,16 @@ class _SplashScreeenState extends State<SplashScreeen> {
       ],
     ));
   }
+
   void _showBigButtonPage() {
-    Navigator.of(context).pushReplacementNamed(
-      '/bigButtonPage',
-    );
+    User firebaseUser = Auth().returnCurrentUser();
+    //Return home or authenticate widget
+    firebaseUser == null
+        ? Navigator.of(context).pushReplacementNamed(
+            '/bigButtonPage',
+          )
+        : Navigator.of(context).pushReplacementNamed(
+            '/auth',
+          );
   }
 }

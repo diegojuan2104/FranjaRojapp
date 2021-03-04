@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:franja_rojapp/components/grid_menu.dart';
 import 'package:franja_rojapp/components/loading.dart';
 import 'package:franja_rojapp/constants/constants.dart';
+import 'package:franja_rojapp/providers/Providerinfo.dart';
 import 'package:franja_rojapp/screens/avatar.dart';
 import 'package:franja_rojapp/components/main_appbar.dart';
 import 'package:franja_rojapp/screens/question.dart';
 import 'package:franja_rojapp/services/auth.dart';
 import 'package:franja_rojapp/services/database.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   Home({Key key}) : super(key: key);
@@ -17,6 +19,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  dynamic prov;
   bool _loading = false;
   int franjas = 0;
   bool firstReward;
@@ -29,6 +32,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    prov = Provider.of<ProviderInfo>(context);
+    
     return _loading
         ? Loading()
         : StreamBuilder(
@@ -36,7 +41,7 @@ class _HomeState extends State<Home> {
                 .collection('profiles')
                 .doc(Auth().firebaseUser != null
                     ? Auth().firebaseUser.uid
-                    : "loading")
+                    : "b9z7ItkEV3gR9lkapZhNjyUPYLj2")//Default direction
                 .snapshots(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
@@ -89,8 +94,8 @@ class _HomeState extends State<Home> {
                                       warna: Colors.red,
                                       action: null),
                                   GridMenu(
-                                      title: "Ayuda",
-                                      icon: Icons.accessibility,
+                                      title: "Preguntas",
+                                      icon: Icons.line_weight,
                                       warna: Colors.red,
                                       action: () => {
                                             Navigator.push(context, MaterialPageRoute(builder: (_) => Question()))
@@ -146,9 +151,9 @@ class _HomeState extends State<Home> {
   }
 
   _showQuestion() {}
-
   void validateFirstReward() {
-    Future.delayed(Duration(milliseconds: 200), () async {
+    Future.delayed(Duration(milliseconds: 500), () async {
+      prov.setFranjas(franjas);
       if (!firstReward) {
         DatabaseService().addFranjas(context, franjas, 10);
         DatabaseService().saveFirstReward(true);

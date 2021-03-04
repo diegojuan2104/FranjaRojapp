@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:franja_rojapp/components/main_appbar.dart';
+import 'package:franja_rojapp/providers/Providerinfo.dart';
 import 'package:franja_rojapp/screens/authentication/register.dart';
 import 'package:franja_rojapp/screens/authentication/reset_password.dart';
 import 'package:franja_rojapp/screens/avatar.dart';
@@ -45,7 +47,9 @@ class MyApp extends StatelessWidget {
         Provider<Auth>(
           create: (_) => Auth(),
         ),
-      
+        ListenableProvider<ProviderInfo>(
+          create: (_) => ProviderInfo(),
+        ),
         StreamProvider(
           create: (context) => context.read<Auth>().authStateChanges,
         ),
@@ -79,6 +83,8 @@ class MyApp extends StatelessWidget {
                   return Avatar();
                 case "/question":
                   return Question();
+                case "/appbar":
+                  return MainAppBar();
               }
             });
           }),
@@ -106,5 +112,4 @@ class _MyHomePageState extends State<MyHomePage> {
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
-
 }

@@ -14,10 +14,15 @@ class _AvatarState extends State<Avatar> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MainAppBar(),
-          body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          Icon(Icons.people),
+          CircleAvatar(
+            radius: 60.0,
+            backgroundImage: NetworkImage(
+                'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'),
+            backgroundColor: Colors.transparent,
+          ),
           Theme(
             data: Theme.of(context).copyWith(accentColor: Colors.white),
             child: RaisedButton(
@@ -33,7 +38,6 @@ class _AvatarState extends State<Avatar> {
               ),
             ),
           ),
-
           Theme(
             data: Theme.of(context).copyWith(accentColor: Colors.white),
             child: RaisedButton(
@@ -44,7 +48,7 @@ class _AvatarState extends State<Avatar> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text("Crear pregunta"),
+                  Text("Test"),
                 ],
               ),
             ),
@@ -59,9 +63,22 @@ class _AvatarState extends State<Avatar> {
   }
 
   //TEST
-  _createQuestion(){
+  _createQuestion() {
     String question = "Pepe?";
-    List<Map> answers = [{"text":"Si","counter": 0, }, {"text":"No","counter": 0,}, {"text":"No sé","counter": 0,}];
+    List<Map> answers = [
+      {
+        "text": "Si",
+        "counter": 0,
+      },
+      {
+        "text": "No",
+        "counter": 0,
+      },
+      {
+        "text": "No sé",
+        "counter": 0,
+      }
+    ];
     List<String> usersWhoresponded = [];
 
     DatabaseService().createAQuestion(question, answers, usersWhoresponded);

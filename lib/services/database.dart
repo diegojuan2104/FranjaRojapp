@@ -32,8 +32,6 @@ class DatabaseService {
   }
 
   addFranjas(context, int franjasCurrentValue, int franjasToAdd) async {
-    simpleAlert(
-        context, "Aviso", "Has ganado" + franjasToAdd.toString() + "franjas");
     await profilesCollection
         .doc(Auth().firebaseUser != null ? Auth().firebaseUser.uid : "loading")
         .update({'franjas': franjasCurrentValue + franjasToAdd});
@@ -63,13 +61,11 @@ class DatabaseService {
     List users_who_responded;
     for (int i = 0; i < snap.docs.length; i++) {
       users_who_responded = snap.docs[i].get("users_who_responded");
-
       //Verify if the user had answer that question 
       if (!users_who_responded.contains(Auth().firebaseUser.uid)) {
         String question = snap.docs[i].get("question");
         List<dynamic>answers = snap.docs[i].get("answers");
         List users_who_responded = snap.docs[i].get("users_who_responded");
-
         final new_question = new QuestionModel(
             question: question,
             answers: answers,

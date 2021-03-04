@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:franja_rojapp/components/loading.dart';
+import 'package:franja_rojapp/providers/Providerinfo.dart';
 import 'package:franja_rojapp/services/auth.dart';
 
 import 'package:provider/provider.dart';
@@ -21,19 +22,8 @@ class _MainAppBarState extends State<MainAppBar> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-        stream: FirebaseFirestore.instance
-            .collection('profiles')
-            .doc(Auth().firebaseUser != null ? Auth().firebaseUser.uid:"loading")
-            .snapshots(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return Loading();
-          }else{
-          var userDocument = snapshot.data;
-          franjas = userDocument["franjas"].toString();
-          print(franjas);
-          return new AppBar(
+    final prov = Provider.of<ProviderInfo>(context);
+    return AppBar(
             title: Text(
                       "Franja Roja",
                       style: TextStyle(
@@ -48,7 +38,7 @@ class _MainAppBarState extends State<MainAppBar> {
                   label: RichText(
                     textAlign: TextAlign.center,
                     text: TextSpan(
-                      text: franjas + ' F',
+                      text: prov.franjas.toString() + ' F',
                       style: TextStyle(
                           fontSize: 30,
                           fontFamily: 'Silvertone',
@@ -58,8 +48,6 @@ class _MainAppBarState extends State<MainAppBar> {
                   ))
             ],
           );
-          }
-        });
   }
 
   getFranjas<String>() {
