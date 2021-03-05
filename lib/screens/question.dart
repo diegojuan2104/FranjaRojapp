@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:franja_rojapp/components/answer_button.dart';
 import 'package:franja_rojapp/components/loading.dart';
 import 'package:franja_rojapp/components/main_appbar.dart';
+import 'package:franja_rojapp/models/questionModel.dart';
 import 'package:franja_rojapp/providers/Providerinfo.dart';
 import 'package:franja_rojapp/services/auth.dart';
 import 'package:franja_rojapp/services/database.dart';
@@ -21,75 +22,90 @@ class _QuestionState extends State<Question> {
   List answers = [];
   List users_who_responded;
   List<Widget> answer_buttons;
-  bool buttons_setted = false;
+  bool userAnswered = false;
+  bool buttonsSetted = false;
+
   var questionModel;
   List<AnswerButton> buttonsList = new List<AnswerButton>();
   @override
   void initState() {
+    DatabaseService()
+        .generateRandomQuestion()
+        .then((value) => this.setState(() {
+              questionr = value.question;
+              answers = value.answers;
+              users_who_responded = value.users_who_responded;
+            }));
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    print("fin");
+
+    setaws();
+    super.dispose();
+    // DatabaseService().addFranjas(context, prov.franjas, 5);
   }
 
   Widget build(BuildContext context) {
     prov = Provider.of<ProviderInfo>(context);
-    return StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('questions').snapshots(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (!snapshot.hasData) {
-            return Loading();
-          } else {
-            var questionCollection = snapshot.data;
-            generateQuestion(questionCollection);
-            return Scaffold(
-              appBar: MainAppBar(),
-              body: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: questionr != null
-                        ? RichText(
-                            textAlign: TextAlign.center,
-                            text: TextSpan(
-                              text: questionr,
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          )
-                        : Loading(),
-                  ),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Column(
-                              children: _buildButtonsWithNames(),
-                            ),
-                          ],
-                        )
-                      ]),
-                ],
-              ),
-            );
-          }
-        });
+    return Scaffold(
+      appBar: MainAppBar(),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: questionr != null
+                ? RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      text: questionr,
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  )
+                : Loading(),
+          ),
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 20,
+                ),
+                Column(
+                  children: <Widget>[RaisedButton(
+                    child: Text(""),
+                    onPressed: (){
+                    Navigator.of(context).pop();
+                  })],
+                ),
+              ],
+            )
+          ]),
+        ],
+      ),
+    );
   }
 
   List<Widget> _buildButtonsWithNames() {
-    buttonsList.clear();
-    for (int i = 0; i < answers.length; i++) {
-      buttonsList.add(
-        AnswerButton(
-            id: i, // passing the i value only, for clear int values
-            label: answers[i]["text"],
-            action: submitAnswer),
-      );
+    if (buttonsList.length == 0) {
+      print("Hola");
+      for (int i = 0; i < answers.length; i++) {
+        buttonsList.add(
+          AnswerButton(
+              id: i, // passing the i value only, for clear int values
+              label: answers[i]["text"],
+              question: new QuestionModel(
+                  answers: answers,
+                  question: questionr,
+                  users_who_responded: users_who_responded)),
+        );
+      }
     }
     return buttonsList;
   }
@@ -115,7 +131,17 @@ class _QuestionState extends State<Question> {
     }
   }
 
+  setaws() async{
+    await FirebaseFirestore.instance
+        .collection('profiles')
+        .doc(Auth().firebaseUser != null ? Auth().firebaseUser.uid : "loading")
+        .update({'franjas': prov.franjas + 5});
+  }
+
   submitAnswer() {
+    setState(() {
+      userAnswered = true;
+    });
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -126,8 +152,11 @@ class _QuestionState extends State<Question> {
                 FlatButton(
                   child: Text("Aceptar"),
                   onPressed: () {
-                    setState(() {});
-                    DatabaseService().addFranjas(context, prov.franjas, 5);
+                    if (userAnswered) {
+                      setState(() {
+                        userAnswered = false;
+                      });
+                    }
                     Navigator.pop(context);
                     Navigator.pop(context);
                   },

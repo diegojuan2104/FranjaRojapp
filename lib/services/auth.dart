@@ -60,9 +60,11 @@ class Auth {
 
       bool isNewUser = userCredential.additionalUserInfo.isNewUser;
 
+      print(isNewUser.toString());
       if(isNewUser){
         final user = userCredential.user;
-        setUserInitialState(user);
+        print(user.uid.toString());
+        await setUserInitialState(user);
       }
     } on PlatformException catch (e) {
       print(e.code);

@@ -6,7 +6,6 @@ import 'package:franja_rojapp/constants/constants.dart';
 import 'package:franja_rojapp/providers/Providerinfo.dart';
 import 'package:franja_rojapp/screens/avatar.dart';
 import 'package:franja_rojapp/components/main_appbar.dart';
-import 'package:franja_rojapp/screens/question.dart';
 import 'package:franja_rojapp/services/auth.dart';
 import 'package:franja_rojapp/services/database.dart';
 import 'package:provider/provider.dart';
@@ -41,7 +40,7 @@ class _HomeState extends State<Home> {
                 .collection('profiles')
                 .doc(Auth().firebaseUser != null
                     ? Auth().firebaseUser.uid
-                    : "b9z7ItkEV3gR9lkapZhNjyUPYLj2")//Default direction
+                    : "dontdelete")//Default direction
                 .snapshots(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
@@ -98,7 +97,7 @@ class _HomeState extends State<Home> {
                                       icon: Icons.line_weight,
                                       warna: Colors.red,
                                       action: () => {
-                                            Navigator.push(context, MaterialPageRoute(builder: (_) => Question()))
+                                            Navigator.pushNamed(context, "/question")
                                           }),
                                   GridMenu(
                                       title: "Sobre Franja Roja",

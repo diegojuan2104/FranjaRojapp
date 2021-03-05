@@ -306,7 +306,6 @@ class _LoginState extends State<Login> {
   }
 
   _loginWithGoogle() async {
-    try {
       setState(() {
         _loading = true;
       });
@@ -315,9 +314,6 @@ class _LoginState extends State<Login> {
       setState(() {
         _loading = true;
       });
-    } catch (e) {
-      simpleAlert(context, "Aviso", "Ha ocurrido un error");
-    }
   }
 
   void _showTermsAndConditions() {

@@ -64,7 +64,7 @@ class _AvatarState extends State<Avatar> {
 
   //TEST
   _createQuestion() {
-    String question = "Pepe?";
+    String question = "a question?";
     List<Map> answers = [
       {
         "text": "Si",

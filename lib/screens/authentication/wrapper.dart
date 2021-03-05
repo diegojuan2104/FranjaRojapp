@@ -37,6 +37,5 @@ class _WrapperState extends State<Wrapper> {
     User firebaseUser = Auth().returnCurrentUser();
     //Return home or authenticate widget 
     return firebaseUser == null ? Login() : Home();
-
   }
 }
