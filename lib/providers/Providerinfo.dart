@@ -1,11 +1,18 @@
 import 'package:flutter/cupertino.dart';
+import 'package:franja_rojapp/models/profileModel.dart';
 
 class ProviderInfo with ChangeNotifier{
-  int franjas = 0;
+  
+  ProfileModel currentProfile;
+  int selectedAnswer;
 
-  void setFranjas(int franjas){
-    this.franjas = franjas;
+  void setCurrentProfile(ProfileModel currentProfile){
+    this.currentProfile = currentProfile;
     notifyListeners();
+  }
+
+  void setSelectedAnswer(int selectedAnswer){
+    this.selectedAnswer = selectedAnswer;
   }
 
 }

@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:franja_rojapp/components/loading.dart';
-import 'package:franja_rojapp/providers/Providerinfo.dart';
+import 'package:franja_rojapp/providers/ProviderInfo.dart';
 import 'package:franja_rojapp/services/auth.dart';
 
 import 'package:provider/provider.dart';
@@ -24,30 +23,30 @@ class _MainAppBarState extends State<MainAppBar> {
   Widget build(BuildContext context) {
     final prov = Provider.of<ProviderInfo>(context);
     return AppBar(
-            title: Text(
-                      "Franja Roja",
-                      style: TextStyle(
-                          fontSize: 40,
-                          fontFamily: 'Silvertone',
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
-                    ),
-            actions: <Widget>[
-              FlatButton.icon(
-                  icon: Icon(null),
-                  label: RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      text: prov.franjas.toString() + ' F',
-                      style: TextStyle(
-                          fontSize: 30,
-                          fontFamily: 'Silvertone',
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ))
-            ],
-          );
+      title: Text(
+        "Franja Roja",
+        style: TextStyle(
+            fontSize: 40,
+            fontFamily: 'Silvertone',
+            color: Colors.white,
+            fontWeight: FontWeight.bold),
+      ),
+      actions: <Widget>[
+        FlatButton.icon(
+            icon: Icon(null),
+            label: RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                text: prov.currentProfile == null? 'Cargando...' : prov.currentProfile.franjas.toString()+ ' F',
+                style: TextStyle(
+                    fontSize: 30,
+                    fontFamily: 'Silvertone',
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
+              ),
+            ))
+      ],
+    );
   }
 
   getFranjas<String>() {

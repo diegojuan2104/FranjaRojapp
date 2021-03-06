@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:franja_rojapp/models/questionModel.dart';
-import 'package:franja_rojapp/providers/Providerinfo.dart';
-import 'package:franja_rojapp/services/database.dart';
-import 'package:provider/provider.dart';
+import 'package:franja_rojapp/models/QuestionModel.dart';
+import 'package:franja_rojapp/providers/ProviderInfo.dart';
 
 class AnswerButton extends StatefulWidget {
   final String label;
   final int id;
   QuestionModel question;
+  Function action;
+  
+  Function answerSelected;
 
   // @required will not let user to skip the specified key to be left null
   AnswerButton(
-      {@required this.label, @required this.id, @required this.question}){
-        
-        
-      }
+      {@required this.label, @required this.id, @required this.question, this.answerSelected}) {}
 
   @override
   _AnswerButtonState createState() => _AnswerButtonState();
@@ -22,17 +20,16 @@ class AnswerButton extends StatefulWidget {
 
 class _AnswerButtonState extends State<AnswerButton> {
 
+  ProviderInfo prov;
   @override
   void initState() {
-    // widget.question.answers[id]["counter"] +=1;
-    //     print(widget.question.answers[id]["counter"].toString());
     super.initState();
   }
+
   @override
   Widget build(
     BuildContext context,
   ) {
-    var prov = Provider.of<ProviderInfo>(context);
     return Container(
         child: SizedBox(
             width: 200,
@@ -44,27 +41,24 @@ class _AnswerButtonState extends State<AnswerButton> {
                 child: Text(this.widget.label),
                 onPressed: () => {
                       showDialog(
+                         barrierDismissible: false,
                           context: context,
                           builder: (context) => AlertDialog(
                                 title: Text("Aviso"),
                                 content: SingleChildScrollView(
                                     child: Container(
-                                        child: Text("Has ganado 5 franjas" +
-                                            widget.question.answers[widget.id]["counter"]
-                                                .toString()))),
+                                        child: Text("Has ganado 5 franjas"))),
                                 actions: [
                                   FlatButton(
                                     child: Text("Aceptar"),
                                     onPressed: () {
-                                      
-
-                                      Navigator.pop(context);
-                                      Navigator.pop(context);
+                                      widget.answerSelected(widget.id);
+                                      Navigator.of(context).pop();
+                                      Navigator.of(context).pop();
                                     },
-                                  )
+                                  ),
                                 ],
                               ))
-                      // Here you print your id using your button only
                     })));
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:franja_rojapp/components/main_appbar.dart';
-import 'package:franja_rojapp/providers/Providerinfo.dart';
+import 'package:franja_rojapp/providers/ProviderInfo.dart';
 import 'package:franja_rojapp/screens/authentication/register.dart';
 import 'package:franja_rojapp/screens/authentication/reset_password.dart';
 import 'package:franja_rojapp/screens/avatar.dart';

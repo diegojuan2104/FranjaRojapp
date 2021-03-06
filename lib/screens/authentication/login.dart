@@ -310,10 +310,11 @@ class _LoginState extends State<Login> {
         _loading = true;
       });
       await Auth().signInUserWithGoogle();
-      _showHomePage();
-      setState(() {
-        _loading = true;
-      });
+      //_showHomePage();
+      if(this.mounted)
+        setState(() {
+          _loading = true;
+        });
   }
 
   void _showTermsAndConditions() {
