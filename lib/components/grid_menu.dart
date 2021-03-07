@@ -32,9 +32,10 @@ class GridMenu extends StatelessWidget {
                 ),
                 Text(title,
                     style: TextStyle(
+                        fontWeight: FontWeight.bold,
                         fontSize: 17,
                         color: Colors.black87,
-                        fontStyle: FontStyle.italic))
+                        fontStyle: FontStyle.normal))
               ],
             ),  
           ),

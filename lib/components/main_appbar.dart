@@ -37,7 +37,9 @@ class _MainAppBarState extends State<MainAppBar> {
             label: RichText(
               textAlign: TextAlign.center,
               text: TextSpan(
-                text: prov.currentProfile == null? 'Cargando...' : prov.currentProfile.franjas.toString()+ ' F',
+                text: prov.currentProfile == null
+                    ? 'Cargando...'
+                    : prov.currentProfile.franjas.toString() + ' F',
                 style: TextStyle(
                     fontSize: 30,
                     fontFamily: 'Silvertone',

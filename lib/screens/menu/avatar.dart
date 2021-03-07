@@ -39,21 +39,6 @@ class _AvatarState extends State<Avatar> {
               ),
             ),
           ),
-          Theme(
-            data: Theme.of(context).copyWith(accentColor: Colors.white),
-            child: RaisedButton(
-              color: Theme.of(context).primaryColor,
-              padding: const EdgeInsets.symmetric(vertical: 15),
-              textColor: Colors.white,
-              onPressed: () async => _createQuestion(),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text("Test"),
-                ],
-              ),
-            ),
-          ),
         ],
       ),
     );
@@ -64,37 +49,5 @@ class _AvatarState extends State<Avatar> {
   }
 
   //TEST
-  _createQuestion() async{
-    String question = "¿Conoces la Política de Inclusión y de Reconocimiento de la Diversidad en la Universidad de Medellín?";
-    List sino = [
-      "Si","No"
-    ];
-
-    List sinonose = [
-      "Si","No","No sé"
-    ];
-
-
-    List<QuestionModel> questions = [
-    //    QuestionModel(
-    //   answers: sino,
-    //   question: "A" ,
-    // ),
-
-    //  QuestionModel(
-    //   answers: sino,
-    //   question: "B" ,
-    // ),
-    QuestionModel(
-      openQuestion: true,
-      question: "C" ,
-    ),
-
-    ];
-
-    questions.forEach((element) async {
-       await DatabaseService().createAQuestion(element);
-    });
-    //DatabaseService().generateRandomQuestion();
-  }
+  
 }

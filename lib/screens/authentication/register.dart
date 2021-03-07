@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:franja_rojapp/components/banner_franja_roja.dart';
 import 'package:franja_rojapp/components/loading.dart';
 import 'package:franja_rojapp/constants/constants.dart';
 import 'package:franja_rojapp/services/auth.dart';
@@ -24,6 +25,7 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData queryData = MediaQuery.of(context);
     return _loading
         ? Loading()
         : Scaffold(
@@ -33,19 +35,7 @@ class _RegisterState extends State<Register> {
               children: <Widget>[
                 Stack(
                   children: [
-                    Container(
-                      width: double.infinity,
-                      padding: EdgeInsets.symmetric(vertical: 30),
-                      decoration: BoxDecoration(color: Color(0xFFfC2c2C)),
-                      child: Container(
-                        margin: EdgeInsets.only(top: 20),
-                        child: Image.asset(
-                          "assets/images/FranjaRojapp_logo_blanco.png",
-                          color: Colors.white,
-                          height: 65,
-                        ),
-                      ),
-                    ),
+                    BannerFranjaRoja(),
                     SizedBox(
                       child: AppBar(
                         elevation: 0,
@@ -59,6 +49,7 @@ class _RegisterState extends State<Register> {
                     key: _formKey,
                     child: Column(
                       children: <Widget>[
+                         SizedBox(height: queryData.size.height*0.05,),
                         Container(
                           width: double.infinity,
                           margin: const EdgeInsets.only(

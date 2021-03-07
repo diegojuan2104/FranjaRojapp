@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:franja_rojapp/components/answer_button.dart';
 import 'package:franja_rojapp/components/loading.dart';
-import 'package:franja_rojapp/components/main_appbar.dart';
+import 'package:franja_rojapp/constants/constants.dart';
 import 'package:franja_rojapp/providers/ProviderInfo.dart';
 
 import 'package:franja_rojapp/services/database.dart';
@@ -15,7 +16,6 @@ class Question extends StatefulWidget {
 
 class _QuestionState extends State<Question> {
   ProviderInfo prov;
-
   String question;
   List answers = [];
   String questionId;
@@ -24,7 +24,7 @@ class _QuestionState extends State<Question> {
   bool openQuestion;
   int answerSelected;
   List<Widget> answer_buttons;
-
+  TextEditingController openAnswerController = new TextEditingController();
   var questionModel;
   List<AnswerButton> buttonsList = new List<AnswerButton>();
   @override
@@ -41,74 +41,186 @@ class _QuestionState extends State<Question> {
   }
 
   Widget build(BuildContext context) {
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
     prov = Provider.of<ProviderInfo>(context);
     return Scaffold(
-      appBar: MainAppBar(),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Text(
+          "Franja Roja",
+          style: TextStyle(
+              fontSize: 40,
+              fontFamily: 'Silvertone',
+              color: Colors.white,
+              fontWeight: FontWeight.bold),
+        ),
+        actions: <Widget>[
+          FlatButton.icon(
+              icon: Icon(null),
+              label: RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  text: prov.currentProfile == null
+                      ? 'Cargando...'
+                      : prov.currentProfile.franjas.toString() + ' F',
+                  style: TextStyle(
+                      fontSize: 30,
+                      fontFamily: 'Silvertone',
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                ),
+              ))
+        ],
+      ),
       body: question != "noquestions"
           ? question != null
-              ? Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: RichText(
-                          textAlign: TextAlign.center,
-                          text: TextSpan(
-                            text: question,
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        )),
-                    Row(
+              ? SingleChildScrollView(
+                              child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(height: queryData.size.height*0.05,),
+                      Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(
+                              text: "Cuentanos!",
+                              style: TextStyle(
+                                fontSize: 80,
+                                  color: Theme.of(context).primaryColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Silvertone',
+                                  ),
+                            ),
+                          )),
+                      Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(
+                              text: question,
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          )),
+                      openQuestion
+                          ? (Container(
+                              width: queryData.size.width * .8,
+                              child: Column(
+                                children: <Widget>[
+                                  SizedBox(height: queryData.size.height*0.03,),
+                                  TextField(
+                                    keyboardType: intInputType
+                                        ? TextInputType.number
+                                        : TextInputType.text,
+                                    inputFormatters: intInputType
+                                        ? <TextInputFormatter>[
+                                            FilteringTextInputFormatter.digitsOnly
+                                          ]
+                                        : null,
+                                    controller: openAnswerController,
+                                    maxLines: 2,
+                                    decoration: InputDecoration(
+                                        hintText: "Ingresa tu respuesta",
+                                        border: OutlineInputBorder(),
+                                        labelText: 'Respuesta'),
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Theme(
+                                    data: Theme.of(context)
+                                        .copyWith(accentColor: Colors.white),
+                                    child: RaisedButton(
+                                      color: Theme.of(context).primaryColor,
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 15),
+                                      textColor: Colors.white,
+                                      onPressed: () async {
+                                        await submitAnswer(context);
+                                      },
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          Text("Enviar respuesta"),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ))
+                          : SizedBox(
+                              height: 0,
+                            ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
+                        children: [
                           Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Column(
-                                children: openQuestion
-                                    ? <Widget>[
-                                        Theme(
-                                          data: Theme.of(context).copyWith(
-                                              accentColor: Colors.white),
-                                          child: RaisedButton(
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 15),
-                                            textColor: Colors.white,
-                                            onPressed: () {},
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: <Widget>[
-                                                Text("Enviar respuesta"),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ]
-                                    : _buildButtonsWithNames(),
-                              ),
-                            ],
-                          )
-                        ]),
-                  ],
-                )
+                            children: _buildAnswerButtonsWith(),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+              )
               : Loading()
-          : Center(
-              child: Text("No hay más preguntas de momento"),
+          : Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Column(
+                        children: [
+                          Text(
+                            "Has contestado todas las preguntas!",
+                            style: TextStyle(fontSize: 18,
+                              fontWeight: FontWeight.bold
+                            ),
+
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Theme(
+                            data: Theme.of(context)
+                                .copyWith(accentColor: Colors.white),
+                            child: RaisedButton(
+                              color: Theme.of(context).primaryColor,
+                              padding: const EdgeInsets.symmetric(vertical: 15),
+                              textColor: Colors.white,
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text("Regresar"),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
     );
   }
 
-  List<Widget> _buildButtonsWithNames() {
-    if (question != null) {
+  List<Widget> _buildAnswerButtonsWith() {
+    if (question != null && answers != null) {
       if (buttonsList.length == 0) {
         for (int i = 0; i < answers.length; i++) {
           buttonsList.add(
@@ -119,7 +231,7 @@ class _QuestionState extends State<Question> {
                   setState(() {
                     answerSelected = answer;
                   });
-                  submitAnswer();
+                  submitAnswer(context);
                 }),
           );
         }
@@ -128,17 +240,24 @@ class _QuestionState extends State<Question> {
     return buttonsList;
   }
 
-  submitAnswer() async {
-    if (answerSelected != null) {
+  submitAnswer(context) async {
+    if (answerSelected != null || openQuestion) {
+      if (openQuestion) {
+        if (openAnswerController.text == "") {
+          simpleAlert(context, "Aviso", "Debes escribir una respuesta");
+
+          return;
+        }
+      }
+      moreQuestions(context, franjas);
       await DatabaseService().createAnswerRegister(
-        answers[answerSelected],
+        openQuestion ? openAnswerController.text : answers[answerSelected],
         questionId,
         question,
         prov.currentProfile.questionsAnswered,
       );
       await DatabaseService()
           .addFranjas(context, prov.currentProfile.franjas, franjas);
-      await DatabaseService().getCurrentProfile();
     }
   }
 
@@ -155,9 +274,4 @@ class _QuestionState extends State<Question> {
         });
   }
 
-  getQuestionsAlreadyAnswered() {}
-
-  updateAnswerScore(int idAnswer) {
-    print("ANSWER SELECTED" + idAnswer.toString());
-  }
 }

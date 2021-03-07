@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:franja_rojapp/constants/constants.dart';
 import 'package:franja_rojapp/models/QuestionModel.dart';
 import 'package:franja_rojapp/providers/ProviderInfo.dart';
 
@@ -11,14 +12,15 @@ class AnswerButton extends StatefulWidget {
 
   // @required will not let user to skip the specified key to be left null
   AnswerButton(
-      {@required this.label, @required this.id, @required this.answerSelected}) {}
+      {@required this.label,
+      @required this.id,
+      @required this.answerSelected}) {}
 
   @override
   _AnswerButtonState createState() => _AnswerButtonState();
 }
 
 class _AnswerButtonState extends State<AnswerButton> {
-
   ProviderInfo prov;
   @override
   void initState() {
@@ -30,34 +32,21 @@ class _AnswerButtonState extends State<AnswerButton> {
     BuildContext context,
   ) {
     return Container(
+        margin: EdgeInsets.only(bottom: 10),
         child: SizedBox(
             width: 200,
             child: RaisedButton(
-                color: Colors.red,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
+                color: Theme.of(context).primaryColor,
+                padding: const EdgeInsets.symmetric(vertical: 15),
+                textColor: Colors.white,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(this.widget.label),
+                  ],
                 ),
-                child: Text(this.widget.label),
                 onPressed: () => {
                       widget.answerSelected(widget.id),
-                      showDialog(
-                         barrierDismissible: false,
-                          context: context,
-                          builder: (context) => AlertDialog(
-                                title: Text("Aviso"),
-                                content: SingleChildScrollView(
-                                    child: Container(
-                                        child: Text("Has ganado 5 franjas"))),
-                                actions: [
-                                  FlatButton(
-                                    child: Text("Aceptar"),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                ],
-                              ))
-      })));
+                    })));
   }
 }

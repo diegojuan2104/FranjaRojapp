@@ -20,15 +20,29 @@ class _SplashScreeenState extends State<SplashScreeen> {
         body: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        FractionallySizedBox(
-          widthFactor: .7,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(8.0),
-            child: Image.asset(
-              "assets/images/FranjaRojapp_logo_blanco.png",
-            ),
-          ),
-        ),
+        Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                text: "Franja Roja",
+                style: TextStyle(
+                  fontSize: 80,
+                  color: Theme.of(context).primaryColor,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Silvertone',
+                ),
+              ),
+            )),
+        // FractionallySizedBox(
+        //   widthFactor: .7,
+        //   child: ClipRRect(
+        //     borderRadius: BorderRadius.circular(8.0),
+        //     child: Image.asset(
+        //       "assets/images/FranjaRojapp_logo_blanco.png",
+        //     ),
+        //   ),
+        // ),
         Padding(
           padding: const EdgeInsets.all(10.0),
           child: RichText(
