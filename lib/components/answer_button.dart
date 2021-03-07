@@ -7,12 +7,11 @@ class AnswerButton extends StatefulWidget {
   final int id;
   QuestionModel question;
   Function action;
-  
   Function answerSelected;
 
   // @required will not let user to skip the specified key to be left null
   AnswerButton(
-      {@required this.label, @required this.id, @required this.question, this.answerSelected}) {}
+      {@required this.label, @required this.id, @required this.answerSelected}) {}
 
   @override
   _AnswerButtonState createState() => _AnswerButtonState();
@@ -40,6 +39,7 @@ class _AnswerButtonState extends State<AnswerButton> {
                 ),
                 child: Text(this.widget.label),
                 onPressed: () => {
+                      widget.answerSelected(widget.id),
                       showDialog(
                          barrierDismissible: false,
                           context: context,
@@ -52,13 +52,12 @@ class _AnswerButtonState extends State<AnswerButton> {
                                   FlatButton(
                                     child: Text("Aceptar"),
                                     onPressed: () {
-                                      widget.answerSelected(widget.id);
                                       Navigator.of(context).pop();
                                       Navigator.of(context).pop();
                                     },
                                   ),
                                 ],
                               ))
-                    })));
+      })));
   }
 }

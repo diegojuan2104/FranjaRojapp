@@ -16,21 +16,26 @@ class DatabaseService {
   final questionsCollection =
       FirebaseFirestore.instance.collection('questions');
 
+  final questionLogsCollection =
+      FirebaseFirestore.instance.collection('questionLogs');
+
   //Collection reference
-  Future updateUserData(
-      int franjas, String email, bool avatarCreated, bool firstReward) async {
+  Future updateUserData(int franjas, String email, bool avatarCreated,
+      bool firstReward, List<String> questions_answered) async {
     return await profilesCollection.doc(uid).set({
       'franjas': franjas,
       'email': email,
       'avatar_created': avatarCreated,
-      'first_reward': firstReward
+      'first_reward': firstReward,
+      'questions_answered': questions_answered
     });
   }
 
   addFranjas(context, int franjasCurrentValue, int franjasToAdd) async {
+    int franjas = franjasCurrentValue + franjasToAdd;
     await profilesCollection
         .doc(Auth().firebaseUser.uid)
-        .update({'franjas': franjasCurrentValue + franjasToAdd});
+        .update({'franjas': franjas});
   }
 
   saveFirstReward(bool firstReward) async {
@@ -57,52 +62,83 @@ class DatabaseService {
     String email = snap.docs[0].get("email");
     bool first_reward = snap.docs[0].get("first_reward");
     bool avatar_created = snap.docs[0].get("avatar_created");
+    List<dynamic> questions_answered = snap.docs[0].get("questions_answered");
 
-    return new ProfileModel(email, franjas, first_reward, avatar_created);
+    return new ProfileModel(
+        email, franjas, first_reward, avatar_created, questions_answered);
   }
 
   //This is to generate a question not answered by a user
-  Future<QuestionModel> generateRandomQuestion() async {
+  Future<QuestionModel> getQuestionData() async {
+    List questions_answered_by_the_user;
+
+    await DatabaseService().getCurrentProfile().then(
+        (value) => {questions_answered_by_the_user = value.questionsAnswered});
+
     QuerySnapshot snap =
         await FirebaseFirestore.instance.collection('questions').get();
-    List<dynamic> users_who_responded;
-    print(snap.docs.length);
-    for (int i = 0; i < snap.docs.length; i++) {
-      users_who_responded = snap.docs[i].get("users_who_responded");
+
+    List<dynamic> questionsList = shuffle(snap.docs);
+
+    for (int i = 0; i < questionsList.length; i++) {
       //Verify if the user had answer that question
-      if (!users_who_responded.contains(Auth().firebaseUser.uid)) {
-        String question = snap.docs[i].get("question");
-        List<dynamic> answers = snap.docs[i].get("answers");
+
+      if (!questions_answered_by_the_user
+          .contains(questionsList[i].id.toString())) {
+        String question = questionsList[i].get("question");
+        int franjas = questionsList[i].get("franjas");
+        List<dynamic> answers = questionsList[i].get("answers");
+        bool intInputType = questionsList[i].get("intInputType");
+        bool openQuestion = questionsList[i].get("openQuestion");
         final new_question = new QuestionModel(
-            question: question,
-            answers: answers,
-            users_who_responded: users_who_responded,
-            questionId: snap.docs[i].id.toString());
+          question: question,
+          answers: answers,
+          questionId: questionsList[i].id.toString(),
+          franjas: franjas,
+          intInputType: intInputType,
+          openQuestion: openQuestion,
+        );
         return new_question;
       }
     }
     final noQuestions = new QuestionModel(
-            question: "noquestions",
-            answers: [],
-            users_who_responded: [],
-            questionId: null);
+        question: "noquestions", answers: [], questionId: null);
     return noQuestions;
   }
 
   //This update and answer: mainly to change the counter and add the user to users_who_responded
-  updateQuestion(List<dynamic> answers, List<dynamic> users_who_responded,
-      String questionId) async {
-    await questionsCollection.doc(questionId).update(
-        {'answers': answers, 'users_who_responded': users_who_responded});
+  createAnswerRegister(String answer, String questionId, String questionText,
+      List questions_answered_by_the_user) async {
+    Timestamp stamp = Timestamp.now();
+    await questionLogsCollection.doc().set({
+      'quesitonId': questionId,
+      'answer': answer,
+      'timestamp': stamp,
+      'userId': Auth().firebaseUser.uid,
+      'question': questionText
+    });
+    await updateQuestionsAnsweredByUser(
+        questionId, questions_answered_by_the_user);
   }
 
-  //This is to add questions to firebase 
-  createAQuestion(String question, List<Map> answers,
-      List<String> usersWhoresponded) async {
+  updateQuestionsAnsweredByUser(
+      String questionId, List questions_answered_by_the_user) async {
+    questions_answered_by_the_user.add(questionId);
+    await profilesCollection.doc(Auth().firebaseUser.uid).update({
+      'questions_answered': questions_answered_by_the_user,
+    });
+  }
+
+  //This is to add questions to firebase
+  createAQuestion(QuestionModel questionModel) async {
     return await questionsCollection.doc().set({
-      'question': question,
-      'answers': answers,
-      'users_who_responded': usersWhoresponded
+      'question': questionModel.question,
+      'answers': questionModel.answers,
+      'openQuestion': questionModel.openQuestion == null
+          ? false
+          : questionModel.openQuestion,
+      'franjas': questionModel.franjas == null ? 5 : questionModel.franjas,
+      'intInputType': questionModel.intInputType == null ? false : true,
     });
   }
 }

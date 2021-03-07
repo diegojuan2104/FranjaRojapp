@@ -2,8 +2,11 @@ class QuestionModel{
 
   final String question;
   final List<dynamic> answers;
-  final List<dynamic> users_who_responded;
   final String questionId;
+  final bool openQuestion;
+  final bool intInputType;
+  final int franjas;
 
-  QuestionModel({this.question, this.answers, this.users_who_responded, this.questionId});
+  QuestionModel({this.question, this.answers, this.questionId, this.openQuestion, this.intInputType, this.franjas}){
+  }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:franja_rojapp/components/main_appbar.dart';
+import 'package:franja_rojapp/models/QuestionModel.dart';
 import 'package:franja_rojapp/services/database.dart';
 
 class Avatar extends StatefulWidget {
@@ -63,25 +64,37 @@ class _AvatarState extends State<Avatar> {
   }
 
   //TEST
-  _createQuestion() {
-    String question = "a question?";
-    List<Map> answers = [
-      {
-        "text": "Si",
-        "counter": 0,
-      },
-      {
-        "text": "No",
-        "counter": 0,
-      },
-      {
-        "text": "No sé",
-        "counter": 0,
-      }
+  _createQuestion() async{
+    String question = "¿Conoces la Política de Inclusión y de Reconocimiento de la Diversidad en la Universidad de Medellín?";
+    List sino = [
+      "Si","No"
     ];
-    List<String> usersWhoresponded = [];
 
-    DatabaseService().createAQuestion(question, answers, usersWhoresponded);
+    List sinonose = [
+      "Si","No","No sé"
+    ];
+
+
+    List<QuestionModel> questions = [
+    //    QuestionModel(
+    //   answers: sino,
+    //   question: "A" ,
+    // ),
+
+    //  QuestionModel(
+    //   answers: sino,
+    //   question: "B" ,
+    // ),
+    QuestionModel(
+      openQuestion: true,
+      question: "C" ,
+    ),
+
+    ];
+
+    questions.forEach((element) async {
+       await DatabaseService().createAQuestion(element);
+    });
     //DatabaseService().generateRandomQuestion();
   }
 }

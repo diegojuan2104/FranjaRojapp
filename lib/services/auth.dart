@@ -20,7 +20,6 @@ class Auth {
     await _auth.sendPasswordResetEmail(email: _email);
   }
 
-
   emailIsVerified() {
     if (firebaseUser != null) {
       return firebaseUser.emailVerified;
@@ -34,10 +33,10 @@ class Auth {
   }
 
   Stream<UserModel> get authStateChanges {
-    try{
-    return _auth.authStateChanges().map((User firebaseUser) =>
-        (firebaseUser != null) ? UserModel(uid: firebaseUser.uid) : null);
-    }catch(e){
+    try {
+      return _auth.authStateChanges().map((User firebaseUser) =>
+          (firebaseUser != null) ? UserModel(uid: firebaseUser.uid) : null);
+    } catch (e) {
       print("HA OCURRIDO UN ERROR CON LA AUTENTICACION");
       return null;
     }
@@ -56,12 +55,13 @@ class Auth {
         idToken: _googleAuth.idToken,
         accessToken: _googleAuth.accessToken,
       );
-      UserCredential userCredential = await _auth.signInWithCredential(credential);
+      UserCredential userCredential =
+          await _auth.signInWithCredential(credential);
 
       bool isNewUser = userCredential.additionalUserInfo.isNewUser;
 
       print(isNewUser.toString());
-      if(isNewUser){
+      if (isNewUser) {
         final user = userCredential.user;
         print(user.uid.toString());
         await setUserInitialState(user);
@@ -89,7 +89,7 @@ class Auth {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-     
+
       User user = result.user;
 
       setUserInitialState(user);
@@ -109,10 +109,8 @@ class Auth {
     }
   }
 
-  Future<void> setUserInitialState(User user) async{
-    await DatabaseService(uid: user.uid).updateUserData(0,
-     user.email.toString(),
-     false,
-     false);
+  Future<void> setUserInitialState(User user) async {
+    await DatabaseService(uid: user.uid)
+        .updateUserData(0, user.email.toString(), false, false, []);
   }
 }

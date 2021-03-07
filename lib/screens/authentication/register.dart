@@ -286,7 +286,7 @@ class _RegisterState extends State<Register> {
               content: SingleChildScrollView(
                   child: Container(
                       child: Text(
-                        terminos_y_condiciones
+                        TERMINOS_Y_CONDICIONES
               ))),
               actions: [
                 Row(

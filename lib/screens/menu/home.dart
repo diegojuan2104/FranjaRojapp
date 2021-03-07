@@ -91,7 +91,7 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 Text(
-                  "FranjaRojApp Versión 1.0.0",
+                  "FranjaRojApp Versión "+VERSION ,
                   style: TextStyle(color: Colors.black54),
                 ),
                 SizedBox(

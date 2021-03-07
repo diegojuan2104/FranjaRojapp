@@ -1,7 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:franja_rojapp/screens/authentication/login.dart';
-import 'package:franja_rojapp/screens/home.dart';
 import 'package:franja_rojapp/services/auth.dart';
 
 class SplashScreeen extends StatefulWidget {
