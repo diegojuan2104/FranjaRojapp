@@ -111,7 +111,7 @@ class _AvatarPageState extends State<AvatarPage> {
         length: 9,
         child: Scaffold(
             appBar: builTabBar(
-                onClicked: panelController.open,
+                onClicked: panelController.close,
                 prov: prov,
                 sizeH: sizeH,
                 sizeW: sizeW),
