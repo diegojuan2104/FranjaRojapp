@@ -16,10 +16,10 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 class AvatarPage extends StatefulWidget {
   AvatarPage({Key key}) : super(key: key);
 
+
   @override
   _AvatarPageState createState() => _AvatarPageState();
 }
-
 class _AvatarPageState extends State<AvatarPage> {
   final panelController = PanelController();
   GlobalKey imageKey = GlobalKey();

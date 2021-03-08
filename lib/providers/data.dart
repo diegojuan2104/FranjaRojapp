@@ -12,6 +12,7 @@ class Data with ChangeNotifier {
   List<AvatarP> items;
   AvatarP acceptedData;
   String a = '';
+  double sizeW,sizeH = 0;
   int numFran = 0;
   List<List<dynamic>> listaTabs = [];
   double _sizeTrash = 50.0;
@@ -21,6 +22,11 @@ class Data with ChangeNotifier {
   Uint8List imgAv = null;
   Color _avColor = Colors.black;
 
+
+
+  Map sizeAvatar(){
+   return this.mapMesuares = Constants.getMesureMap(this.sizeW,this.sizeH);
+  }
 
 
   set setImg(Uint8List img) {
@@ -112,7 +118,6 @@ class Data with ChangeNotifier {
     items = [];
     this.mapItems = Constants.initializMap();
     this._colorList = Constants.initializMapColors();
-    this.mapMesuares = Constants.getMesureMap();
 
   }
 

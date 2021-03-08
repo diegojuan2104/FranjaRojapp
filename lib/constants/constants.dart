@@ -10,7 +10,6 @@ import 'package:franja_rojapp/services/database.dart';
 
 const IMAGES_WORD = '-removebg-preview';
 
-
 simpleAlert(context, title, text) {
   showDialog(
       barrierDismissible: false,
@@ -263,6 +262,7 @@ _createQuestion() async {
   });
   //DatabaseService().generateRandomQuestion();
 }
+
 class Constants {
   static double TAB_BAR_SIZE = 0.131;
   static double SPACING_BAR_SIZE = 0.101;
@@ -283,16 +283,18 @@ class Constants {
     return lista;
   }
 
-  static Map<String, List<double>> getMesureMap() {
+  static Map<String, List<double>> getMesureMap(double witdh, double height) {
+    print("sisa $witdh");
+    print("sisa $height");
     final dict = {
-      "ojos": [175.0, 150.0],
-      "boca": [125.0, 100.0],
-      "nariz": [80.0, 80.0],
-      "orejas": [250.0, 140.0],
-      "mascotas": [100.0, 100.0],
-      "figuras": [100.0, 100.0],
-      "plantas": [100.0, 100.0],
-      "cuerpo": [100.0, 100.0],
+      "ojos": [witdh * 0.445, height * 0.157],
+      "boca": [witdh * 0.318, height * 0.1315],
+      "nariz": [witdh * 0.203, height * 0.105],
+      "orejas": [witdh * 0.636, 0.184 * height],
+      "mascotas": [witdh * 0.254, height * 0.1315],
+      "figuras": [witdh * 0.254, height * 0.1315],
+      "plantas": [witdh * 0.254, height * 0.1315],
+      "cuerpo": [witdh * 0.254, height * 0.1315],
     };
     return dict;
   }
@@ -320,8 +322,7 @@ class Constants {
     for (int i = 0; i < lista.length; i += 2) {
       if (flag) {
         ret.add(createAv(lista[i], Colors.red[50]));
-        if (i + 1 < lista.length)
-          ret.add(createAv(lista[i + 1], Colors.white));
+        if (i + 1 < lista.length) ret.add(createAv(lista[i + 1], Colors.white));
         flag = false;
       } else {
         ret.add(createAv(lista[i], Colors.white));
@@ -365,5 +366,33 @@ class Constants {
       ));
     }
     return tabs;
+  }
+
+  static Widget Dialog(BuildContext context, String textTit, String text,
+      Function callA, Function callC) {
+        print(context.owner);
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Text(textTit),
+              content: SingleChildScrollView(
+                  child: Container(
+                      child: Text(
+                text,
+              ))),
+              actions: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    FlatButton(child: Text("Cancelar"), onPressed: callC),
+                    FlatButton(
+                        child: Text("Aceptar"),
+                        onPressed: () {
+                          callA();
+                        }),
+                  ],
+                ),
+              ],
+            ));
   }
 }

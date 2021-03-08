@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:franja_rojapp/providers/data.dart';
 import 'package:franja_rojapp/services/auth.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreeen extends StatefulWidget {
   @override
@@ -16,6 +18,9 @@ class _SplashScreeenState extends State<SplashScreeen> {
 
   @override
   Widget build(BuildContext context) {
+    final prov = Provider.of<Data>(context);
+    prov.sizeH = MediaQuery.of(context).size.height;
+    prov.sizeW = MediaQuery.of(context).size.width;
     return Scaffold(
         body: Column(
       mainAxisAlignment: MainAxisAlignment.center,
