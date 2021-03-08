@@ -34,7 +34,7 @@ Column buildColumn(Data prov, String parameter, scrol) {
                 mainAxisSpacing: 20,
                 crossAxisSpacing: 10,
                 crossAxisCount: 2,
-                childAspectRatio: 0.8 - (-1 * (0.8 - prov.sizeH * 0.00106))),
+                childAspectRatio: 0.8 - (-1 * (0.8 - prov.sizeH * 0.00108))),
             itemBuilder: (context, index) => AvatarCard(
               avatar: list[index],
               press: () {
@@ -98,39 +98,41 @@ class AvatarCard extends StatelessWidget {
       child: SizedBox(
         height: height * 0.305,
         width: width * 0.418,
-        child: Container(
-          padding: EdgeInsets.fromLTRB(10, 5, 10, 0),
-          decoration: BoxDecoration(
-              border: Border.all(color: Color(0xFFfC2c2C)),
-              color: avatar.color,
-              borderRadius: BorderRadius.circular(16)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: height * 0.205,
-                width: width * 0.418,
-                child: Container(
-                  child: Image.asset(avatar.image),
-                ),
-              ),
-              SizedBox(
-                height: 50,
-                width: width * 0.418,
-                child: Container(
-                    child: RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                    text: "${avatar.numFranjas} F",
-                    style: TextStyle(
-                        fontSize: 30,
-                        fontFamily: 'Silvertone',
-                        color: Colors.red,
-                        fontWeight: FontWeight.bold),
+        child: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.fromLTRB(10, 5, 10, 0),
+            decoration: BoxDecoration(
+                border: Border.all(color: Color(0xFFfC2c2C)),
+                color: avatar.color,
+                borderRadius: BorderRadius.circular(16)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: height * 0.205,
+                  width: width * 0.418,
+                  child: Container(
+                    child: Image.asset(avatar.image),
                   ),
-                )),
-              )
-            ],
+                ),
+                SizedBox(
+                  height: 50,
+                  width: width * 0.418,
+                  child: Container(
+                      child: RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      text: "${avatar.numFranjas} F",
+                      style: TextStyle(
+                          fontSize: 30,
+                          fontFamily: 'Silvertone',
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  )),
+                )
+              ],
+            ),
           ),
         ),
       ),
