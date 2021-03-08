@@ -35,7 +35,7 @@ Column buildColumn(Data prov, String parameter, scrol) {
                 mainAxisSpacing: 20,
                 crossAxisSpacing: 10,
                 crossAxisCount: 2,
-                childAspectRatio: 0.8-(-1*(0.8 - prov.sizeH * 0.0010101))),
+                childAspectRatio: 0.8-(-1*(0.8 - prov.sizeH * 0.00106))),
             itemBuilder: (context, index) => AvatarCard(
               avatar: list[index],
               press: () {
