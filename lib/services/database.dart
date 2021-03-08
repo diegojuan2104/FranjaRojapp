@@ -9,6 +9,7 @@ import 'package:franja_rojapp/services/auth.dart';
 class DatabaseService {
   User firebaseUser = FirebaseAuth.instance.currentUser;
   String uid;
+  Timestamp stamp;
 
   DatabaseService({this.uid});
 
@@ -20,14 +21,17 @@ class DatabaseService {
       FirebaseFirestore.instance.collection('questionLogs');
 
   //Collection reference
-  Future updateUserData(int franjas, String email, bool avatarCreated,
-      bool firstReward, List<String> questions_answered) async {
+  Future setInitialUserAttributes(String email) async {
+    stamp = Timestamp.now();
     return await profilesCollection.doc(uid).set({
-      'franjas': franjas,
+      'franjas': 0,
       'email': email,
-      'avatar_created': avatarCreated,
-      'first_reward': firstReward,
-      'questions_answered': questions_answered
+      'avatar_created': false,
+      'first_reward': false,
+      'questions_answered': [],
+      'timestamp': stamp,
+      'avatar_position': [],
+      'glossary_opened': false
     });
   }
 
@@ -45,7 +49,6 @@ class DatabaseService {
   }
 
   saveAvatarCreated(context, bool avatarCreated) async {
-    simpleAlert(context, "Aviso", "Avatar Guardado");
     await profilesCollection.doc(Auth().firebaseUser.uid).update({
       'avatar_created': true,
     });
@@ -60,8 +63,11 @@ class DatabaseService {
       bool first_reward = user.data()["first_reward"];
       bool avatar_created = user.data()["avatar_created"];
       List<dynamic> questions_answered = user.data()["questions_answered"];
-      return new ProfileModel(
-          email, franjas, first_reward, avatar_created, questions_answered);
+      List<dynamic> avatar_position = user.data()["questions_answered"];
+      bool glossary_opened = user.data()["glossary_opened"];
+      Timestamp timestamp = user.data()["timestamp"];
+      return new ProfileModel(email, franjas, first_reward, avatar_created,
+          questions_answered, avatar_position, glossary_opened, timestamp);
     }
   }
 
@@ -103,7 +109,7 @@ class DatabaseService {
   //This update and answer: mainly to change the counter and add the user to users_who_responded
   createAnswerRegister(String answer, String questionId, String questionText,
       List questions_answered_by_the_user) async {
-    Timestamp stamp = Timestamp.now();
+    stamp = Timestamp.now();
     await questionLogsCollection.doc().set({
       'quesitonId': questionId,
       'answer': answer,

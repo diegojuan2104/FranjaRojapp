@@ -7,7 +7,9 @@ import 'package:franja_rojapp/components/grid_colors.dart';
 import 'package:franja_rojapp/components/main_appbar.dart';
 import 'package:franja_rojapp/components/stack_avatar.dart';
 import 'package:franja_rojapp/constants/constants.dart';
+import 'package:franja_rojapp/providers/ProviderInfo.dart';
 import 'package:franja_rojapp/providers/data.dart';
+import 'package:franja_rojapp/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
@@ -24,6 +26,7 @@ class _AvatarPageState extends State<AvatarPage> {
   @override
   Widget build(BuildContext context) {
     final prov = Provider.of<Data>(context);
+    final prov2 = Provider.of<ProviderInfo>(context);
     double sizeH = MediaQuery.of(context).size.height;
     double sizeW = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -39,7 +42,9 @@ class _AvatarPageState extends State<AvatarPage> {
                   panelController: panelController,
                   prov: prov,
                   sizeH: sizeH,
-                  sizeW: sizeW),
+                  sizeW: sizeW,
+                  prov2: prov2
+                  ),
               body: Scaffold(
                   floatingActionButton: Icon(Icons.ac_unit),
                   /*appBar: AppBar(
@@ -104,22 +109,27 @@ class _AvatarPageState extends State<AvatarPage> {
       @required PanelController panelController,
       Data prov,
       double sizeH,
-      double sizeW}) {
+      double sizeW,
+      ProviderInfo prov2
+      
+      }) {
     List lista = prov.getListTabs(s: scrollController);
     lista.add(TabWidgetColor(scrollController: scrollController));
     return DefaultTabController(
         length: 9,
         child: Scaffold(
-            appBar: builTabBar(
+            appBar: buildTabBar(
                 onClicked: panelController.close,
                 prov: prov,
                 sizeH: sizeH,
-                sizeW: sizeW),
+                sizeW: sizeW
+                , prov2: prov2,
+                ),
             body: TabBarView(children: lista)));
   }
 
-  Widget builTabBar(
-      {VoidCallback onClicked, Data prov, double sizeH, double sizeW}) {
+  Widget buildTabBar(
+      {VoidCallback onClicked, Data prov, double sizeH, double sizeW, ProviderInfo prov2}) {
     print(sizeW);
     return PreferredSize(
       preferredSize: Size.fromHeight(sizeH * Constants.TAB_BAR_SIZE),
@@ -144,6 +154,10 @@ class _AvatarPageState extends State<AvatarPage> {
                           await image.toByteData(format: ImageByteFormat.png);
                       final pngBytes = byteData.buffer.asUint8List();
                       prov.setImg = pngBytes;
+                     if(!prov2.currentProfile.avatar_created){
+                      await DatabaseService().saveAvatarCreated(context, true);
+                     }
+                     
                       Navigator.pushNamed(context, '/home');
                     }, () {});
                   }, // button pressed

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:franja_rojapp/components/grid_menu.dart';
 import 'package:franja_rojapp/components/loading.dart';
 import 'package:franja_rojapp/constants/constants.dart';
-import 'package:franja_rojapp/providers/Providerinfo.dart';
+import 'package:franja_rojapp/providers/ProviderInfo.dart';
 import 'package:franja_rojapp/components/main_appbar.dart';
 import 'package:franja_rojapp/providers/data.dart';
 import 'package:franja_rojapp/screens/menu/avatar.dart';
@@ -27,8 +27,6 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-  
-    validateFirstReward();
     super.initState();
   }
 
@@ -37,9 +35,8 @@ class _HomeState extends State<Home> {
     prov = Provider.of<ProviderInfo>(context);
     final provD = Provider.of<Data>(context);
 
-
-    //validateFirstReward();
     setCurrentProfileData();
+    validateFirstReward();
     return _loading || prov.currentProfile == null
         ? Loading()
         : prov.currentProfile.avatar_created

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:franja_rojapp/providers/Providerinfo.dart';
+import 'package:franja_rojapp/providers/ProviderInfo.dart';
 import 'package:franja_rojapp/services/auth.dart';
 
 import 'package:provider/provider.dart';

@@ -111,6 +111,6 @@ class Auth {
 
   Future<void> setUserInitialState(User user) async {
     await DatabaseService(uid: user.uid)
-        .updateUserData(0, user.email.toString(), false, false, []);
+        .setInitialUserAttributes(user.email.toString());
   }
 }
