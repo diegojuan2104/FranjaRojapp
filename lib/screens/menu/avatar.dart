@@ -16,10 +16,10 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 class AvatarPage extends StatefulWidget {
   AvatarPage({Key key}) : super(key: key);
 
-
   @override
   _AvatarPageState createState() => _AvatarPageState();
 }
+
 class _AvatarPageState extends State<AvatarPage> {
   final panelController = PanelController();
   GlobalKey imageKey = GlobalKey();
@@ -33,6 +33,7 @@ class _AvatarPageState extends State<AvatarPage> {
       body: Container(
           alignment: Alignment.topLeft,
           child: SlidingUpPanel(
+              backdropEnabled: true,
               //maxHeight: ,
               controller: panelController,
               panelBuilder: (scrollController) => builSlidingPanel(
@@ -135,15 +136,18 @@ class _AvatarPageState extends State<AvatarPage> {
                 color: Colors.white, // button color
                 child: InkWell(
                   splashColor: Colors.green, // splash color
-                  onTap: () async {
-                    RenderRepaintBoundary imageOb =
-                        imageKey.currentContext.findRenderObject();
-                    final image = await imageOb.toImage(pixelRatio: 5);
-                    ByteData byteData =
-                        await image.toByteData(format: ImageByteFormat.png);
-                    final pngBytes = byteData.buffer.asUint8List();
-                    prov.setImg = pngBytes;
-                    print("sisas $pngBytes");
+                  onTap: () {
+                    Constants.Dialog(context, "Mensaje",
+                        "¿Está listo para guardar su nuevo avatar?", () async {
+                      RenderRepaintBoundary imageOb =
+                          imageKey.currentContext.findRenderObject();
+                      final image = await imageOb.toImage(pixelRatio: 5);
+                      ByteData byteData =
+                          await image.toByteData(format: ImageByteFormat.png);
+                      final pngBytes = byteData.buffer.asUint8List();
+                      prov.setImg = pngBytes;
+                      Navigator.pushNamed(context, '/home');
+                    }, () {});
                   }, // button pressed
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,

@@ -72,16 +72,13 @@ class Data with ChangeNotifier {
 
   void deleteFromList(AvatarP item) {
     int aux = -1;
-    print(items);
+    List<AvatarP> auxL = [];
     for (var i = 0; i < items.length; i++) {
-      if (item.path == items[i].path) {
-        aux = i;
-        break;
-      }
+      if (item.path == items[i].path) 
+      continue;
+      auxL.add(items[i]);
     }
-    items.removeAt(aux);
-    print(items);
-
+    this.items = auxL;
     notifyListeners();
   }
 

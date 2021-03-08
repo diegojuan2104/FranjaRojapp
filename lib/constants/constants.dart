@@ -267,10 +267,12 @@ class Constants {
   static double TAB_BAR_SIZE = 0.131;
   static double SPACING_BAR_SIZE = 0.101;
   static String HOME_SCREEN = 'HOME_SCREEN';
+  static String MsmRemoveAvatarPart =
+      "¿Está seguro de remover la parte del avatar escogída?, recuerde que no la podrá recuperar a no ser que pague de nuevo por ella. ";
 
   static List<Color> initializMapColors() {
     final lista = [
-      Colors.red[900],
+      Color(0xFFfC2c2C),
       Colors.orange,
       Colors.blue,
       Colors.green,
@@ -368,28 +370,58 @@ class Constants {
     return tabs;
   }
 
+  static Widget actions(String text, Function callback, BuildContext c) {
+    return GestureDetector(
+        child: Container(
+            decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(width: 2, color: Colors.white),
+                borderRadius: BorderRadius.circular(10)),
+            width: 70,
+            height: 40,
+            child: Center(
+                child: Text(
+              text,
+              style: TextStyle(fontSize: 15, color: Colors.black),
+            ))),
+        onTap: () {
+          Navigator.pop(c);
+          callback();
+
+        });
+  }
+
   static Widget Dialog(BuildContext context, String textTit, String text,
       Function callA, Function callC) {
-        print(context.owner);
     showDialog(
         context: context,
-        builder: (context) => AlertDialog(
-              title: Text(textTit),
+        builder: (c) => AlertDialog(
+              shape: RoundedRectangleBorder(
+                  side: BorderSide(color: Colors.white),
+                  borderRadius: BorderRadius.circular(10)),
+              backgroundColor: Colors.red,
+              title: Center(
+                  child: Text(
+                textTit,
+                style: TextStyle(color: Colors.black, fontSize: 30),
+              )),
               content: SingleChildScrollView(
                   child: Container(
-                      child: Text(
-                text,
+                      child: Center(
+                child: Text(
+                  text,
+                  textAlign: TextAlign.center,
+                ),
               ))),
               actions: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    FlatButton(child: Text("Cancelar"), onPressed: callC),
-                    FlatButton(
-                        child: Text("Aceptar"),
-                        onPressed: () {
-                          callA();
-                        }),
+                    actions("Cancelar", callC, c),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    actions("Aceptar", callA, c)
                   ],
                 ),
               ],
