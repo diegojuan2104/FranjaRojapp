@@ -99,6 +99,7 @@ class _HomeState extends State<Home> {
                         ],
                       ),
                     ),
+                    SizedBox( height:  20,),
                     Text(
                       "FranjaRojApp Versión " + VERSION,
                       style: TextStyle(color: Colors.black54),

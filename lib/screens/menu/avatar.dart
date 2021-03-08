@@ -7,9 +7,7 @@ import 'package:franja_rojapp/components/grid_colors.dart';
 import 'package:franja_rojapp/components/main_appbar.dart';
 import 'package:franja_rojapp/components/stack_avatar.dart';
 import 'package:franja_rojapp/constants/constants.dart';
-import 'package:franja_rojapp/models/questionModel.dart';
 import 'package:franja_rojapp/providers/data.dart';
-import 'package:franja_rojapp/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
@@ -87,7 +85,7 @@ class _AvatarPageState extends State<AvatarPage> {
             height: MediaQuery.of(context).size.height - 250,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(10),
                 boxShadow: [
                   BoxShadow(color: prov.getavColor, spreadRadius: 0.2),
                 ],
@@ -131,7 +129,7 @@ class _AvatarPageState extends State<AvatarPage> {
             Container(
               padding: EdgeInsets.fromLTRB(0, 5, 5, 5),
               child: Material(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(5),
                 color: Colors.white, // button color
                 child: InkWell(
                   splashColor: Colors.green, // splash color
@@ -151,7 +149,10 @@ class _AvatarPageState extends State<AvatarPage> {
                       // icon
                       Padding(
                         padding: const EdgeInsets.fromLTRB(5, 0, 2, 0),
-                        child: Text("Guardar"),
+                        child: Text("Guardar",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold
+                        ),),
                       ),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
