@@ -25,13 +25,13 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
+    validateFirstReward();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     prov = Provider.of<ProviderInfo>(context);
-    validateFirstReward();
     setCurrentProfileData();
     return _loading || prov.currentProfile == null
         ? Loading()
@@ -106,7 +106,7 @@ class _HomeState extends State<Home> {
   }
 
   setCurrentProfileData() {
-    DatabaseService()
+     DatabaseService()
         .getCurrentProfile()
         .then((value) => {prov.setCurrentProfile(value)});
   }
@@ -117,7 +117,9 @@ class _HomeState extends State<Home> {
         _loading = true;
       });
       await Auth().signOutUser();
-      setState(() {
+      Navigator.of(context).pushReplacementNamed(
+      '/auth',
+    );      setState(() {
         _loading = false;
       });
     } catch (e) {

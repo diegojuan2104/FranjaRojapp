@@ -7,6 +7,7 @@ import 'dart:math';
 import 'package:franja_rojapp/services/database.dart';
 
 simpleAlert(context, title, text){
+  if(context != null){
    showDialog(
       barrierDismissible: false,
         context: context,
@@ -24,6 +25,7 @@ simpleAlert(context, title, text){
                 ),
               ],
             ));
+  }
 }
 const String TERMINOS_Y_CONDICIONES = ("""FRANJAROJAPP garantiza la protección de los datos proporcionados por las personas usuarias. Todo estos son tratados con absoluta confidencialidad, siendo usados exclusivamente con los fines por los que han sido solicitados, en cumplimiento de las disposiciones de la Ley 1582 de 2012, Decreto 1377 de 2013, y demás normas vigentes y complementarias. \n
 ACEPTACIÓN DE LAS CONDICIONES DE USO. El acceso y utilización de la aplicación supone que las personas usuarias están aceptando en su totalidad las condiciones y, por esta aceptación, se obligan a cumplir los TÉRMINOS Y CONDICIONES de la aplicación. Por lo tanto, las personas usuarias deberán leer detenidamente las presentes CONDICIONES DE USO, así como los otros TÉRMINOS Y CONDICIONES aquí consignados.\n
