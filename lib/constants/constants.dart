@@ -279,7 +279,8 @@ class Constants {
       Colors.pink,
       Colors.purple,
       Colors.lime,
-      Colors.cyan
+      Colors.cyan,
+      Colors.black
     ];
 
     return lista;
@@ -303,33 +304,36 @@ class Constants {
 
   static Map<String, List<AvatarModel>> initializMap() {
     final dict = {
-      "ojos": fillList(getImgPaths('ojos', 'ojosapp', 42)),
-      "boca": fillList(getImgPaths('boca', 'bocasapp', 31)),
-      "nariz": fillList(getImgPaths('nariz', 'naricesapp', 18)),
-      "orejas": fillList(getImgPaths('oreja', 'orejasapp', 8)),
-      "mascotas": fillList(getImgPaths('pet', 'petsapp', 20)),
-      "figuras": fillList(getImgPaths('fig', 'figapp', 6)),
-      "cuerpo": fillList(getImgPaths('bodypart', 'partescuerpoapp', 12)),
-      "plantas": fillList(getImgPaths('planta', 'plantasapp', 17)),
+      "ojos": fillList(getImgPaths('ojos', 'ojosapp', 42), 1.0, 1.0, 0),
+      "boca": fillList(getImgPaths('boca', 'bocasapp', 31), 1.0, 1.0, 0),
+      "nariz": fillList(getImgPaths('nariz', 'naricesapp', 31),2.5,2.0,12),
+      "orejas": fillList(getImgPaths('oreja', 'orejasapp', 15),1.0,1.0,0),
+      "mascotas": fillList(getImgPaths('pet', 'petsapp', 20),1.0,1.0,0),
+      "figuras": fillList(getImgPaths('fig', 'figapp', 6),1.0,1.0,0),
+      "cuerpo": fillList(getImgPaths('bodypart', 'partescuerpoapp', 12),1.0,1.0,0),
+      "plantas": fillList(getImgPaths('planta', 'plantasapp', 17),1.0,1.0,0),
     };
     dict["ojos"][0].numFranjas = 10;
     return dict;
   }
 
-  static List<AvatarModel> fillList(List<String> lista) {
+  static List<AvatarModel> fillList(
+      List<String> lista, double sizew, double sizeh, int a) {
     List<AvatarModel> ret = [];
     bool flag = true;
     print(lista.length);
     print((lista.length / 2).round());
     for (int i = 0; i < lista.length; i += 2) {
+      double auxW = i >= a ? sizew : 1;
+      double auxH = i >= a ? sizeh : 1;
       if (flag) {
-        ret.add(createAv(lista[i], Colors.red[50]));
-        if (i + 1 < lista.length) ret.add(createAv(lista[i + 1], Colors.white));
+        ret.add(createAv(lista[i], Colors.red[50],auxH,auxH));
+        if (i + 1 < lista.length) ret.add(createAv(lista[i + 1], Colors.white,auxH,auxH));
         flag = false;
       } else {
-        ret.add(createAv(lista[i], Colors.white));
+        ret.add(createAv(lista[i], Colors.white,auxH,auxH));
         if (i + 1 < lista.length)
-          ret.add(createAv(lista[i + 1], Colors.red[50]));
+          ret.add(createAv(lista[i + 1], Colors.red[50],auxH,auxH));
         flag = true;
       }
     }
@@ -337,8 +341,8 @@ class Constants {
     return ret;
   }
 
-  static AvatarModel createAv(String s, Color c) {
-    return AvatarModel(image: s, color: c);
+  static AvatarModel createAv(String s, Color c, double w, double h) {
+    return AvatarModel(image: s, color: c, sizew: w, sizeh: h);
   }
 
   static List<String> getImgPaths(String pal, String dir, int numImg) {
@@ -387,7 +391,6 @@ class Constants {
         onTap: () {
           Navigator.pop(c);
           callback();
-
         });
   }
 

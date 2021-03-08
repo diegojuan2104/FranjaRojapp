@@ -12,7 +12,7 @@ class Data with ChangeNotifier {
   List<AvatarP> items;
   AvatarP acceptedData;
   String a = '';
-  double sizeW,sizeH = 0;
+  double sizeW, sizeH = 0;
   int numFran = 0;
   List<List<dynamic>> listaTabs = [];
   double _sizeTrash = 50.0;
@@ -22,12 +22,9 @@ class Data with ChangeNotifier {
   Uint8List imgAv = null;
   Color _avColor = Colors.black;
 
-
-
-  Map sizeAvatar(){
-   return this.mapMesuares = Constants.getMesureMap(this.sizeW,this.sizeH);
+  Map sizeAvatar() {
+    return this.mapMesuares = Constants.getMesureMap(this.sizeW, this.sizeH);
   }
-
 
   set setImg(Uint8List img) {
     this.imgAv = img;
@@ -52,18 +49,22 @@ class Data with ChangeNotifier {
     notifyListeners();
   }
 
-  void addElementList(AvatarP item) {
-    bool exist = false;
+  bool validateTypeExist(AvatarP item) {
     for (var val in items) {
       if (item.type == val.type) {
-        exist = true;
-        break;
+        return true;
       }
     }
-    if (!exist) {
-      items.add(item);
-      notifyListeners();
+    return false;
+  }
+
+  void addElementList(AvatarP item) {
+    bool exist = false;
+    if(validateTypeExist(item)){
+      return;
     }
+    items.add(item);
+    notifyListeners();
   }
 
   bool validateFranjas(AvatarModel item) {
@@ -74,8 +75,7 @@ class Data with ChangeNotifier {
     int aux = -1;
     List<AvatarP> auxL = [];
     for (var i = 0; i < items.length; i++) {
-      if (item.path == items[i].path) 
-      continue;
+      if (item.path == items[i].path) continue;
       auxL.add(items[i]);
     }
     this.items = auxL;
@@ -115,7 +115,6 @@ class Data with ChangeNotifier {
     items = [];
     this.mapItems = Constants.initializMap();
     this._colorList = Constants.initializMapColors();
-
   }
 
   void setValueListTop(int i, double value) {
