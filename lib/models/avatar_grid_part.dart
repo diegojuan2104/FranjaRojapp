@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 class AvatarModel{
   final String image;
   final Color color;
+  double sizew;
+  double sizeh;
   int numFranjas = 0;
   AvatarModel({
-    this.image,this.color
+    this.image,this.color,this.sizeh=1,this.sizew =1
   });
 
 }

@@ -49,17 +49,17 @@ class DraggablePart extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.only(top: item.top, left: item.left), 
           child:
-              SizedBox(width: list_medidas[0], height:list_medidas[1], child: Image.asset(item.path,fit: BoxFit.fill)),
+              SizedBox(width: list_medidas[0]*item.sizew, height:list_medidas[1]*item.sizeh, child: Image.asset(item.path,fit: BoxFit.fill)),
         ),
         feedback: Container(
           padding: EdgeInsets.only(top: item.top, left: item.left),
           child:
-              SizedBox(width: list_medidas[0], height:list_medidas[1], child: Image.asset(item.path,fit: BoxFit.fill)),
+              SizedBox(width: list_medidas[0]*item.sizew, height:list_medidas[1]*item.sizeh, child: Image.asset(item.path,fit: BoxFit.fill)),
         ),
         childWhenDragging: Container(
           padding: EdgeInsets.only(top: item.top, left: item.left),
           child:
-              SizedBox(width: list_medidas[0], height:list_medidas[1], child: Image.asset(item.path,fit: BoxFit.fill)),
+              SizedBox(width: list_medidas[0]*item.sizew, height:list_medidas[1]*item.sizeh, child: Image.asset(item.path,fit: BoxFit.fill)),
         ),
         onDragCompleted: () {},
         onDragEnd: (drag) {

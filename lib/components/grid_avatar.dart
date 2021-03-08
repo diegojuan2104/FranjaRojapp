@@ -20,7 +20,6 @@ class TabWidget extends StatelessWidget {
   }
 }
 
-
 Column buildColumn(Data prov, String parameter, scrol) {
   final list = prov.mapItems[parameter];
   return Column(
@@ -35,23 +34,35 @@ Column buildColumn(Data prov, String parameter, scrol) {
                 mainAxisSpacing: 20,
                 crossAxisSpacing: 10,
                 crossAxisCount: 2,
-                childAspectRatio: 0.8-(-1*(0.8 - prov.sizeH * 0.00106))),
+                childAspectRatio: 0.8 - (-1 * (0.8 - prov.sizeH * 0.00106))),
             itemBuilder: (context, index) => AvatarCard(
               avatar: list[index],
               press: () {
-                print("object");
                 final canI = prov.validateFranjas(list[index]);
                 if (canI) {
-                  Constants.Dialog(context, "¡Atención!",
-                      "¿está seguro en comprar este item?, recuerde que no tendrá devoluciones",
-                      () {
-                    final av =
-                        AvatarP(path: list[index].image, type: parameter);
-                    prov.addElementList(av);
-                  }, () {});
+                  final av = AvatarP(
+                      path: list[index].image,
+                      type: parameter,
+                      sizeh: list[index].sizeh,
+                      sizew: list[index].sizew);
+                  final exist = prov.validateTypeExist(av);
+                  if (!exist) {
+                    Constants.Dialog(context, "¡Atención!",
+                        "¿está seguro en comprar este item?, recuerde que no tendrá devoluciones",
+                        () {
+                      prov.addElementList(av);
+                    }, () {});
+                  } else {
+                    Constants.Dialog(
+                        context,
+                        " Mensaje ",
+                        "Ya tienes un elmento de este tipo, por favor eliminalo y podrás escoger uno nuevo",
+                        () {},
+                        () {});
+                  }
                 } else {
                   Constants.Dialog(context, 'Mensaje',
-                      'No tiene las franjas necesarias para comprar este item',
+                      'No tiene las franjas necesarias para comprar este ixtem',
                       () {
                     Navigator.pushNamed(context, "/question");
                   }, () {});
