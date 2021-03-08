@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:franja_rojapp/components/grid_menu.dart';
 import 'package:franja_rojapp/components/loading.dart';
 import 'package:franja_rojapp/constants/constants.dart';
-import 'package:franja_rojapp/providers/ProviderInfo.dart';
+import 'package:franja_rojapp/providers/Providerinfo.dart';
 import 'package:franja_rojapp/components/main_appbar.dart';
+import 'package:franja_rojapp/providers/data.dart';
 import 'package:franja_rojapp/screens/menu/avatar.dart';
 import 'package:franja_rojapp/services/auth.dart';
 import 'package:franja_rojapp/services/database.dart';
@@ -18,6 +19,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   ProviderInfo prov;
+
   bool _loading = false;
   int franjas = 0;
   bool firstReward;
@@ -31,7 +33,8 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     prov = Provider.of<ProviderInfo>(context);
-    validateFirstReward();
+    final provD = Provider.of<Data>(context);
+    //validateFirstReward();
     setCurrentProfileData();
     return _loading || prov.currentProfile == null
         ? Loading()
@@ -44,11 +47,13 @@ class _HomeState extends State<Home> {
                     SizedBox(
                       height: 20,
                     ),
-                    CircleAvatar(
-                      radius: 60.0,
-                      backgroundImage: NetworkImage(
-                          'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'),
-                      backgroundColor: Colors.transparent,
+                    Container(
+                      child: provD.imgAv != null ? Image.memory(
+                        provD.imgAv,
+                        width: 150,
+                        height: 150,
+                        fit: BoxFit.fill,
+                      ) : Text(""),
                     ),
                     Container(
                       padding: EdgeInsets.all(15),
@@ -102,7 +107,7 @@ class _HomeState extends State<Home> {
                     ),
                   ]),
                 ))
-            : Avatar();
+            : AvatarPage();
   }
 
   setCurrentProfileData() {

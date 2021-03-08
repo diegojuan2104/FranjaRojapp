@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:franja_rojapp/components/main_appbar.dart';
-import 'package:franja_rojapp/providers/ProviderInfo.dart';
+import 'package:franja_rojapp/providers/Providerinfo.dart';
+import 'package:franja_rojapp/providers/data.dart';
 import 'package:franja_rojapp/screens/authentication/register.dart';
 import 'package:franja_rojapp/screens/authentication/reset_password.dart';
 import 'package:franja_rojapp/screens/menu/avatar.dart';
@@ -54,8 +55,11 @@ class MyApp extends StatelessWidget {
         StreamProvider(
           create: (context) => context.read<Auth>().authStateChanges,
         ),
+        ChangeNotifierProvider<Data>(create: (context) => Data()),
+
       ],
       child: MaterialApp(
+          debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           theme: ThemeData(
             primarySwatch: kPrimaryColor,
@@ -81,7 +85,7 @@ class MyApp extends StatelessWidget {
                 case "/reset_password":
                   return ResetPassword();
                 case "/avatar":
-                  return Avatar();
+                  return AvatarPage();
                 case "/question":
                   return Question();
                 case "/appbar":

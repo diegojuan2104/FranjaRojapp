@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:franja_rojapp/models/profileModel.dart';
+import 'package:franja_rojapp/models/ProfileModel.dart';
 
 class ProviderInfo with ChangeNotifier{
   

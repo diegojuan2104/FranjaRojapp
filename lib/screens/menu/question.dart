@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:franja_rojapp/components/answer_button.dart';
 import 'package:franja_rojapp/components/loading.dart';
 import 'package:franja_rojapp/constants/constants.dart';
-import 'package:franja_rojapp/providers/ProviderInfo.dart';
+import 'package:franja_rojapp/providers/Providerinfo.dart';
 
 import 'package:franja_rojapp/services/database.dart';
 import 'package:provider/provider.dart';

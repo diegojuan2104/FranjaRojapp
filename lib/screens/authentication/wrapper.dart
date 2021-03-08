@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:franja_rojapp/screens/menu/home.dart';
 import 'package:franja_rojapp/screens/authentication/login.dart';
-import 'package:franja_rojapp/models/UserModel.dart';
+import 'package:franja_rojapp/models/userModel.dart';
 import 'package:franja_rojapp/services/auth.dart';
 import 'package:provider/provider.dart';
 
