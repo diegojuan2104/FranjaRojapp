@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:franja_rojapp/components/banner_franja_roja.dart';
 import 'package:franja_rojapp/components/loading.dart';
 import 'package:franja_rojapp/constants/constants.dart';
 import 'package:franja_rojapp/services/auth.dart';
@@ -26,19 +27,7 @@ class _ResetPasswordState extends State<ResetPassword> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Stack(children: <Widget>[
-                  Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.symmetric(vertical: 30),
-                    decoration: BoxDecoration(color: Color(0xFFfC2c2C)),
-                    child: Container(
-                      margin: EdgeInsets.only(top: 20),
-                      child: Image.asset(
-                        "assets/images/FranjaRojapp_logo_blanco.png",
-                        color: Colors.white,
-                        height: 65,
-                      ),
-                    ),
-                  ),
+                  BannerFranjaRoja(),
                   SizedBox(
                     child: AppBar(
                       elevation: 0,

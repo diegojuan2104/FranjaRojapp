@@ -3,10 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:franja_rojapp/components/answer_button.dart';
 import 'package:franja_rojapp/components/loading.dart';
 import 'package:franja_rojapp/constants/constants.dart';
-import 'package:franja_rojapp/providers/Providerinfo.dart';
 
 import 'package:franja_rojapp/services/database.dart';
 import 'package:provider/provider.dart';
+
+import '../../providers/Providerinfo.dart';
 
 class Question extends StatefulWidget {
   Question({Key key}) : super(key: key);
@@ -76,10 +77,12 @@ class _QuestionState extends State<Question> {
       body: question != "noquestions"
           ? question != null
               ? SingleChildScrollView(
-                              child: Column(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(height: queryData.size.height*0.05,),
+                      SizedBox(
+                        height: queryData.size.height * 0.05,
+                      ),
                       Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: RichText(
@@ -88,10 +91,10 @@ class _QuestionState extends State<Question> {
                               text: "Cuentanos!",
                               style: TextStyle(
                                 fontSize: 80,
-                                  color: Theme.of(context).primaryColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Silvertone',
-                                  ),
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Silvertone',
+                              ),
                             ),
                           )),
                       Padding(
@@ -111,14 +114,17 @@ class _QuestionState extends State<Question> {
                               width: queryData.size.width * .8,
                               child: Column(
                                 children: <Widget>[
-                                  SizedBox(height: queryData.size.height*0.03,),
+                                  SizedBox(
+                                    height: queryData.size.height * 0.03,
+                                  ),
                                   TextField(
                                     keyboardType: intInputType
                                         ? TextInputType.number
                                         : TextInputType.text,
                                     inputFormatters: intInputType
                                         ? <TextInputFormatter>[
-                                            FilteringTextInputFormatter.digitsOnly
+                                            FilteringTextInputFormatter
+                                                .digitsOnly
                                           ]
                                         : null,
                                     controller: openAnswerController,
@@ -170,7 +176,7 @@ class _QuestionState extends State<Question> {
                       )
                     ],
                   ),
-              )
+                )
               : Loading()
           : Container(
               child: Column(
@@ -183,10 +189,8 @@ class _QuestionState extends State<Question> {
                         children: [
                           Text(
                             "Has contestado todas las preguntas!",
-                            style: TextStyle(fontSize: 18,
-                              fontWeight: FontWeight.bold
-                            ),
-
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
                           ),
                           SizedBox(
                             height: 20,
@@ -273,5 +277,4 @@ class _QuestionState extends State<Question> {
           }),
         });
   }
-
 }

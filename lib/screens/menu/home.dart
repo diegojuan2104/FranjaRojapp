@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:franja_rojapp/components/grid_menu.dart';
 import 'package:franja_rojapp/components/loading.dart';
 import 'package:franja_rojapp/constants/constants.dart';
-import 'package:franja_rojapp/providers/Providerinfo.dart';
 import 'package:franja_rojapp/components/main_appbar.dart';
 import 'package:franja_rojapp/providers/data.dart';
 import 'package:franja_rojapp/screens/menu/avatar.dart';
 import 'package:franja_rojapp/services/auth.dart';
 import 'package:franja_rojapp/services/database.dart';
 import 'package:provider/provider.dart';
+
+import '../../providers/Providerinfo.dart';
 
 class Home extends StatefulWidget {
   Home({Key key}) : super(key: key);
@@ -27,8 +28,6 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-  
-    validateFirstReward();
     super.initState();
   }
 
@@ -37,9 +36,8 @@ class _HomeState extends State<Home> {
     prov = Provider.of<ProviderInfo>(context);
     final provD = Provider.of<Data>(context);
 
-
-    //validateFirstReward();
     setCurrentProfileData();
+    validateFirstReward();
     return _loading || prov.currentProfile == null
         ? Loading()
         : prov.currentProfile.avatar_created
