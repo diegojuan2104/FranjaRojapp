@@ -3,7 +3,7 @@ import 'package:franja_rojapp/components/banner_franja_roja.dart';
 import 'package:franja_rojapp/components/loading.dart';
 import 'package:franja_rojapp/constants/constants.dart';
 import 'package:franja_rojapp/services/auth.dart';
-import 'package:franja_rojapp/services/database.dart';
+
 
 class Register extends StatefulWidget {
   Register({Key key}) : super(key: key);

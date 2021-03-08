@@ -29,8 +29,5 @@ class _GlossaryState extends State<Glossary> {
         ],
       )   
     );
-
-   
-
   }
 }

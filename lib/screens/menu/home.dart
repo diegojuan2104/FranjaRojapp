@@ -27,6 +27,7 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
+    validateFirstReward();
     super.initState();
   }
 
@@ -111,7 +112,7 @@ class _HomeState extends State<Home> {
   }
 
   setCurrentProfileData() {
-    DatabaseService()
+     DatabaseService()
         .getCurrentProfile()
         .then((value) => {prov.setCurrentProfile(value)});
   }
@@ -122,7 +123,9 @@ class _HomeState extends State<Home> {
         _loading = true;
       });
       await Auth().signOutUser();
-      setState(() {
+      Navigator.of(context).pushReplacementNamed(
+      '/auth',
+    );      setState(() {
         _loading = false;
       });
     } catch (e) {

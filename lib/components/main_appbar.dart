@@ -33,7 +33,7 @@ class _MainAppBarState extends State<MainAppBar> {
       ),
       actions: <Widget>[
         SizedBox(width: 10,),
-        TextButton(
+        FlatButton(
             onPressed: () {},
             child: RichText(
               textAlign: TextAlign.center,
