@@ -27,6 +27,7 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
+  
     validateFirstReward();
     super.initState();
   }
@@ -35,13 +36,15 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     prov = Provider.of<ProviderInfo>(context);
     final provD = Provider.of<Data>(context);
+
+
     //validateFirstReward();
     setCurrentProfileData();
     return _loading || prov.currentProfile == null
         ? Loading()
         : prov.currentProfile.avatar_created
             ? Scaffold(
-                backgroundColor: Colors.grey[150],
+                backgroundColor: Colors.white,
                 appBar: MainAppBar(),
                 body: SingleChildScrollView(
                   child: Column(children: [
