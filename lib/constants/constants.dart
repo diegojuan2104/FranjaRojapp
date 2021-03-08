@@ -10,7 +10,6 @@ import 'package:franja_rojapp/services/database.dart';
 
 const IMAGES_WORD = '-removebg-preview';
 
-
 simpleAlert(context, title, text) {
   showDialog(
       barrierDismissible: false,
@@ -263,14 +262,17 @@ _createQuestion() async {
   });
   //DatabaseService().generateRandomQuestion();
 }
+
 class Constants {
   static double TAB_BAR_SIZE = 0.131;
   static double SPACING_BAR_SIZE = 0.101;
   static String HOME_SCREEN = 'HOME_SCREEN';
+  static String MsmRemoveAvatarPart =
+      "¿Está seguro de remover la parte del avatar escogída?, recuerde que no la podrá recuperar a no ser que pague de nuevo por ella. ";
 
   static List<Color> initializMapColors() {
     final lista = [
-      Colors.red[900],
+      Color(0xFFfC2c2C),
       Colors.orange,
       Colors.blue,
       Colors.green,
@@ -283,16 +285,18 @@ class Constants {
     return lista;
   }
 
-  static Map<String, List<double>> getMesureMap() {
+  static Map<String, List<double>> getMesureMap(double witdh, double height) {
+    print("sisa $witdh");
+    print("sisa $height");
     final dict = {
-      "ojos": [175.0, 150.0],
-      "boca": [125.0, 100.0],
-      "nariz": [80.0, 80.0],
-      "orejas": [250.0, 140.0],
-      "mascotas": [100.0, 100.0],
-      "figuras": [100.0, 100.0],
-      "plantas": [100.0, 100.0],
-      "cuerpo": [100.0, 100.0],
+      "ojos": [witdh * 0.445, height * 0.157],
+      "boca": [witdh * 0.318, height * 0.1315],
+      "nariz": [witdh * 0.203, height * 0.105],
+      "orejas": [witdh * 0.636, 0.184 * height],
+      "mascotas": [witdh * 0.254, height * 0.1315],
+      "figuras": [witdh * 0.254, height * 0.1315],
+      "plantas": [witdh * 0.254, height * 0.1315],
+      "cuerpo": [witdh * 0.254, height * 0.1315],
     };
     return dict;
   }
@@ -320,8 +324,7 @@ class Constants {
     for (int i = 0; i < lista.length; i += 2) {
       if (flag) {
         ret.add(createAv(lista[i], Colors.red[50]));
-        if (i + 1 < lista.length)
-          ret.add(createAv(lista[i + 1], Colors.white));
+        if (i + 1 < lista.length) ret.add(createAv(lista[i + 1], Colors.white));
         flag = false;
       } else {
         ret.add(createAv(lista[i], Colors.white));
@@ -365,5 +368,63 @@ class Constants {
       ));
     }
     return tabs;
+  }
+
+  static Widget actions(String text, Function callback, BuildContext c) {
+    return GestureDetector(
+        child: Container(
+            decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(width: 2, color: Colors.white),
+                borderRadius: BorderRadius.circular(10)),
+            width: 70,
+            height: 40,
+            child: Center(
+                child: Text(
+              text,
+              style: TextStyle(fontSize: 15, color: Colors.black),
+            ))),
+        onTap: () {
+          Navigator.pop(c);
+          callback();
+
+        });
+  }
+
+  static Widget Dialog(BuildContext context, String textTit, String text,
+      Function callA, Function callC) {
+    showDialog(
+        context: context,
+        builder: (c) => AlertDialog(
+              shape: RoundedRectangleBorder(
+                  side: BorderSide(color: Colors.white),
+                  borderRadius: BorderRadius.circular(10)),
+              backgroundColor: Colors.red,
+              title: Center(
+                  child: Text(
+                textTit,
+                style: TextStyle(color: Colors.black, fontSize: 30),
+              )),
+              content: SingleChildScrollView(
+                  child: Container(
+                      child: Center(
+                child: Text(
+                  text,
+                  textAlign: TextAlign.center,
+                ),
+              ))),
+              actions: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    actions("Cancelar", callC, c),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    actions("Aceptar", callA, c)
+                  ],
+                ),
+              ],
+            ));
   }
 }

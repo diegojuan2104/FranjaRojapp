@@ -39,7 +39,7 @@ class DraggablePart extends StatelessWidget {
   Widget build(BuildContext context) {
     final item_data = Provider.of<Data>(context);
     final item = item_data.itemsList[i];
-    final list_medidas = item_data.mapMesuares[item.type];
+    final list_medidas = item_data.sizeAvatar()[item.type];
     return Container(
       child: Draggable(
         onDragStarted: () {
