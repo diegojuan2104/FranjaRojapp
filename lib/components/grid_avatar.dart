@@ -20,6 +20,7 @@ class TabWidget extends StatelessWidget {
   }
 }
 
+
 Column buildColumn(Data prov, String parameter, scrol) {
   final list = prov.mapItems[parameter];
   return Column(
@@ -34,7 +35,7 @@ Column buildColumn(Data prov, String parameter, scrol) {
                 mainAxisSpacing: 20,
                 crossAxisSpacing: 10,
                 crossAxisCount: 2,
-                childAspectRatio: prov.sizeH * 0.0010101),
+                childAspectRatio: 0.8-(-1*(0.8 - prov.sizeH * 0.0010101))),
             itemBuilder: (context, index) => AvatarCard(
               avatar: list[index],
               press: () {
