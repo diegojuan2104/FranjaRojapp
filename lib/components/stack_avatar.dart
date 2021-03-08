@@ -5,6 +5,8 @@ import 'package:franja_rojapp/models/avatar_stack_part.dart';
 import 'package:franja_rojapp/providers/data.dart';
 import 'package:provider/provider.dart';
 
+GlobalKey key = GlobalKey();
+
 class StackAvatar extends StatelessWidget {
   const StackAvatar({Key key}) : super(key: key);
 
@@ -12,6 +14,7 @@ class StackAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     List<AvatarP> lista = Provider.of<Data>(context).itemsList;
     return Container(
+      key: key,
       child: Stack(
         children: _getStackItems(lista, context),
       ),
@@ -67,18 +70,20 @@ class DraggablePart extends StatelessWidget {
           double off_x = drag.offset.dx;
           double top = item.top;
           double left = item.left;
-          item_data.sizeTrah = 50;
+          print("size ${key.currentContext.size.width}");
+          item_data.sizeTrah = 0;
           item_data.setValueListTop(
               i, getPosition(top, off_y, MediaQuery.of(context).size.height));
           item_data.setValueListLeft(
               i, getPosition(left, off_x, MediaQuery.of(context).size.width));
+          print(item);
         },
       ),
     );
   }
 }
 
-final double offsetXYBR = 90.0;
+final double offsetXYBR = 100.0;
 final double offsetXYTL = 30.0;
 double getPosition(double value, double off, length) {
   if ((value + off) > (length - offsetXYBR)) {
