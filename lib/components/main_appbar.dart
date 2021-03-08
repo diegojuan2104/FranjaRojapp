@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:franja_rojapp/providers/ProviderInfo.dart';
+import 'package:franja_rojapp/providers/Providerinfo.dart';
 import 'package:franja_rojapp/services/auth.dart';
 
 import 'package:provider/provider.dart';
@@ -32,9 +32,10 @@ class _MainAppBarState extends State<MainAppBar> {
             fontWeight: FontWeight.bold),
       ),
       actions: <Widget>[
-        FlatButton.icon(
-            icon: Icon(null),
-            label: RichText(
+        SizedBox(width: 10,),
+        FlatButton(
+            onPressed: () {},
+            child: RichText(
               textAlign: TextAlign.center,
               text: TextSpan(
                 text: prov.currentProfile == null
@@ -49,16 +50,5 @@ class _MainAppBarState extends State<MainAppBar> {
             ))
       ],
     );
-  }
-
-  getFranjas<String>() {
-    final profiles = Provider.of<QuerySnapshot>(context);
-    User firebaseUser = Auth().returnCurrentUser();
-    if (profiles != null) {
-      for (var doc
-          in profiles.docs.where((profile) => profile.id == firebaseUser.uid)) {
-        return (doc.get("franjas")).toString();
-      }
-    }
   }
 }
