@@ -48,7 +48,7 @@ class DatabaseService {
     });
   }
 
-  saveAvatarCreated(context, bool avatarCreated) async {
+  saveAvatarCreated(bool avatarCreated) async {
     await profilesCollection.doc(Auth().firebaseUser.uid).update({
       'avatar_created': true,
     });

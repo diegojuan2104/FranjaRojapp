@@ -296,6 +296,7 @@ class Constants {
       "figuras": [witdh * 0.254, height * 0.1315],
       "plantas": [witdh * 0.254, height * 0.1315],
       "cuerpo": [witdh * 0.254, height * 0.1315],
+      "cabellos":[witdh * 0.636, 0.184 * height],
     };
     return dict;
   }
@@ -304,12 +305,13 @@ class Constants {
     final dict = {
       "ojos": fillList(getImgPaths('ojos', 'ojosapp', 42), 1.0, 1.0, 0),
       "boca": fillList(getImgPaths('boca', 'bocasapp', 31), 1.0, 1.0, 0),
-      "nariz": fillList(getImgPaths('nariz', 'naricesapp', 31),3,2.3,12),
+      "nariz": fillList(getImgPaths('nariz', 'naricesapp', 28),3,2.3,13),
       "orejas": fillList(getImgPaths('oreja', 'orejasapp', 15),1.0,1.0,0),
       "mascotas": fillList(getImgPaths('pet', 'petsapp', 20),1.0,1.0,0),
       "figuras": fillList(getImgPaths('fig', 'figapp', 6),1.0,1.0,0),
       "cuerpo": fillList(getImgPaths('bodypart', 'partescuerpoapp', 12),1.0,1.0,0),
       "plantas": fillList(getImgPaths('planta', 'plantasapp', 17),1.0,1.0,0),
+      "cabellos": fillList(getImgPaths('pelo', 'pelosapp', 2),1.0,1.0,0),
     };
     dict["ojos"][0].numFranjas = 10;
     return dict;
@@ -319,7 +321,6 @@ class Constants {
       List<String> lista, double sizew, double sizeh, int a) {
     List<AvatarModel> ret = [];
     bool flag = true;
-    print((lista.length / 2).round());
     for (int i = 0; i < lista.length; i += 2) {
       double auxW = i >= a ? sizew : 1;
       double auxH = i >= a ? sizeh : 1;

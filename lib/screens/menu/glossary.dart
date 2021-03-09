@@ -7,6 +7,8 @@ import 'package:franja_rojapp/providers/Providerinfo.dart';
 import 'package:franja_rojapp/services/database.dart';
 import 'package:provider/provider.dart';
 
+import '../../providers/Providerinfo.dart';
+
 class Glossary extends StatefulWidget {
   Glossary({Key key}) : super(key: key);
 
