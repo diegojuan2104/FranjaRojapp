@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:franja_rojapp/components/grid_menu.dart';
 import 'package:franja_rojapp/components/loading.dart';
 import 'package:franja_rojapp/constants/constants.dart';
-import 'package:franja_rojapp/providers/ProviderInfo.dart';
 import 'package:franja_rojapp/components/main_appbar.dart';
 import 'package:franja_rojapp/providers/data.dart';
 import 'package:franja_rojapp/screens/menu/avatar.dart';
 import 'package:franja_rojapp/services/auth.dart';
 import 'package:franja_rojapp/services/database.dart';
 import 'package:provider/provider.dart';
+
+import '../../providers/Providerinfo.dart';
 
 class Home extends StatefulWidget {
   Home({Key key}) : super(key: key);

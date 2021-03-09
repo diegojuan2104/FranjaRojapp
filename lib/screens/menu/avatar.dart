@@ -7,11 +7,12 @@ import 'package:franja_rojapp/components/grid_colors.dart';
 import 'package:franja_rojapp/components/main_appbar.dart';
 import 'package:franja_rojapp/components/stack_avatar.dart';
 import 'package:franja_rojapp/constants/constants.dart';
-import 'package:franja_rojapp/providers/ProviderInfo.dart';
 import 'package:franja_rojapp/providers/data.dart';
 import 'package:franja_rojapp/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+
+import '../../providers/Providerinfo.dart';
 
 class AvatarPage extends StatefulWidget {
   AvatarPage({Key key}) : super(key: key);
@@ -43,37 +44,8 @@ class _AvatarPageState extends State<AvatarPage> {
                   prov: prov,
                   sizeH: sizeH,
                   sizeW: sizeW,
-                  prov2: prov2
-                  ),
+                  prov2: prov2),
               body: Scaffold(
-                  /*appBar: AppBar(
-                    backgroundColor: Colors.white,
-                    elevation: 0,
-                    leading: IconButton(
-                      icon: Icon(
-                        Icons.arrow_back,
-                      ),
-                      onPressed: () {},
-                    ),
-                    actions: [
-                      IconButton(
-                          icon: Icon(Icons.save),
-                          onPressed: () async {
-                            RenderRepaintBoundary imageOb =
-                                imageKey.currentContext.findRenderObject();
-                            final image = await imageOb.toImage(pixelRatio: 5);
-                            ByteData byteData = await image.toByteData(
-                                format: ImageByteFormat.png);
-                            final pngBytes = byteData.buffer.asUint8List();
-                            /*Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => ImageTaked(
-                                    imageBytes: pngBytes,
-                                  )));
-                        },
-                        color: Colors.red,*/
-                          })
-                    ],
-                  ),*/
                   body: Container(
                       alignment: Alignment.topLeft,
                       child: stackForAvatar(context, prov)) //),
@@ -109,26 +81,28 @@ class _AvatarPageState extends State<AvatarPage> {
       Data prov,
       double sizeH,
       double sizeW,
-      ProviderInfo prov2
-      
-      }) {
+      ProviderInfo prov2}) {
     List lista = prov.getListTabs(s: scrollController);
     lista.add(TabWidgetColor(scrollController: scrollController));
     return DefaultTabController(
         length: 9,
         child: Scaffold(
             appBar: buildTabBar(
-                onClicked: panelController.close,
-                prov: prov,
-                sizeH: sizeH,
-                sizeW: sizeW
-                , prov2: prov2,
-                ),
+              onClicked: panelController.close,
+              prov: prov,
+              sizeH: sizeH,
+              sizeW: sizeW,
+              prov2: prov2,
+            ),
             body: TabBarView(children: lista)));
   }
 
   Widget buildTabBar(
-      {VoidCallback onClicked, Data prov, double sizeH, double sizeW, ProviderInfo prov2}) {
+      {VoidCallback onClicked,
+      Data prov,
+      double sizeH,
+      double sizeW,
+      ProviderInfo prov2}) {
     return PreferredSize(
       preferredSize: Size.fromHeight(sizeH * Constants.TAB_BAR_SIZE),
       child: GestureDetector(
@@ -152,10 +126,11 @@ class _AvatarPageState extends State<AvatarPage> {
                           await image.toByteData(format: ImageByteFormat.png);
                       final pngBytes = byteData.buffer.asUint8List();
                       prov.setImg = pngBytes;
-                     if(!prov2.currentProfile.avatar_created){
-                      await DatabaseService().saveAvatarCreated(context, true);
-                     }
-                     
+                      if (!prov2.currentProfile.avatar_created) {
+                        await DatabaseService()
+                            .saveAvatarCreated(context, true);
+                      }
+
                       Navigator.pushNamed(context, '/home');
                     }, () {});
                   }, // button pressed
@@ -165,10 +140,10 @@ class _AvatarPageState extends State<AvatarPage> {
                       // icon
                       Padding(
                         padding: const EdgeInsets.fromLTRB(5, 0, 2, 0),
-                        child: Text("Guardar",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold
-                        ),),
+                        child: Text(
+                          "Guardar",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),

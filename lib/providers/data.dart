@@ -15,7 +15,7 @@ class Data with ChangeNotifier {
   double sizeW, sizeH = 0;
   int numFran = 0;
   List<List<dynamic>> listaTabs = [];
-  double _sizeTrash = 50.0;
+  double _sizeTrash = 0;
   Map<String, List<double>> mapMesuares = {};
   Map<String, List<AvatarModel>> mapItems = {};
   List<Color> _colorList = [];
@@ -119,7 +119,7 @@ class Data with ChangeNotifier {
 
   void setValueListTop(int i, double value) {
     if (i < items.length) {
-      items[i].top = value - 80 < 0 ? 0 : value - 80;
+      items[i].top = value - 80 < 0 ? 0 : value - 53;
       notifyListeners();
     }
   }

@@ -319,6 +319,7 @@ class Constants {
       List<String> lista, double sizew, double sizeh, int a) {
     List<AvatarModel> ret = [];
     bool flag = true;
+    print((lista.length / 2).round());
     for (int i = 0; i < lista.length; i += 2) {
       double auxW = i >= a ? sizew : 1;
       double auxH = i >= a ? sizeh : 1;

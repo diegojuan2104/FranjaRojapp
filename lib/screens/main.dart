@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:franja_rojapp/components/main_appbar.dart';
-import 'package:franja_rojapp/providers/ProviderInfo.dart';
 import 'package:franja_rojapp/providers/data.dart';
 import 'package:franja_rojapp/screens/authentication/register.dart';
 import 'package:franja_rojapp/screens/authentication/reset_password.dart';
@@ -17,6 +16,8 @@ import 'package:flutter/services.dart';
 import 'package:franja_rojapp/screens/authentication/wrapper.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
+
+import '../providers/Providerinfo.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
