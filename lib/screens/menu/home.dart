@@ -94,7 +94,7 @@ class _HomeState extends State<Home> {
                               icon: Icons.info_outline,
                               warna: Colors.red,
                               action: () =>
-                                  {Navigator.pushNamed(context,"/test")}),
+                                  {Navigator.pushNamed(context,"/about")}),
                           GridMenu(
                               title: "Cerrar Sesión",
                               icon: Icons.arrow_back,
