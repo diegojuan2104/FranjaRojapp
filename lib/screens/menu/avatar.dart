@@ -12,6 +12,7 @@ import 'package:franja_rojapp/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
+import '../../constants/constants.dart';
 import '../../providers/Providerinfo.dart';
 
 class AvatarPage extends StatefulWidget {
@@ -59,7 +60,7 @@ class _AvatarPageState extends State<AvatarPage> {
         child: Container(
             alignment: Alignment.topLeft,
             margin: EdgeInsets.all(30),
-            height: MediaQuery.of(context).size.height - 250,
+            height: MediaQuery.of(context).size.height - ((MediaQuery.of(context).size.height)*Constants.TAB_BAR_SIZE+110),
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
@@ -126,11 +127,6 @@ class _AvatarPageState extends State<AvatarPage> {
                           await image.toByteData(format: ImageByteFormat.png);
                       final pngBytes = byteData.buffer.asUint8List();
                       prov.setImg = pngBytes;
-                      if (!prov2.currentProfile.avatar_created) {
-                        await DatabaseService()
-                            .saveAvatarCreated(context, true);
-                      }
-
                       Navigator.pushNamed(context, '/home');
                     }, () {});
                   }, // button pressed

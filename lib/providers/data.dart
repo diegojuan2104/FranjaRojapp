@@ -119,7 +119,7 @@ class Data with ChangeNotifier {
 
   void setValueListTop(int i, double value) {
     if (i < items.length) {
-      items[i].top = value - 80 < 0 ? 0 : value - 53;
+      items[i].top = value - 80 < 0 ? 0 : value;
       notifyListeners();
     }
   }
