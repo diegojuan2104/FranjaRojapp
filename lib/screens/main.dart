@@ -3,13 +3,13 @@ import 'package:franja_rojapp/components/main_appbar.dart';
 import 'package:franja_rojapp/providers/data.dart';
 import 'package:franja_rojapp/screens/authentication/register.dart';
 import 'package:franja_rojapp/screens/authentication/reset_password.dart';
+import 'package:franja_rojapp/screens/menu/aboutFranjaRoja.dart';
 import 'package:franja_rojapp/screens/menu/avatar.dart';
 import 'package:franja_rojapp/screens/menu/glossary.dart';
 import 'package:franja_rojapp/screens/menu/home.dart';
 import 'package:franja_rojapp/screens/initial_screens/big_button_page.dart';
 import 'package:franja_rojapp/screens/authentication/login.dart';
 import 'package:franja_rojapp/screens/menu/question.dart';
-import 'package:franja_rojapp/screens/menu/glossary.dart';
 import 'package:franja_rojapp/services/auth.dart';
 import 'package:franja_rojapp/screens/initial_screens/splash_screen.dart';
 import 'package:flutter/services.dart';
@@ -94,8 +94,8 @@ class MyApp extends StatelessWidget {
                   return MainAppBar();
                 case "/glossary":
                   return Glossary();
-                case "/test":
-                  return Glossary();
+                case "/about":
+                  return AboutFranjaRoja();
               }
             });
           }),

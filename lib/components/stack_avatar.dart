@@ -88,13 +88,7 @@ class DraggablePart extends StatelessWidget {
           //print("size ${key.currentContext.size.width}");
           item_data.sizeTrah = 0;
           item_data.setValueListTop(
-<<<<<<< HEAD
-              i,
-              getPosition(
-                  top, off_y, MediaQuery.of(context).size.height));
-=======
               i, getPosition(top, off_y, h, offsetXYBR, maxY));
->>>>>>> 824ecbc8fe74119f011b5cca66c0f312ff9eaa8e
           item_data.setValueListLeft(
               i,
               getPosition(left, off_x, MediaQuery.of(context).size.width,
@@ -112,10 +106,8 @@ double getPosition(double value, double off, length, double c, double max) {
   } else if ((value + off - c) < 0.0) {
     return 0;
   } else {
-<<<<<<< HEAD
-    return value + off;
-=======
-    return value + off - c;
->>>>>>> 824ecbc8fe74119f011b5cca66c0f312ff9eaa8e
+  
+  
+  return value + off - c;
   }
 }
