@@ -3,7 +3,7 @@ import 'package:franja_rojapp/components/main_appbar.dart';
 import 'package:franja_rojapp/providers/data.dart';
 import 'package:franja_rojapp/screens/authentication/register.dart';
 import 'package:franja_rojapp/screens/authentication/reset_password.dart';
-import 'package:franja_rojapp/screens/menu/aboutFranjaRoja.dart';
+import 'package:franja_rojapp/screens/menu/about_franja_roja.dart';
 import 'package:franja_rojapp/screens/menu/avatar.dart';
 import 'package:franja_rojapp/screens/menu/glossary.dart';
 import 'package:franja_rojapp/screens/menu/home.dart';
