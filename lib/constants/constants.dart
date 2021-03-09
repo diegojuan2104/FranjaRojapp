@@ -288,9 +288,9 @@ class Constants {
 
   static Map<String, List<double>> getMesureMap(double witdh, double height) {
     final dict = {
-      "ojos": [witdh * 0.445, height * 0.157],
-      "boca": [witdh * 0.318, height * 0.1315],
-      "nariz": [witdh * 0.203, height * 0.105],
+      "ojos": [witdh * 0.55, height * 0.167],
+      "boca": [witdh * 0.358, height * 0.1515],
+      "nariz": [witdh * 0.223, height * 0.125],
       "orejas": [witdh * 0.636, 0.184 * height],
       "mascotas": [witdh * 0.254, height * 0.1315],
       "figuras": [witdh * 0.254, height * 0.1315],
@@ -304,7 +304,7 @@ class Constants {
     final dict = {
       "ojos": fillList(getImgPaths('ojos', 'ojosapp', 42), 1.0, 1.0, 0),
       "boca": fillList(getImgPaths('boca', 'bocasapp', 31), 1.0, 1.0, 0),
-      "nariz": fillList(getImgPaths('nariz', 'naricesapp', 31),2.5,2.0,12),
+      "nariz": fillList(getImgPaths('nariz', 'naricesapp', 31),3,2.3,12),
       "orejas": fillList(getImgPaths('oreja', 'orejasapp', 15),1.0,1.0,0),
       "mascotas": fillList(getImgPaths('pet', 'petsapp', 20),1.0,1.0,0),
       "figuras": fillList(getImgPaths('fig', 'figapp', 6),1.0,1.0,0),
