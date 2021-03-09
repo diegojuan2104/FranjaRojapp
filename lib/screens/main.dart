@@ -10,6 +10,7 @@ import 'package:franja_rojapp/screens/menu/home.dart';
 import 'package:franja_rojapp/screens/initial_screens/big_button_page.dart';
 import 'package:franja_rojapp/screens/authentication/login.dart';
 import 'package:franja_rojapp/screens/menu/question.dart';
+import 'package:franja_rojapp/screens/menu/glossary.dart';
 import 'package:franja_rojapp/services/auth.dart';
 import 'package:franja_rojapp/screens/initial_screens/splash_screen.dart';
 import 'package:flutter/services.dart';
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
         Provider<Auth>(
           create: (_) => Auth(),
         ),
-        ListenableProvider<ProviderInfo>(
+        ChangeNotifierProvider<ProviderInfo>(
           create: (_) => ProviderInfo(),
         ),
         StreamProvider(
@@ -91,6 +92,8 @@ class MyApp extends StatelessWidget {
                 case "/appbar":
                   return MainAppBar();
                 case "/glossary":
+                  return Glossary();
+                case "/test":
                   return Glossary();
               }
             });

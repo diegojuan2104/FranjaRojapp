@@ -2,13 +2,40 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:franja_rojapp/components/glossary_card.dart';
 import 'package:franja_rojapp/components/main_appbar.dart';
+import 'package:franja_rojapp/constants/constants.dart';
+import 'package:franja_rojapp/providers/ProviderInfo.dart';
+import 'package:franja_rojapp/services/database.dart';
+import 'package:provider/provider.dart';
 
-class Glossary extends StatelessWidget {
-  MediaQueryData queryData;
+class Glossary extends StatefulWidget {
+  Glossary({Key key}) : super(key: key);
+
+  @override
+  _GlossaryState createState() => _GlossaryState();
+}
+
+
+
+class _GlossaryState extends State<Glossary> {
+  
+
+  ProviderInfo prov;
+  @override
+  void dispose(){
+    super.dispose();
+  }
+
+  @override
+  void initState() { 
+    super.initState();
+    validateGlossaryOpened();
+  }
+
   int total = 5;
   @override
   Widget build(BuildContext context) {
-    queryData = MediaQuery.of(context);
+   prov = Provider.of<ProviderInfo>(context);
+    MediaQueryData queryData = MediaQuery.of(context);
     return Scaffold(
       appBar: MainAppBar(),
       body: SingleChildScrollView(
@@ -72,5 +99,20 @@ class Glossary extends StatelessWidget {
         ),
       ),
     );
+  }
+
+    void validateGlossaryOpened() {
+    Future.delayed(Duration(milliseconds: 500), () async {
+      if (prov.currentProfile != null) {
+        if (!prov.currentProfile.glossary_opened) {
+          simpleAlert(
+              context, "Felicidades", "Has ganado 10 franjas por darle un vistazo al glosario!");
+         await DatabaseService()
+              .addFranjas(context, prov.currentProfile.franjas, 10);
+          await DatabaseService().saveGlossaryOpened(true);
+          
+        }
+      }
+    });
   }
 }

@@ -129,7 +129,6 @@ class _AvatarPageState extends State<AvatarPage> {
 
   Widget buildTabBar(
       {VoidCallback onClicked, Data prov, double sizeH, double sizeW, ProviderInfo prov2}) {
-    print(sizeW);
     return PreferredSize(
       preferredSize: Size.fromHeight(sizeH * Constants.TAB_BAR_SIZE),
       child: GestureDetector(

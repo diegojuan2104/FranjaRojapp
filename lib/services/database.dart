@@ -54,6 +54,12 @@ class DatabaseService {
     });
   }
 
+  saveGlossaryOpened(bool glossaryOpened) async {
+    await profilesCollection.doc(Auth().firebaseUser.uid).update({
+      'glossary_opened': true,
+    });
+  }
+
   Future<ProfileModel> getCurrentProfile() async {
     if (Auth().firebaseUser != null) {
       DocumentSnapshot user =
@@ -82,7 +88,6 @@ class DatabaseService {
 
     for (int i = 0; i < questionsList.length; i++) {
       //Verify if the user had answer that question
-
       if (!questions_answered_by_the_user
           .contains(questionsList[i].id.toString())) {
         String question = questionsList[i].data()["question"];
@@ -128,7 +133,6 @@ class DatabaseService {
       'questions_answered': questions_answered_by_the_user,
     });
   }
-
   //This is to add questions to firebase
   createAQuestion(QuestionModel questionModel) async {
     return await questionsCollection.doc().set({

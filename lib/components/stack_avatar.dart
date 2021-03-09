@@ -47,19 +47,25 @@ class DraggablePart extends StatelessWidget {
         },
         data: item,
         child: Container(
-          padding: EdgeInsets.only(top: item.top, left: item.left), 
-          child:
-              SizedBox(width: list_medidas[0]*item.sizew, height:list_medidas[1]*item.sizeh, child: Image.asset(item.path,fit: BoxFit.fill)),
+          padding: EdgeInsets.only(top: item.top, left: item.left),
+          child: SizedBox(
+              width: list_medidas[0] * item.sizew,
+              height: list_medidas[1] * item.sizeh,
+              child: Image.asset(item.path, fit: BoxFit.fill)),
         ),
         feedback: Container(
           padding: EdgeInsets.only(top: item.top, left: item.left),
-          child:
-              SizedBox(width: list_medidas[0]*item.sizew, height:list_medidas[1]*item.sizeh, child: Image.asset(item.path,fit: BoxFit.fill)),
+          child: SizedBox(
+              width: list_medidas[0] * item.sizew,
+              height: list_medidas[1] * item.sizeh,
+              child: Image.asset(item.path, fit: BoxFit.fill)),
         ),
         childWhenDragging: Container(
           padding: EdgeInsets.only(top: item.top, left: item.left),
-          child:
-              SizedBox(width: list_medidas[0]*item.sizew, height:list_medidas[1]*item.sizeh, child: Image.asset(item.path,fit: BoxFit.fill)),
+          child: SizedBox(
+              width: list_medidas[0] * item.sizew,
+              height: list_medidas[1] * item.sizeh,
+              child: Image.asset(item.path, fit: BoxFit.fill)),
         ),
         onDragCompleted: () {},
         onDragEnd: (drag) {
@@ -68,25 +74,31 @@ class DraggablePart extends StatelessWidget {
           double top = item.top;
           double left = item.left;
           item_data.sizeTrah = 50;
+          final double offsetXYBR = 46.0;
+          final double offsetXYTL = 30.0;
+          //print("size ${key.currentContext.size.width}");
+          item_data.sizeTrah = 0;
           item_data.setValueListTop(
-              i, getPosition(top, off_y, MediaQuery.of(context).size.height));
+              i,
+              getPosition(
+                  top, off_y, MediaQuery.of(context).size.height, offsetXYBR));
           item_data.setValueListLeft(
-              i, getPosition(left, off_x, MediaQuery.of(context).size.width));
+              i,
+              getPosition(
+                  left, off_x, MediaQuery.of(context).size.width, offsetXYTL));
+          print(item);
         },
       ),
     );
   }
 }
 
-final double offsetXYBR = 90.0;
-final double offsetXYTL = 30.0;
-double getPosition(double value, double off, length) {
-  if ((value + off) > (length - offsetXYBR)) {
-    return (length - offsetXYBR);
-  } else if ((value + off - offsetXYTL) < 0.0) {
+double getPosition(double value, double off, length, double c) {
+  if ((value + off) > (length - c)) {
+    return (length - c);
+  } else if ((value + off - c) < 0.0) {
     return 0;
   } else {
-    return value + off - offsetXYTL;
+    return value + off - c;
   }
 }
-

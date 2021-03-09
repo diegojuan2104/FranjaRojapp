@@ -49,12 +49,14 @@ class _HomeState extends State<Home> {
                       height: 20,
                     ),
                     Container(
-                      child: provD.imgAv != null ? Image.memory(
-                        provD.imgAv,
-                        width: 150,
-                        height: 150,
-                        fit: BoxFit.fill,
-                      ) : Text(""),
+                      child: provD.imgAv != null
+                          ? Image.memory(
+                              provD.imgAv,
+                              width: 150,
+                              height: 150,
+                              fit: BoxFit.fill,
+                            )
+                          : Text(""),
                     ),
                     Container(
                       padding: EdgeInsets.all(15),
@@ -90,7 +92,8 @@ class _HomeState extends State<Home> {
                               title: "Sobre Franja Roja",
                               icon: Icons.info_outline,
                               warna: Colors.red,
-                              action: null),
+                              action: () =>
+                                  {Navigator.pushNamed(context,"/test")}),
                           GridMenu(
                               title: "Cerrar Sesión",
                               icon: Icons.arrow_back,
@@ -99,7 +102,9 @@ class _HomeState extends State<Home> {
                         ],
                       ),
                     ),
-                    SizedBox( height:  20,),
+                    SizedBox(
+                      height: 20,
+                    ),
                     Text(
                       "FranjaRojApp Versión " + VERSION,
                       style: TextStyle(color: Colors.black54),
@@ -113,7 +118,7 @@ class _HomeState extends State<Home> {
   }
 
   setCurrentProfileData() {
-     DatabaseService()
+    DatabaseService()
         .getCurrentProfile()
         .then((value) => {prov.setCurrentProfile(value)});
   }
@@ -125,8 +130,9 @@ class _HomeState extends State<Home> {
       });
       await Auth().signOutUser();
       Navigator.of(context).pushReplacementNamed(
-      '/auth',
-    );      setState(() {
+        '/auth',
+      );
+      setState(() {
         _loading = false;
       });
     } catch (e) {
@@ -141,12 +147,15 @@ class _HomeState extends State<Home> {
   }
 
   void validateFirstReward() {
-    Future.delayed(Duration(milliseconds: 500), () async {
-      if (!prov.currentProfile.first_reward) {
-        DatabaseService().addFranjas(context, prov.currentProfile.franjas, 10);
-        DatabaseService().saveFirstReward(true);
-        simpleAlert(
-            context, "Felicidades", "Has ganado 10 franjas por registrarte!");
+    Future.delayed(Duration(milliseconds: 2000), () async {
+      if (prov.currentProfile != null) {
+        if (!prov.currentProfile.first_reward) {
+          DatabaseService()
+              .addFranjas(context, prov.currentProfile.franjas, 10);
+          DatabaseService().saveFirstReward(true);
+          simpleAlert(
+              context, "Felicidades", "Has ganado 10 franjas por registrarte!");
+        }
       }
     });
   }

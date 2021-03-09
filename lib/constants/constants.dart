@@ -287,8 +287,6 @@ class Constants {
   }
 
   static Map<String, List<double>> getMesureMap(double witdh, double height) {
-    print("sisa $witdh");
-    print("sisa $height");
     final dict = {
       "ojos": [witdh * 0.445, height * 0.157],
       "boca": [witdh * 0.318, height * 0.1315],
@@ -321,8 +319,6 @@ class Constants {
       List<String> lista, double sizew, double sizeh, int a) {
     List<AvatarModel> ret = [];
     bool flag = true;
-    print(lista.length);
-    print((lista.length / 2).round());
     for (int i = 0; i < lista.length; i += 2) {
       double auxW = i >= a ? sizew : 1;
       double auxH = i >= a ? sizeh : 1;
