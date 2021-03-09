@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../../constants/constants.dart';
 import '../../providers/Providerinfo.dart';
+import '../../services/database.dart';
 
 class AvatarPage extends StatefulWidget {
   AvatarPage({Key key}) : super(key: key);
@@ -60,7 +62,9 @@ class _AvatarPageState extends State<AvatarPage> {
         child: Container(
             alignment: Alignment.topLeft,
             margin: EdgeInsets.all(30),
-            height: MediaQuery.of(context).size.height - ((MediaQuery.of(context).size.height)*Constants.TAB_BAR_SIZE+110),
+            height: MediaQuery.of(context).size.height -
+                ((MediaQuery.of(context).size.height) * Constants.TAB_BAR_SIZE +
+                    110),
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
@@ -86,7 +90,7 @@ class _AvatarPageState extends State<AvatarPage> {
     List lista = prov.getListTabs(s: scrollController);
     lista.add(TabWidgetColor(scrollController: scrollController));
     return DefaultTabController(
-        length: 9,
+        length: 10,
         child: Scaffold(
             appBar: buildTabBar(
               onClicked: panelController.close,
@@ -127,6 +131,10 @@ class _AvatarPageState extends State<AvatarPage> {
                           await image.toByteData(format: ImageByteFormat.png);
                       final pngBytes = byteData.buffer.asUint8List();
                       prov.setImg = pngBytes;
+                      if (!prov2.currentProfile.avatar_created)
+                        DatabaseService().saveAvatarCreated(true);
+                      final base64String = base64Encode(pngBytes);
+                      print(prov.items);
                       Navigator.pushNamed(context, '/home');
                     }, () {});
                   }, // button pressed

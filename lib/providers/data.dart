@@ -91,7 +91,8 @@ class Data with ChangeNotifier {
       'mascotas',
       'figuras',
       'cuerpo',
-      'plantas'
+      'plantas',
+      'cabellos'
     ];
     final names = [
       "Ojos",
@@ -102,7 +103,9 @@ class Data with ChangeNotifier {
       "Figuras",
       "Partes Cuerpo",
       "Plantas",
-      "Colores"
+      "Cabello",
+      "Colores",
+
     ];
     if (s != null)
       return Constants.createListTabs(parameters, s);
@@ -119,7 +122,7 @@ class Data with ChangeNotifier {
 
   void setValueListTop(int i, double value) {
     if (i < items.length) {
-      items[i].top = value - 80 < 0 ? 0 : value;
+      items[i].top =  value;
       notifyListeners();
     }
   }

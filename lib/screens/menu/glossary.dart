@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:franja_rojapp/components/glossary_card.dart';
 import 'package:franja_rojapp/components/main_appbar.dart';
 import 'package:franja_rojapp/constants/constants.dart';
-import 'package:franja_rojapp/providers/ProviderInfo.dart';
 import 'package:franja_rojapp/services/database.dart';
 import 'package:provider/provider.dart';
+
+import '../../providers/Providerinfo.dart';
 
 class Glossary extends StatefulWidget {
   Glossary({Key key}) : super(key: key);
