@@ -76,7 +76,8 @@ class _HomeState extends State<Home> {
                               title: "Tendedero",
                               icon: Icons.flag,
                               warna: Colors.red,
-                              action: null),
+                              action:  () =>
+                                  {Navigator.pushNamed(context, "/test")}),
                           GridMenu(
                               title: "Glosario Rojo",
                               icon: Icons.book,
