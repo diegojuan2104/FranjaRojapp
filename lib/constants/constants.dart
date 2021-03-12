@@ -1,10 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:franja_rojapp/components/grid_avatar.dart';
 import 'package:franja_rojapp/models/avatar_grid_part.dart';
 import 'package:franja_rojapp/models/avatar_stack_part.dart';
 import 'package:franja_rojapp/models/questionModel.dart';
-import 'package:franja_rojapp/services/auth.dart';
 import 'dart:math';
 
 import 'package:franja_rojapp/services/database.dart';
@@ -117,6 +115,12 @@ _createQuestion() async {
     ),
     QuestionModel(
         openQuestion: true, question: "¿Cúal es tu edad?", intInputType: true),
+
+    QuestionModel(
+      answers: sino,
+      question:
+          "¿Consideras que la Universidad es un espacio libre de violencias?",
+    ),
     QuestionModel(
       answers: ["Administrativo", "Docente", "Estudiante", "Egresado", "Otro"],
       question: "¿A qué estamento de la comunidad universitaria perteneces?",
@@ -258,9 +262,13 @@ _createQuestion() async {
     ),
   ];
 
-  questions.forEach((element) async {
-    await DatabaseService().createAQuestion(element);
-  });
+
+  for (var i = questions.length-1; i >= 0; i--){
+    print(questions[i].question);
+  }
+  // questions.forEach((element) async {
+  //   await DatabaseService().createAQuestion(element);
+  // });
   //DatabaseService().generateRandomQuestion();
 }
 

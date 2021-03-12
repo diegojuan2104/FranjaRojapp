@@ -46,7 +46,6 @@ class Data with ChangeNotifier {
           }
         }
         cont++;
-        print(items);
       }
     }
     notifyListeners();
