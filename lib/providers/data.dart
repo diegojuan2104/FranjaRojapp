@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:ui';
 
@@ -32,9 +33,12 @@ class Data with ChangeNotifier {
     dynamic lista = p.avatar_position;
     if (lista != null) {
       if (lista.length > 0) {
-        dynamic list = lista[0]["DataAvatar"];
-        for (var l in list) {
-          if (cont == 1) {
+        if (cont == 1) {
+          dynamic img = lista[0]["ImgUser"];
+          dynamic list = lista[0]["DataAvatar"];
+          final _byteImage = Base64Decoder().convert(img);
+          imgAv = _byteImage;
+          for (var l in list) {
             items.add(AvatarP(
               path: l['path'],
               top: l['top'],
@@ -46,7 +50,6 @@ class Data with ChangeNotifier {
           }
         }
         cont++;
-        print(items);
       }
     }
     notifyListeners();

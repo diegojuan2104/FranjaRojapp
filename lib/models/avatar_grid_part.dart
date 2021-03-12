@@ -5,9 +5,9 @@ class AvatarModel{
   final Color color;
   double sizew;
   double sizeh;
-  int numFranjas = 0;
+  int numFranjas;
   AvatarModel({
-    this.image,this.color,this.sizeh=1,this.sizew =1
+    this.image,this.color,this.sizeh=1,this.sizew =1,this.numFranjas = 8
   });
 
 }

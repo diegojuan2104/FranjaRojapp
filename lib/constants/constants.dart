@@ -315,7 +315,9 @@ class Constants {
       "plantas": fillList(getImgPaths('planta', 'plantasapp', 17), 1.0, 1.0, 0),
       "cabellos": fillList(getImgPaths('pelo', 'pelosapp', 2), 1.0, 1.0, 0),
     };
-    dict["ojos"][0].numFranjas = 10;
+    dict["ojos"][0].numFranjas = 0;
+    dict["nariz"][0].numFranjas = 0;
+    dict["boca"][0].numFranjas = 0;
     return dict;
   }
 
