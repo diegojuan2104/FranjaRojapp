@@ -75,7 +75,7 @@ class DatabaseService {
       bool first_reward = user.data()["first_reward"];
       bool avatar_created = user.data()["avatar_created"];
       List<dynamic> questions_answered = user.data()["questions_answered"];
-      List<dynamic> avatar_position = user.data()["questions_answered"];
+      List<dynamic> avatar_position = user.data()["avatar_position"];
       bool glossary_opened = user.data()["glossary_opened"];
       Timestamp timestamp = user.data()["timestamp"];
       return new ProfileModel(email, franjas, first_reward, avatar_created,

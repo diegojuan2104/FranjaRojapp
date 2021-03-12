@@ -4,13 +4,17 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:franja_rojapp/constants/constants.dart';
+import 'package:franja_rojapp/models/ProfileModel.dart';
 import 'package:franja_rojapp/models/avatar_grid_part.dart';
 import 'package:franja_rojapp/models/avatar_stack_part.dart';
+import 'package:franja_rojapp/providers/Providerinfo.dart';
+import 'package:franja_rojapp/services/database.dart';
 
 class Data with ChangeNotifier {
   bool successDrop;
   List<AvatarP> items;
   AvatarP acceptedData;
+  ProfileModel currentProfile;
   String a = '';
   double sizeW, sizeH = 0;
   int numFran = 0;
@@ -20,7 +24,33 @@ class Data with ChangeNotifier {
   Map<String, List<AvatarModel>> mapItems = {};
   List<Color> _colorList = [];
   Uint8List imgAv = null;
+  int cont = 1;
   Color _avColor = Colors.black;
+
+  set currentProf(ProfileModel p) {
+    this.currentProfile = p;
+    dynamic lista = p.avatar_position;
+    if (lista != null) {
+      if (lista.length > 0) {
+        dynamic list = lista[0]["DataAvatar"];
+        for (var l in list) {
+          if (cont == 1) {
+            items.add(AvatarP(
+              path: l['path'],
+              top: l['top'],
+              left: l['left'],
+              type: l['type'],
+              sizew: l['sizew'],
+              sizeh: l['sizeh'],
+            ));
+          }
+        }
+        cont++;
+        print(items);
+      }
+    }
+    notifyListeners();
+  }
 
   Map sizeAvatar() {
     return this.mapMesuares = Constants.getMesureMap(this.sizeW, this.sizeH);
@@ -60,7 +90,7 @@ class Data with ChangeNotifier {
 
   void addElementList(AvatarP item) {
     bool exist = false;
-    if(validateTypeExist(item)){
+    if (validateTypeExist(item)) {
       return;
     }
     items.add(item);
@@ -105,7 +135,6 @@ class Data with ChangeNotifier {
       "Plantas",
       "Cabello",
       "Colores",
-
     ];
     if (s != null)
       return Constants.createListTabs(parameters, s);
@@ -122,7 +151,7 @@ class Data with ChangeNotifier {
 
   void setValueListTop(int i, double value) {
     if (i < items.length) {
-      items[i].top =  value;
+      items[i].top = value;
       notifyListeners();
     }
   }

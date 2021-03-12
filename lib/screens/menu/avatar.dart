@@ -134,7 +134,10 @@ class _AvatarPageState extends State<AvatarPage> {
                       if (!prov2.currentProfile.avatar_created)
                         DatabaseService().saveAvatarCreated(true);
                       final base64String = base64Encode(pngBytes);
-                      print(prov.items);
+                      List<dynamic> listaToSave = [];
+                      dynamic listaItems = Constants.changeUserModelToList(prov.items);
+                      listaToSave.add({"ImgUser":base64String,"DataAvatar":listaItems});
+                      DatabaseService().saveAvatarData(listaToSave);
                       Navigator.pushNamed(context, '/home');
                     }, () {});
                   }, // button pressed

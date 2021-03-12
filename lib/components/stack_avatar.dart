@@ -63,7 +63,7 @@ class DraggablePart extends StatelessWidget {
               h * Constants.TAB_BAR_SIZE -
               100 -
               list_medidas[1] * item.sizeh;
-          final double offsetXYBR = 86.0;
+          final double offsetXYBR = 107.0;
           final double offsetXYTL = 30.0;
           item_data.sizeTrah = 0;
           item_data.setValueListTop(

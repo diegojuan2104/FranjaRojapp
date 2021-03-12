@@ -25,6 +25,7 @@ class _HomeState extends State<Home> {
   int franjas = 0;
   bool firstReward;
   bool avatarIsCreated;
+  Data prov2;
 
   @override
   void initState() {
@@ -35,6 +36,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     prov = Provider.of<ProviderInfo>(context);
     final provD = Provider.of<Data>(context);
+    prov2 = Provider.of<Data>(context);
 
     setCurrentProfileData();
     validateFirstReward();
@@ -76,7 +78,7 @@ class _HomeState extends State<Home> {
                               title: "Tendedero",
                               icon: Icons.flag,
                               warna: Colors.red,
-                              action:  () =>
+                              action: () =>
                                   {Navigator.pushNamed(context, "/test")}),
                           GridMenu(
                               title: "Glosario Rojo",
@@ -95,7 +97,7 @@ class _HomeState extends State<Home> {
                               icon: Icons.info_outline,
                               warna: Colors.red,
                               action: () =>
-                                  {Navigator.pushNamed(context,"/about")}),
+                                  {Navigator.pushNamed(context, "/about")}),
                           GridMenu(
                               title: "Cerrar Sesión",
                               icon: Icons.arrow_back,
@@ -120,9 +122,9 @@ class _HomeState extends State<Home> {
   }
 
   setCurrentProfileData() {
-    DatabaseService()
-        .getCurrentProfile()
-        .then((value) => {prov.setCurrentProfile(value)});
+    DatabaseService().getCurrentProfile().then(
+        (value) => {
+          prov.setCurrentProfile(value), prov2.currentProf = value});
   }
 
   _signOut() async {

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:franja_rojapp/components/grid_avatar.dart';
 import 'package:franja_rojapp/models/avatar_grid_part.dart';
+import 'package:franja_rojapp/models/avatar_stack_part.dart';
 import 'package:franja_rojapp/models/questionModel.dart';
 import 'package:franja_rojapp/services/auth.dart';
 import 'dart:math';
@@ -296,7 +297,7 @@ class Constants {
       "figuras": [witdh * 0.254, height * 0.1315],
       "plantas": [witdh * 0.254, height * 0.1315],
       "cuerpo": [witdh * 0.254, height * 0.1315],
-      "cabellos":[witdh * 0.636, 0.184 * height],
+      "cabellos": [witdh * 0.636, 0.184 * height],
     };
     return dict;
   }
@@ -305,13 +306,14 @@ class Constants {
     final dict = {
       "ojos": fillList(getImgPaths('ojos', 'ojosapp', 42), 1.0, 1.0, 0),
       "boca": fillList(getImgPaths('boca', 'bocasapp', 31), 1.0, 1.0, 0),
-      "nariz": fillList(getImgPaths('nariz', 'naricesapp', 28),3,2.3,13),
-      "orejas": fillList(getImgPaths('oreja', 'orejasapp', 15),1.0,1.0,0),
-      "mascotas": fillList(getImgPaths('pet', 'petsapp', 20),1.0,1.0,0),
-      "figuras": fillList(getImgPaths('fig', 'figapp', 6),1.0,1.0,0),
-      "cuerpo": fillList(getImgPaths('bodypart', 'partescuerpoapp', 12),1.0,1.0,0),
-      "plantas": fillList(getImgPaths('planta', 'plantasapp', 17),1.0,1.0,0),
-      "cabellos": fillList(getImgPaths('pelo', 'pelosapp', 2),1.0,1.0,0),
+      "nariz": fillList(getImgPaths('nariz', 'naricesapp', 28), 3, 2.3, 13),
+      "orejas": fillList(getImgPaths('oreja', 'orejasapp', 15), 1.0, 1.0, 0),
+      "mascotas": fillList(getImgPaths('pet', 'petsapp', 20), 1.0, 1.0, 0),
+      "figuras": fillList(getImgPaths('fig', 'figapp', 6), 1.0, 1.0, 0),
+      "cuerpo":
+          fillList(getImgPaths('bodypart', 'partescuerpoapp', 12), 1.0, 1.0, 0),
+      "plantas": fillList(getImgPaths('planta', 'plantasapp', 17), 1.0, 1.0, 0),
+      "cabellos": fillList(getImgPaths('pelo', 'pelosapp', 2), 1.0, 1.0, 0),
     };
     dict["ojos"][0].numFranjas = 10;
     return dict;
@@ -325,13 +327,14 @@ class Constants {
       double auxW = i >= a ? sizew : 1;
       double auxH = i >= a ? sizeh : 1;
       if (flag) {
-        ret.add(createAv(lista[i], Colors.red[50],auxH,auxH));
-        if (i + 1 < lista.length) ret.add(createAv(lista[i + 1], Colors.white,auxH,auxH));
+        ret.add(createAv(lista[i], Colors.red[50], auxH, auxH));
+        if (i + 1 < lista.length)
+          ret.add(createAv(lista[i + 1], Colors.white, auxH, auxH));
         flag = false;
       } else {
-        ret.add(createAv(lista[i], Colors.white,auxH,auxH));
+        ret.add(createAv(lista[i], Colors.white, auxH, auxH));
         if (i + 1 < lista.length)
-          ret.add(createAv(lista[i + 1], Colors.red[50],auxH,auxH));
+          ret.add(createAv(lista[i + 1], Colors.red[50], auxH, auxH));
         flag = true;
       }
     }
@@ -427,5 +430,21 @@ class Constants {
                 ),
               ],
             ));
+  }
+
+  static List<dynamic> changeUserModelToList(List<AvatarP> l) {
+    List<dynamic> lista = [];
+    for (var item in l) {
+      dynamic dict = {
+        "path": item.path,
+        "top": item.top,
+        "left": item.left,
+        "type": item.type,
+        "sizew": item.sizew,
+        "sizeh": item.sizeh
+      };
+      lista.add(dict);
+    }
+    return lista;
   }
 }
