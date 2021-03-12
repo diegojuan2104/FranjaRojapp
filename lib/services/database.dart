@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:franja_rojapp/constants/constants.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:franja_rojapp/models/questionModel.dart';
 import 'package:franja_rojapp/models/ProfileModel.dart';
 
@@ -60,6 +60,12 @@ class DatabaseService {
     });
   }
 
+  saveAvatarData(List avatar_position) async {
+    await profilesCollection.doc(Auth().firebaseUser.uid).update({
+      'avatar_position': avatar_position,
+    });
+  }
+
   Future<ProfileModel> getCurrentProfile() async {
     if (Auth().firebaseUser != null) {
       DocumentSnapshot user =
@@ -76,7 +82,7 @@ class DatabaseService {
           questions_answered, avatar_position, glossary_opened, timestamp);
     }
   }
-
+  
   //This is to generate a question not answered by a user
   Future<QuestionModel> getQuestionData() async {
     List questions_answered_by_the_user;
@@ -84,7 +90,7 @@ class DatabaseService {
         (value) => {questions_answered_by_the_user = value.questionsAnswered});
     QuerySnapshot snap = await questionsCollection.get();
 
-    List<QueryDocumentSnapshot> questionsList = shuffle(snap.docs);
+    List<QueryDocumentSnapshot> questionsList = snap.docs;
 
     for (int i = 0; i < questionsList.length; i++) {
       //Verify if the user had answer that question
@@ -111,19 +117,34 @@ class DatabaseService {
     return noQuestions;
   }
 
+
   //This update and answer: mainly to change the counter and add the user to users_who_responded
   createAnswerRegister(String answer, String questionId, String questionText,
       List questions_answered_by_the_user) async {
-    stamp = Timestamp.now();
-    await questionLogsCollection.doc().set({
-      'quesitonId': questionId,
-      'answer': answer,
-      'timestamp': stamp,
+    Timestamp time = Timestamp.now();
+    var datetime =DateTime.fromMicrosecondsSinceEpoch(time.microsecondsSinceEpoch);
+    await FirebaseDatabase.instance
+        .reference()
+        .child("Registro_de_Preguntas")
+        .push()
+        .child("pregunta")
+        .set({
+      'respuesta': answer,
+      'fecha': datetime.toString(),
       'userId': Auth().firebaseUser.uid,
-      'question': questionText
+      'pregunta': questionText
     });
-    await updateQuestionsAnsweredByUser(
-        questionId, questions_answered_by_the_user);
+
+    //   await questionLogsCollection.doc().set({
+    //     'quesitonId': questionId,
+    //     'answer': answer,
+    //     'timestamp': stamp,
+    //     'userId': Auth().firebaseUser.uid,
+    //     'question': questionText
+    //   });
+      await updateQuestionsAnsweredByUser(
+          questionId, questions_answered_by_the_user);
+    
   }
 
   updateQuestionsAnsweredByUser(
@@ -133,6 +154,7 @@ class DatabaseService {
       'questions_answered': questions_answered_by_the_user,
     });
   }
+
   //This is to add questions to firebase
   createAQuestion(QuestionModel questionModel) async {
     return await questionsCollection.doc().set({
