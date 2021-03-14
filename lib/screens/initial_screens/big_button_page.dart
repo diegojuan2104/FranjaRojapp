@@ -51,16 +51,27 @@ class _BigButtonPageState extends State<BigButtonPage>
                         ),
                       ),
                     )),
-                Center(
-                  child: GestureDetector(
-                    onTapDown: _onTapDown,
-                    onTapUp: _onTapUp,
-                    child: Transform.scale(
-                      scale: _scale,
-                      child: _animatedbuttonUi,
+                Container(
+                    child: Column(children: <Widget>[
+                  Center(
+                    child: GestureDetector(
+                      onTapDown: _onTapDown,
+                      onTapUp: _onTapUp,
+                      child: Transform.scale(
+                        scale: _scale,
+                        child: _animatedbuttonUi,
+                      ),
                     ),
                   ),
-                ),
+                  SizedBox(height: 20,),
+                  Text(
+                    "Presiona el botón para continuar >>",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontStyle: FontStyle.italic
+                    ),
+                  ),
+                ])),
                 Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: RichText(
@@ -82,8 +93,8 @@ class _BigButtonPageState extends State<BigButtonPage>
   }
 
   Widget get _animatedbuttonUi => Container(
-      height: 220,
-      width: 220,
+      height: 230,
+      width: 230,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border:
@@ -103,16 +114,19 @@ class _BigButtonPageState extends State<BigButtonPage>
           end: Alignment.bottomRight,
         ),
       ),
-      child: Center(
-        child: RichText(
-          textAlign: TextAlign.center,
-          text: TextSpan(
-            text: 'Acompañanos a construir una UdeM que ya no calle',
-            style: TextStyle(
-                fontSize: 20,
-                fontFamily: 'BigShouldersDisplay',
-                color: Colors.black,
-                fontWeight: FontWeight.bold),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+          child: RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
+              text: 'Acompañanos a construir una UdeM que ya no calle',
+              style: TextStyle(
+                  fontSize: 20,
+                  fontFamily: 'BigShouldersDisplay',
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold),
+            ),
           ),
         ),
       ));

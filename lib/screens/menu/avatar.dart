@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -138,7 +137,7 @@ class _AvatarPageState extends State<AvatarPage> {
                       dynamic listaItems = Constants.changeUserModelToList(prov.items);
                       listaToSave.add({"ImgUser":base64String,"DataAvatar":listaItems});
                       DatabaseService().saveAvatarData(listaToSave);
-                      Navigator.pushNamed(context, '/home');
+                      Navigator.pushReplacementNamed(context, '/home');
                     }, () {});
                   }, // button pressed
                   child: Row(

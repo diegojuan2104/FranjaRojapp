@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:franja_rojapp/models/questionModel.dart';
 import 'package:franja_rojapp/models/ProfileModel.dart';
-
+import 'package:franja_rojapp/models/QuestionModel.dart';
 import 'package:franja_rojapp/services/auth.dart';
 
 class DatabaseService {
@@ -43,24 +42,28 @@ class DatabaseService {
   }
 
   saveFirstReward(bool firstReward) async {
+    if (Auth().firebaseUser == null) return;
     await profilesCollection.doc(Auth().firebaseUser.uid).update({
       'first_reward': firstReward,
     });
   }
 
   saveAvatarCreated(bool avatarCreated) async {
+    if (Auth().firebaseUser == null) return;
     await profilesCollection.doc(Auth().firebaseUser.uid).update({
       'avatar_created': true,
     });
   }
 
   saveGlossaryOpened(bool glossaryOpened) async {
+    if (Auth().firebaseUser == null) return;
     await profilesCollection.doc(Auth().firebaseUser.uid).update({
       'glossary_opened': true,
     });
   }
 
   saveAvatarData(List avatar_position) async {
+    if (Auth().firebaseUser == null) return;
     await profilesCollection.doc(Auth().firebaseUser.uid).update({
       'avatar_position': avatar_position,
     });
@@ -82,13 +85,16 @@ class DatabaseService {
           questions_answered, avatar_position, glossary_opened, timestamp);
     }
   }
-  
+
   //This is to generate a question not answered by a user
   Future<QuestionModel> getQuestionData() async {
+    final noQuestions = new QuestionModel(
+        question: "noquestions", answers: [], questionId: null);
+    if (Auth().firebaseUser == null) return noQuestions;
     List questions_answered_by_the_user;
     await DatabaseService().getCurrentProfile().then(
         (value) => {questions_answered_by_the_user = value.questionsAnswered});
-    QuerySnapshot snap = await questionsCollection.get();
+    QuerySnapshot snap = await questionsCollection.orderBy("index").get();
 
     List<QueryDocumentSnapshot> questionsList = snap.docs;
 
@@ -112,17 +118,17 @@ class DatabaseService {
         return new_question;
       }
     }
-    final noQuestions = new QuestionModel(
-        question: "noquestions", answers: [], questionId: null);
+
     return noQuestions;
   }
-
 
   //This update and answer: mainly to change the counter and add the user to users_who_responded
   createAnswerRegister(String answer, String questionId, String questionText,
       List questions_answered_by_the_user) async {
+    if (Auth().firebaseUser == null) return;
     Timestamp time = Timestamp.now();
-    var datetime =DateTime.fromMicrosecondsSinceEpoch(time.microsecondsSinceEpoch);
+    var datetime =
+        DateTime.fromMicrosecondsSinceEpoch(time.microsecondsSinceEpoch);
     await FirebaseDatabase.instance
         .reference()
         .child("Registro_de_Preguntas")
@@ -142,13 +148,13 @@ class DatabaseService {
     //     'userId': Auth().firebaseUser.uid,
     //     'question': questionText
     //   });
-      await updateQuestionsAnsweredByUser(
-          questionId, questions_answered_by_the_user);
-    
+    await updateQuestionsAnsweredByUser(
+        questionId, questions_answered_by_the_user);
   }
 
   updateQuestionsAnsweredByUser(
       String questionId, List questions_answered_by_the_user) async {
+    if (Auth().firebaseUser == null) return;
     questions_answered_by_the_user.add(questionId);
     await profilesCollection.doc(Auth().firebaseUser.uid).update({
       'questions_answered': questions_answered_by_the_user,
@@ -157,14 +163,15 @@ class DatabaseService {
 
   //This is to add questions to firebase
   createAQuestion(QuestionModel questionModel) async {
-    return await questionsCollection.doc().set({
+    await questionsCollection.doc().set({
       'question': questionModel.question,
       'answers': questionModel.answers,
       'openQuestion': questionModel.openQuestion == null
           ? false
           : questionModel.openQuestion,
-      'franjas': questionModel.franjas == null ? 5 : questionModel.franjas,
+      'franjas': questionModel.franjas == null ? 2 : questionModel.franjas,
       'intInputType': questionModel.intInputType == null ? false : true,
+      'index': questionModel.index
     });
   }
 }

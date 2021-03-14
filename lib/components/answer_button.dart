@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:franja_rojapp/constants/constants.dart';
 import 'package:franja_rojapp/models/questionModel.dart';
 
 import '../providers/Providerinfo.dart';

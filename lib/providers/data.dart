@@ -8,8 +8,6 @@ import 'package:franja_rojapp/constants/constants.dart';
 import 'package:franja_rojapp/models/ProfileModel.dart';
 import 'package:franja_rojapp/models/avatar_grid_part.dart';
 import 'package:franja_rojapp/models/avatar_stack_part.dart';
-import 'package:franja_rojapp/providers/Providerinfo.dart';
-import 'package:franja_rojapp/services/database.dart';
 
 class Data with ChangeNotifier {
   bool successDrop;
@@ -50,7 +48,7 @@ class Data with ChangeNotifier {
           }
         }
         cont++;
-      }
+    }
     }
     notifyListeners();
   }

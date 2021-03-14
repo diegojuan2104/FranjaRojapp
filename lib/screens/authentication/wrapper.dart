@@ -11,11 +11,9 @@ class Wrapper extends StatefulWidget {
 
   @override
   _WrapperState createState() => _WrapperState();
-  
 }
 
 class _WrapperState extends State<Wrapper> {
-
   final MaterialColor kPrimaryColor = const MaterialColor(
     0xFFfC2c2C,
     const <int, Color>{
@@ -33,9 +31,12 @@ class _WrapperState extends State<Wrapper> {
   );
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserModel>(context);
     User firebaseUser = Auth().returnCurrentUser();
-    //Return home or authenticate widget 
-    return firebaseUser == null ? Login() : Home();
+    //Return home or authenticate widget
+    if (firebaseUser != null) {
+      return Auth().emailIsVerified() ? Login() : Home();
+    }else{
+      return Login();
+    }
   }
 }

@@ -6,7 +6,6 @@ import 'package:franja_rojapp/constants/constants.dart';
 import 'package:franja_rojapp/providers/Providerinfo.dart';
 import 'package:franja_rojapp/services/database.dart';
 import 'package:provider/provider.dart';
-
 import '../../providers/Providerinfo.dart';
 
 class Glossary extends StatefulWidget {
@@ -108,7 +107,9 @@ class _GlossaryState extends State<Glossary> {
       if (prov.currentProfile != null) {
         if (!prov.currentProfile.glossary_opened) {
           simpleAlert(
-              context, "Felicidades", "Has ganado 10 franjas por darle un vistazo al glosario!");
+              context, "Te damos la bienvenida al glosario rojo", "Es una introducción al reconocimiento de las violencias basadas en género en el contexto de la Universidad de Medellín. Acá encontrarás 5 términos bases: sexo, género, identidad de género, perspectiva de género y violencia de género, cada una de ellos acompañado de un ejemplo.");
+          simpleAlert(
+              context, "Felicidades", "Has ganado 10 franjitas por darle un vistazo al glosario!");
          await DatabaseService()
               .addFranjas(context, prov.currentProfile.franjas, 10);
           await DatabaseService().saveGlossaryOpened(true);
