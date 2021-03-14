@@ -100,8 +100,8 @@ class Data with ChangeNotifier {
     notifyListeners();
   }
 
-  bool validateFranjas(AvatarModel item) {
-    return numFran >= item.numFranjas;
+  bool validateFranjas(AvatarModel item,int franjas) {
+    return franjas >= item.numFranjas;
   }
 
   void deleteFromList(AvatarP item) {

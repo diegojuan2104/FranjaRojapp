@@ -4,7 +4,9 @@ import 'package:flutter/widgets.dart';
 import 'package:franja_rojapp/constants/constants.dart';
 import 'package:franja_rojapp/models/avatar_grid_part.dart';
 import 'package:franja_rojapp/models/avatar_stack_part.dart';
+import 'package:franja_rojapp/providers/Providerinfo.dart';
 import 'package:franja_rojapp/providers/data.dart';
+import 'package:franja_rojapp/services/database.dart';
 import 'package:provider/provider.dart';
 
 class TabWidget extends StatelessWidget {
@@ -16,11 +18,12 @@ class TabWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final prov = Provider.of<Data>(context);
-    return buildColumn(prov, parameter, scrollController);
+    final prov2 = Provider.of<ProviderInfo>(context);
+    return buildColumn(prov,prov2, parameter, scrollController);
   }
 }
 
-Column buildColumn(Data prov, String parameter, scrol) {
+Column buildColumn(Data prov,ProviderInfo prov2, String parameter, scrol) {
   final list = prov.mapItems[parameter];
   return Column(
     children: [
@@ -38,34 +41,43 @@ Column buildColumn(Data prov, String parameter, scrol) {
             itemBuilder: (context, index) => AvatarCard(
               avatar: list[index],
               press: () {
-                final canI = prov.validateFranjas(list[index]);
-                if (canI) {
-                  final av = AvatarP(
-                      path: list[index].image,
-                      type: parameter,
-                      sizeh: list[index].sizeh,
-                      sizew: list[index].sizew);
-                  final exist = prov.validateTypeExist(av);
-                  if (!exist) {
+                final numF = prov2.currentProfile.franjas;
+                final canI = prov.validateFranjas(list[index],numF);
+                final av = AvatarP(
+                    path: list[index].image,
+                    type: parameter,
+                    sizeh: list[index].sizeh,
+                    sizew: list[index].sizew);
+                final exist = prov.validateTypeExist(av);
+                bool wantIt = false;
+                if (!exist) {
+                  if (canI) {
                     Constants.Dialog(context, "¡Atención!",
-                        "¿está seguro en comprar este item?, recuerde que no tendrá devoluciones",
+                        "¿Está seguro en comprar este item?, recuerde que no tendrá devoluciones",
                         () {
                       prov.addElementList(av);
+                      DatabaseService().addFranjas(context, numF, -list[index].numFranjas);
+                      Constants.Dialog(
+                          context,
+                          'Mensaje',
+                          'Item exitosamente comprado, ahora puedes moverlo como quieras',
+                          () {},
+                          () {});
                     }, () {});
                   } else {
-                    Constants.Dialog(
-                        context,
-                        " Mensaje ",
-                        "Ya tienes un elmento de este tipo, por favor eliminalo y podrás escoger uno nuevo",
-                        () {},
-                        () {});
+                    Constants.Dialog(context, 'Mensaje',
+                        'No tiene las franjas necesarias para comprar este ixtem',
+                        () {
+                      Navigator.pushNamed(context, "/question");
+                    }, () {});
                   }
                 } else {
-                  Constants.Dialog(context, 'Mensaje',
-                      'No tiene las franjas necesarias para comprar este ixtem',
-                      () {
-                    Navigator.pushNamed(context, "/question");
-                  }, () {});
+                  Constants.Dialog(
+                      context,
+                      " Mensaje ",
+                      "Ya tienes un elmento de este tipo, por favor eliminalo y podrás escoger uno nuevo",
+                      () {},
+                      () {});
                 }
               },
               width: prov.sizeW,

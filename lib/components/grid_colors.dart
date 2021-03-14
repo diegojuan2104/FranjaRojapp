@@ -4,11 +4,12 @@ import 'package:franja_rojapp/providers/data.dart';
 import 'package:provider/provider.dart';
 
 class TabWidgetColor extends StatelessWidget {
-  const TabWidgetColor({Key key, @required this.scrollController}) : super(key: key);
+  const TabWidgetColor({Key key, @required this.scrollController})
+      : super(key: key);
   final ScrollController scrollController;
   @override
   Widget build(BuildContext context) {
-   final prov = Provider.of<Data>(context);
+    final prov = Provider.of<Data>(context);
     return buildColumn(prov);
   }
 }
@@ -42,7 +43,7 @@ Column buildColumn(Data prov) {
 class ColorWidget extends StatelessWidget {
   final Function press;
   final Color color;
-  const ColorWidget({Key key, @required this.press,@required this.color})
+  const ColorWidget({Key key, @required this.press, @required this.color})
       : super(key: key);
 
   @override
@@ -52,15 +53,17 @@ class ColorWidget extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: press,
-          child: SizedBox(
-            height: 160,
+          child: SingleChildScrollView(
+            child: SizedBox(
+              height: 160,
               width: 165,
-            child: Container(
-              //height: 180,
-              //width: 150,
-              padding: EdgeInsets.all(30),
-              decoration: BoxDecoration(
-                  color: this.color, borderRadius: BorderRadius.circular(16)),
+              child: Container(
+                //height: 180,
+                //width: 150,
+                padding: EdgeInsets.all(30),
+                decoration: BoxDecoration(
+                    color: this.color, borderRadius: BorderRadius.circular(16)),
+              ),
             ),
           ),
         ),
