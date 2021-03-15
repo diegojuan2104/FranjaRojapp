@@ -10,6 +10,8 @@ import 'package:franja_rojapp/screens/menu/home.dart';
 import 'package:franja_rojapp/screens/initial_screens/big_button_page.dart';
 import 'package:franja_rojapp/screens/authentication/login.dart';
 import 'package:franja_rojapp/screens/menu/question.dart';
+import 'package:franja_rojapp/screens/menu/tendedero/cartographic_exercise.dart';
+import 'package:franja_rojapp/screens/menu/tendedero/place_description.dart';
 import 'package:franja_rojapp/services/auth.dart';
 import 'package:franja_rojapp/screens/initial_screens/splash_screen.dart';
 import 'package:flutter/services.dart';
@@ -58,7 +60,6 @@ class MyApp extends StatelessWidget {
           create: (context) => context.read<Auth>().authStateChanges,
         ),
         ChangeNotifierProvider<Data>(create: (context) => Data()),
-
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -96,6 +97,10 @@ class MyApp extends StatelessWidget {
                   return Glossary();
                 case "/about":
                   return AboutFranjaRoja();
+                case "/tendedero":
+                  return CartographicExercise();
+                case "/place_description":
+                  return PlaceDescription();
               }
             });
           }),

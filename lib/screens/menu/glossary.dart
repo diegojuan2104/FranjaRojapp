@@ -15,27 +15,25 @@ class Glossary extends StatefulWidget {
   _GlossaryState createState() => _GlossaryState();
 }
 
-
-
 class _GlossaryState extends State<Glossary> {
-  
-
   ProviderInfo prov;
   @override
-  void dispose(){
+  void dispose() {
     super.dispose();
   }
 
   @override
-  void initState() { 
+  void initState() {
     super.initState();
     validateGlossaryOpened();
   }
 
   int total = 5;
+  int _currentPage;
+  List cardsViewed = [];
   @override
   Widget build(BuildContext context) {
-   prov = Provider.of<ProviderInfo>(context);
+    prov = Provider.of<ProviderInfo>(context);
     MediaQueryData queryData = MediaQuery.of(context);
     return Scaffold(
       appBar: MainAppBar(),
@@ -65,7 +63,7 @@ class _GlossaryState extends State<Glossary> {
                   total: total,
                 ),
                 GlosaryCard(
-                  title: "IDenTidad de Ge'nero",
+                  title: "Identidad de Ge'nero",
                   content:
                       "La identidad designa aquello que es propio de un individuo o grupo y singulariza. Las expresiones de la identidad varían en función de las referencias culturales, profesionales, religiosas, geográficas y lingüísticas, entre otras. A pesar de su vaguedad semántica, el concepto de identidad permite esclarecer las relaciones entre el individuo y su entorno",
                   index: 3,
@@ -88,12 +86,24 @@ class _GlossaryState extends State<Glossary> {
               ],
               //Slider Container properties
               options: CarouselOptions(
+                initialPage: 0,
+                onPageChanged: (index, reason) {
+                  setState(() {
+                    _currentPage = index;
+                  });
+                  if (!cardsViewed.contains(index)) {
+                    cardsViewed.add(index);
+                    if (cardsViewed.length == total) {
+                      validateGlossaryReward();
+                    }
+                  }
+                },
                 height: queryData.size.height * 0.95,
                 enlargeCenterPage: true,
                 aspectRatio: 16 / 9,
                 autoPlayCurve: Curves.fastOutSlowIn,
                 enableInfiniteScroll: true,
-                viewportFraction: 0.95,
+                viewportFraction: 1,
               ),
             ),
           ],
@@ -102,20 +112,73 @@ class _GlossaryState extends State<Glossary> {
     );
   }
 
-    void validateGlossaryOpened() {
+  void validateGlossaryOpened() {
     Future.delayed(Duration(milliseconds: 500), () async {
       if (prov.currentProfile != null) {
         if (!prov.currentProfile.glossary_opened) {
-          simpleAlert(
-              context, "Te damos la bienvenida al glosario rojo", "Es una introducción al reconocimiento de las violencias basadas en género en el contexto de la Universidad de Medellín. Acá encontrarás 5 términos bases: sexo, género, identidad de género, perspectiva de género y violencia de género, cada una de ellos acompañado de un ejemplo.");
-          simpleAlert(
-              context, "Felicidades", "Has ganado 10 franjitas por darle un vistazo al glosario!");
-         await DatabaseService()
-              .addFranjas(context, prov.currentProfile.franjas, 10);
-          await DatabaseService().saveGlossaryOpened(true);
-          
+          showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (context) => AlertDialog(
+                    title: Text("Te damos la bienvenida al glosario rojo"),
+                    content: SingleChildScrollView(
+                        child: Container(
+                            child: Column(children: <Widget>[
+                      RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          text:
+                              'Es una introducción al reconocimiento de las violencias basadas en género. Acá encontrarás 5 términos bases: sexo, género, identidad de género, perspectiva de género y violencia de género, cada una de ellos acompañado de un ejemplo. \n \nPuedes desplazarte por el glosario con este gesto:',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      Image.asset(
+                        "assets/images/slidegesture.gif",
+                        height: 125.0,
+                        width: 200,
+                      ),
+                    ]))),
+                    actions: [
+                      FlatButton(
+                        child: Text("Aceptar"),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  ));
         }
       }
     });
+  }
+
+  void validateGlossaryReward() async {
+    if (prov.currentProfile.glossary_opened) return;
+
+    await DatabaseService()
+        .addFranjas(context, prov.currentProfile.franjas, 10);
+
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Text("Felicidades!"),
+              content: SingleChildScrollView(
+                  child: Container(
+                      child: Text(
+                          "Has ganado 10 franjitas por haber observado todo el glosario, Continuemos expolorando FranjaRojApp"))),
+              actions: [
+                FlatButton(
+                  child: Text("Aceptar"),
+                  onPressed: () async {
+                    await DatabaseService().saveGlossaryOpened(true);
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            ));
   }
 }

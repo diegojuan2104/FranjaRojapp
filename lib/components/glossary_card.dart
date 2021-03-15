@@ -30,6 +30,9 @@ class GlosaryCard extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              SizedBox(
+                height: 20,
+              ),
               Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: RichText(
@@ -94,11 +97,19 @@ class GlosaryCard extends StatelessWidget {
                       ),
                     ),
                   )),
-              Text(
-                "Puedes deslizar >>",
-                style: TextStyle(
-                  color: Colors.grey,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    "Puedes deslizar >>",
+                    style: TextStyle(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  )
+                ],
               ),
               SizedBox(
                 height: 20,

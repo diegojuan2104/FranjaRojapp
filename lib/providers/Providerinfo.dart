@@ -5,6 +5,7 @@ class ProviderInfo with ChangeNotifier{
   
   ProfileModel currentProfile;
   int selectedAnswer;
+  String placeSelected;
 
   void setCurrentProfile(ProfileModel currentProfile){
     this.currentProfile = currentProfile;
@@ -13,6 +14,10 @@ class ProviderInfo with ChangeNotifier{
 
   void setSelectedAnswer(int selectedAnswer){
     this.selectedAnswer = selectedAnswer;
+  }
+
+  void setSelectedPlace(String placeSelected){
+    this.placeSelected = placeSelected;
   }
 
 }

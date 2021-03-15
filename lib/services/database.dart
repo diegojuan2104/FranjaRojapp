@@ -30,7 +30,8 @@ class DatabaseService {
       'questions_answered': [],
       'timestamp': stamp,
       'avatar_position': [],
-      'glossary_opened': false
+      'glossary_opened': false,
+      'is_new_user': true
     });
   }
 
@@ -69,6 +70,14 @@ class DatabaseService {
     });
   }
 
+
+  saveIsNewUser(bool isNewUser) async {
+    if (Auth().firebaseUser == null) return;
+    await profilesCollection.doc(Auth().firebaseUser.uid).update({
+      'is_new_user': isNewUser,
+    });
+  }
+
   Future<ProfileModel> getCurrentProfile() async {
     if (Auth().firebaseUser != null) {
       DocumentSnapshot user =
@@ -81,8 +90,9 @@ class DatabaseService {
       List<dynamic> avatar_position = user.data()["avatar_position"];
       bool glossary_opened = user.data()["glossary_opened"];
       Timestamp timestamp = user.data()["timestamp"];
+      bool isNewUser = user.data()["is_new_user"];
       return new ProfileModel(email, franjas, first_reward, avatar_created,
-          questions_answered, avatar_position, glossary_opened, timestamp);
+          questions_answered, avatar_position, glossary_opened, timestamp ,isNewUser);
     }
   }
 
@@ -118,7 +128,6 @@ class DatabaseService {
         return new_question;
       }
     }
-
     return noQuestions;
   }
 

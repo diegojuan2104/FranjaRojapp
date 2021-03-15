@@ -341,7 +341,7 @@ class _LoginState extends State<Login> {
 
   void _showHomePage() {
      Navigator.of(context).pushReplacementNamed(
-      '/home',
+      '/',
     );
   }
 

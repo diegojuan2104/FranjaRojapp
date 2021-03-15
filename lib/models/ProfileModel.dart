@@ -9,10 +9,11 @@ class ProfileModel {
   List questionsAnswered;
   List avatar_position;
   Timestamp timestamp;
+  bool isNewUser;
 
   
   ProfileModel(this.email, this.franjas, this.first_reward, this.avatar_created,
-      this.questionsAnswered, this.avatar_position, this.glossary_opened, this.timestamp);
+      this.questionsAnswered, this.avatar_position, this.glossary_opened, this.timestamp, this.isNewUser);
 
   void setFranjas(int franjas) {
     this.franjas = franjas;

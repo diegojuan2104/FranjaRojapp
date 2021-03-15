@@ -95,9 +95,12 @@ class Auth {
       setUserInitialState(user);
 
       return _userFromFirebaseUser(user);
-    } catch (e) {
-      print(e.toString());
-      return null;
+    } catch (signUpError) {
+      if (signUpError is PlatformException) {
+        if (signUpError.code == 'ERROR_EMAIL_ALREADY_IN_USE') {
+          print("Email ya registrado");
+        }
+      }
     }
   }
 

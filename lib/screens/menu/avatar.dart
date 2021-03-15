@@ -24,12 +24,20 @@ class AvatarPage extends StatefulWidget {
 }
 
 class _AvatarPageState extends State<AvatarPage> {
+  @override
+  void initState() {
+    validateFirstReward();
+    super.initState();
+  }
+
+  bool firstRewardValidation = false;
+  ProviderInfo prov2;
   final panelController = PanelController();
   GlobalKey imageKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     final prov = Provider.of<Data>(context);
-    final prov2 = Provider.of<ProviderInfo>(context);
+    prov2 = Provider.of<ProviderInfo>(context);
     double sizeH = MediaQuery.of(context).size.height;
     double sizeW = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -134,8 +142,10 @@ class _AvatarPageState extends State<AvatarPage> {
                         DatabaseService().saveAvatarCreated(true);
                       final base64String = base64Encode(pngBytes);
                       List<dynamic> listaToSave = [];
-                      dynamic listaItems = Constants.changeUserModelToList(prov.items);
-                      listaToSave.add({"ImgUser":base64String,"DataAvatar":listaItems});
+                      dynamic listaItems =
+                          Constants.changeUserModelToList(prov.items);
+                      listaToSave.add(
+                          {"ImgUser": base64String, "DataAvatar": listaItems});
                       DatabaseService().saveAvatarData(listaToSave);
                       Navigator.pushReplacementNamed(context, '/home');
                     }, () {});
@@ -172,5 +182,28 @@ class _AvatarPageState extends State<AvatarPage> {
         ),
       ),
     );
+  }
+
+  void validateFirstReward() {
+    try {
+      Future.delayed(Duration(milliseconds: 200), () async {
+        if (prov2.currentProfile != null) {
+          if (!prov2.currentProfile.first_reward && !firstRewardValidation) {
+            setState(() {
+              firstRewardValidation = true;
+            });
+            DatabaseService()
+                .addFranjas(context, prov2.currentProfile.franjas, 10);
+            DatabaseService().saveFirstReward(true);
+            simpleAlert(context, "Felicidades",
+                "Has ganado 10 franjitas por registrarte!");
+            simpleAlert(context, "Franjarojizate! y crea tu ávatar",
+                "Acá podrás personalizar tu silueta de la manera que desees y como te identifiques! para ello podras elegir cualquiera de los elementos del panel y comprarlos con franjitas, si no te alcanza puedes responder una pregunta, ganar más franjitas y seguir personalizando! \n Cuando creas que hayas terminado pulsa en guardar para continuar por tu recorrido en la app");
+          }
+        }
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 }

@@ -3,13 +3,12 @@ import 'package:franja_rojapp/components/grid_menu.dart';
 import 'package:franja_rojapp/components/loading.dart';
 import 'package:franja_rojapp/constants/constants.dart';
 import 'package:franja_rojapp/components/main_appbar.dart';
-import 'package:franja_rojapp/models/QuestionModel.dart';
 import 'package:franja_rojapp/providers/data.dart';
 import 'package:franja_rojapp/screens/menu/avatar.dart';
+import 'package:franja_rojapp/screens/menu/glossary.dart';
 import 'package:franja_rojapp/services/auth.dart';
 import 'package:franja_rojapp/services/database.dart';
 import 'package:provider/provider.dart';
-
 import '../../providers/Providerinfo.dart';
 
 class Home extends StatefulWidget {
@@ -30,7 +29,7 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    validateFirstReward();
+    validateNewUser();
     super.initState();
   }
 
@@ -39,86 +38,102 @@ class _HomeState extends State<Home> {
     prov = Provider.of<ProviderInfo>(context);
     final provD = Provider.of<Data>(context);
     prov2 = Provider.of<Data>(context);
-
     setCurrentProfileData();
 
     return _loading || prov.currentProfile == null
         ? Loading()
         : prov.currentProfile.avatar_created
-            ? Scaffold(
-                backgroundColor: Colors.white,
-                appBar: MainAppBar(),
-                body: SingleChildScrollView(
-                  child: Column(children: [
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      child: provD.imgAv != null
-                          ? Image.memory(
-                              provD.imgAv,
-                              width: 150,
-                              height: 150,
-                              fit: BoxFit.fill,
-                            )
-                          : Text(""),
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(15),
-                      child: GridView.count(
-                        physics: ScrollPhysics(),
-                        shrinkWrap: true,
-                        crossAxisCount: 2,
-                        children: <Widget>[
-                          GridMenu(
-                            title: "Mi avatar",
-                            icon: Icons.person,
-                            warna: Colors.red,
-                            action: _showAvatar,
+            ? (prov.currentProfile.glossary_opened
+                ? Scaffold(
+                    backgroundColor: Colors.grey[50],
+                    appBar: MainAppBar(),
+                    body: SingleChildScrollView(
+                      child: Column(children: [
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.red, // set border color
+                                width: 0.5),
+                            borderRadius: BorderRadius.all(Radius.circular(
+                                5)), // set rounded corner radius// make rounded corner of border
                           ),
-                          GridMenu(
-                              title: "Tendedero",
-                              icon: Icons.flag,
-                              warna: Colors.red,
-                              action: () => {_createQuestion()}),
-                          GridMenu(
-                              title: "Glosario Rojo",
-                              icon: Icons.book,
-                              warna: Colors.red,
-                              action: () =>
-                                  {Navigator.pushNamed(context, "/glossary")}),
-                          GridMenu(
-                              title: "Gana Franjas!",
-                              icon: Icons.line_weight,
-                              warna: Colors.red,
-                              action: () =>
-                                  {Navigator.pushNamed(context, "/question")}),
-                          GridMenu(
-                              title: "Sobre Franja Roja",
-                              icon: Icons.info_outline,
-                              warna: Colors.red,
-                              action: () =>
-                                  {Navigator.pushNamed(context, "/about")}),
-                          GridMenu(
-                              title: "Cerrar Sesión",
-                              icon: Icons.arrow_back,
-                              warna: Colors.grey,
-                              action: _signOut),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      "FranjaRojApp Versión " + VERSION,
-                      style: TextStyle(color: Colors.black54),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                  ]),
-                ))
+                          // set bo ,
+                          child: provD.imgAv != null
+                              ? Image.memory(
+                                  provD.imgAv,
+                                  width: 150,
+                                  height: 150,
+                                  fit: BoxFit.fill,
+                                )
+                              : Text(""),
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(15),
+                          child: GridView.count(
+                            physics: ScrollPhysics(),
+                            shrinkWrap: true,
+                            crossAxisCount: 2,
+                            children: <Widget>[
+                              GridMenu(
+                                title: "Mi avatar",
+                                icon: Icons.person,
+                                warna: Colors.red,
+                                action: _showAvatar,
+                              ),
+                              GridMenu(
+                                  title: "Tendedero",
+                                  icon: Icons.flag,
+                                  warna: Colors.red,
+                                  action: () => {
+                                        Navigator.pushNamed(
+                                            context, "/tendedero")
+                                      }),
+                              GridMenu(
+                                  title: "Glosario Rojo",
+                                  icon: Icons.book,
+                                  warna: Colors.red,
+                                  action: () => {
+                                        Navigator.pushNamed(
+                                            context, "/glossary")
+                                      }),
+                              GridMenu(
+                                  title: "Gana Franjas!",
+                                  icon: Icons.line_weight,
+                                  warna: Colors.red,
+                                  action: () => {
+                                        Navigator.pushNamed(
+                                            context, "/question")
+                                      }),
+                              GridMenu(
+                                  title: "Sobre Franja Roja",
+                                  icon: Icons.info_outline,
+                                  warna: Colors.red,
+                                  action: () =>
+                                      {Navigator.pushNamed(context, "/about")}),
+                              GridMenu(
+                                  title: "Cerrar Sesión",
+                                  icon: Icons.arrow_back,
+                                  warna: Colors.grey,
+                                  action: _signOut),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          "FranjaRojApp Versión " + VERSION,
+                          style: TextStyle(color: Colors.black54),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                      ]),
+                    ))
+                : Glossary())
             : AvatarPage();
   }
 
@@ -132,6 +147,38 @@ class _HomeState extends State<Home> {
   setCurrentProfileData() {
     DatabaseService().getCurrentProfile().then(
         (value) => {prov.setCurrentProfile(value), prov2.currentProf = value});
+  }
+
+  validateNewUser() {
+    Future.delayed(Duration(milliseconds: 200), () async {
+      if (prov == null) return;
+      if (prov.currentProfile == null) return;
+      if (prov.currentProfile.avatar_created == false) return;
+      if (prov.currentProfile.glossary_opened == false) return;
+      if (false) {
+        showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (context) => AlertDialog(
+                  title: Text("Te damos la bienvenida al panel"),
+                  content: SingleChildScrollView(
+                      child: Container(
+                    child: Column(
+                      children: <Widget>[],
+                    ),
+                  )),
+                  actions: [
+                    FlatButton(
+                      child: Text("Aceptar"),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                ));
+        DatabaseService().saveIsNewUser(false);
+      }
+    });
   }
 
   _signOut() async {
@@ -155,25 +202,5 @@ class _HomeState extends State<Home> {
     Navigator.of(context).pushNamed(
       '/avatar',
     );
-  }
-
-  void validateFirstReward() {
-    try {
-      Future.delayed(Duration(milliseconds: 2000), () async {
-        if (prov.currentProfile != null) {
-          if (!prov.currentProfile.first_reward) {
-            DatabaseService()
-                .addFranjas(context, prov.currentProfile.franjas, 10);
-            DatabaseService().saveFirstReward(true);
-            simpleAlert(context, "Felicidades",
-                "Has ganado 10 franjas por registrarte!");
-            simpleAlert(context, "Franjarojizate! y crea tu ávatar",
-                "Acá podrás personalizar tu silueta de la manera que desees y como te identifiques! para ello podras elegir cualquiera de los elementos del panel y comprarlos con franjitas, si no te alcanza puedes responder una pregunta, ganar más franjitas y seguir personalizando!");
-          }
-        }
-      });
-    } catch (e) {
-      print(e);
-    }
   }
 }

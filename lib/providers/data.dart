@@ -27,6 +27,7 @@ class Data with ChangeNotifier {
   Color _avColor = Colors.black;
 
   set currentProf(ProfileModel p) {
+    if (p == null) return;
     this.currentProfile = p;
     dynamic lista = p.avatar_position;
     if (lista != null) {
@@ -48,7 +49,7 @@ class Data with ChangeNotifier {
           }
         }
         cont++;
-    }
+      }
     }
     notifyListeners();
   }
@@ -98,7 +99,7 @@ class Data with ChangeNotifier {
     notifyListeners();
   }
 
-  bool validateFranjas(AvatarModel item,int franjas) {
+  bool validateFranjas(AvatarModel item, int franjas) {
     return franjas >= item.numFranjas;
   }
 
