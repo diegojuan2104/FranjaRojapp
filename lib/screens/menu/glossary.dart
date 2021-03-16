@@ -169,7 +169,7 @@ class _GlossaryState extends State<Glossary> {
               content: SingleChildScrollView(
                   child: Container(
                       child: Text(
-                          "Has ganado 10 franjitas por haber observado todo el glosario, Continuemos expolorando FranjaRojApp"))),
+                          "Has ganado 10 franjitas por haber observado todo el glosario, Continuemos explorando FranjaRojApp"))),
               actions: [
                 FlatButton(
                   child: Text("Aceptar"),

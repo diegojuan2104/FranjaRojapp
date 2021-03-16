@@ -180,6 +180,7 @@ class _AvatarPageState extends State<AvatarPage> {
           titleSpacing: sizeW * Constants.SPACING_BAR_SIZE,
           bottom: TabBar(isScrollable: true, tabs: prov.getListTabs()),
         ),
+        
       ),
     );
   }
@@ -195,10 +196,11 @@ class _AvatarPageState extends State<AvatarPage> {
             DatabaseService()
                 .addFranjas(context, prov2.currentProfile.franjas, 10);
             DatabaseService().saveFirstReward(true);
-            simpleAlert(context, "Felicidades",
-                "Has ganado 10 franjitas por registrarte!");
+
             simpleAlert(context, "Franjarojizate! y crea tu ávatar",
                 "Acá podrás personalizar tu silueta de la manera que desees y como te identifiques! para ello podras elegir cualquiera de los elementos del panel y comprarlos con franjitas, si no te alcanza puedes responder una pregunta, ganar más franjitas y seguir personalizando! \n Cuando creas que hayas terminado pulsa en guardar para continuar por tu recorrido en la app");
+            simpleAlert(context, "Felicidades",
+                "Has ganado 10 franjitas por registrarte!");
           }
         }
       });
