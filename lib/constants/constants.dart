@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:franja_rojapp/components/grid_avatar.dart';
-import 'package:franja_rojapp/models/QuestionModel.dart';
 import 'package:franja_rojapp/models/avatar_grid_part.dart';
 import 'package:franja_rojapp/models/avatar_stack_part.dart';
+import 'package:franja_rojapp/models/questionModel.dart';
 import 'dart:math';
 
 import 'package:franja_rojapp/services/database.dart';
@@ -91,7 +91,7 @@ moreQuestions(context, franjas) {
                 child: Text("No"),
                 onPressed: () {
                   Navigator.of(context).pop();
-                  Navigator.of(context).pop();
+                  Navigator.of(context).pop(true);
                 },
               ),
             ],
@@ -294,6 +294,7 @@ class Constants {
       "plantas": [witdh * 0.254, height * 0.1315],
       "cuerpo": [witdh * 0.254, height * 0.1315],
       "cabellos": [witdh * 0.636, 0.184 * height],
+      'especiales': [witdh * 0.4, height * 0.2]
     };
     return dict;
   }
@@ -310,6 +311,7 @@ class Constants {
           fillList(getImgPaths('bodypart', 'partescuerpoapp', 12), 1.0, 1.0, 0),
       "plantas": fillList(getImgPaths('planta', 'plantasapp', 17), 1.0, 1.0, 0),
       "cabellos": fillList(getImgPaths('pelo', 'pelosapp', 2), 1.0, 1.0, 0),
+      "especiales": fillList(getImgPaths('ojos', 'ojosapp', 42), 1.0, 1.0, 0),
     };
     dict["ojos"][0].numFranjas = 0;
     dict["nariz"][0].numFranjas = 0;

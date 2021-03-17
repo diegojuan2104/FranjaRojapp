@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:franja_rojapp/components/main_appbar.dart';
 import 'package:franja_rojapp/providers/Providerinfo.dart';
 import 'package:provider/provider.dart';
+import 'package:photo_view/photo_view.dart';
 
 class CartographicExercise extends StatefulWidget {
   CartographicExercise({Key key}) : super(key: key);
@@ -109,15 +110,20 @@ class _CartographicExerciseState extends State<CartographicExercise> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          fit: BoxFit.fill,
-                          image: AssetImage("assets/images/UdemMap.png"),
-                        ),
-                      ),
-                    ),
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.width,
+                        child: AspectRatio(
+                          aspectRatio: 16 / 9,
+                          child: ClipRect(
+                            child: PhotoView(
+                              imageProvider:
+                                  AssetImage("assets/images/UdemMap.png"),
+                              minScale: PhotoViewComputedScale.contained * 0.8,
+                              maxScale: PhotoViewComputedScale.covered * 5,
+                              initialScale:  PhotoViewComputedScale.covered *1,
+                            ),
+                          ),
+                        )),
                   ),
                   Padding(
                       padding: const EdgeInsets.all(10.0),

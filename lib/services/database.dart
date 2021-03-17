@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:franja_rojapp/models/ProfileModel.dart';
-import 'package:franja_rojapp/models/QuestionModel.dart';
+import 'package:franja_rojapp/models/questionModel.dart';
 import 'package:franja_rojapp/services/auth.dart';
 
 class DatabaseService {

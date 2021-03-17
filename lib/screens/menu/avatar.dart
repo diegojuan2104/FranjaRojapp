@@ -96,6 +96,7 @@ class _AvatarPageState extends State<AvatarPage> {
       ProviderInfo prov2}) {
     List lista = prov.getListTabs(s: scrollController);
     lista.add(TabWidgetColor(scrollController: scrollController));
+
     return DefaultTabController(
         length: 10,
         child: Scaffold(
@@ -115,8 +116,9 @@ class _AvatarPageState extends State<AvatarPage> {
       double sizeH,
       double sizeW,
       ProviderInfo prov2}) {
+      double sizeS = (sizeH * Constants.TAB_BAR_SIZE);
     return PreferredSize(
-      preferredSize: Size.fromHeight(sizeH * Constants.TAB_BAR_SIZE),
+      preferredSize: Size.fromHeight(sizeS+ (sizeH < 520 ? 30 : 0)) ,
       child: GestureDetector(
         onTap: onClicked,
         child: AppBar(

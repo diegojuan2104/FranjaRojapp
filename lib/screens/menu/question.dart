@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:franja_rojapp/components/answer_button.dart';
 import 'package:franja_rojapp/components/loading.dart';
 import 'package:franja_rojapp/constants/constants.dart';
+import 'package:franja_rojapp/providers/data.dart';
 
 import 'package:franja_rojapp/services/database.dart';
 import 'package:provider/provider.dart';
@@ -235,6 +236,7 @@ class _QuestionState extends State<Question> {
                   setState(() {
                     answerSelected = answer;
                   });
+                 
                   submitAnswer(context);
                 }),
           );
@@ -254,6 +256,7 @@ class _QuestionState extends State<Question> {
         }
       }
       moreQuestions(context, franjas);
+
       await DatabaseService().createAnswerRegister(
         openQuestion ? openAnswerController.text : answers[answerSelected],
         questionId,
