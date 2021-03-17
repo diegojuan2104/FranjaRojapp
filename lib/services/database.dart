@@ -31,7 +31,8 @@ class DatabaseService {
       'timestamp': stamp,
       'avatar_position': [],
       'glossary_opened': false,
-      'is_new_user': true
+      'is_new_user': true,
+      'tendedero_opened': false,
     });
   }
 
@@ -70,7 +71,6 @@ class DatabaseService {
     });
   }
 
-
   saveIsNewUser(bool isNewUser) async {
     if (Auth().firebaseUser == null) return;
     await profilesCollection.doc(Auth().firebaseUser.uid).update({
@@ -91,8 +91,18 @@ class DatabaseService {
       bool glossary_opened = user.data()["glossary_opened"];
       Timestamp timestamp = user.data()["timestamp"];
       bool isNewUser = user.data()["is_new_user"];
-      return new ProfileModel(email, franjas, first_reward, avatar_created,
-          questions_answered, avatar_position, glossary_opened, timestamp ,isNewUser);
+      bool tenderoOpened = user.data()["tendero_opened"];
+      return new ProfileModel(
+          email,
+          franjas,
+          first_reward,
+          avatar_created,
+          questions_answered,
+          avatar_position,
+          glossary_opened,
+          timestamp,
+          isNewUser,
+          tenderoOpened);
     }
   }
 
@@ -142,7 +152,6 @@ class DatabaseService {
         .reference()
         .child("Registro_de_Preguntas")
         .push()
-        .child("pregunta")
         .set({
       'respuesta': answer,
       'fecha': datetime.toString(),
@@ -159,6 +168,24 @@ class DatabaseService {
     //   });
     await updateQuestionsAnsweredByUser(
         questionId, questions_answered_by_the_user);
+  }
+
+  createTendederoRegister(String answer, String questionId, String questionText,
+      List questions_answered_by_the_user) async {
+    if (Auth().firebaseUser == null) return;
+    Timestamp time = Timestamp.now();
+    var datetime =
+        DateTime.fromMicrosecondsSinceEpoch(time.microsecondsSinceEpoch);
+    await FirebaseDatabase.instance
+        .reference()
+        .child("Registro_del_Tendedero")
+        .push()
+        .set({
+      'respuesta': answer,
+      'fecha': datetime.toString(),
+      'userId': Auth().firebaseUser.uid,
+      'pregunta': questionText
+    });
   }
 
   updateQuestionsAnsweredByUser(
