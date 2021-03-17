@@ -94,7 +94,7 @@ class _AvatarPageState extends State<AvatarPage> {
       double sizeH,
       double sizeW,
       ProviderInfo prov2}) {
-    List lista = prov.getListTabs(s: scrollController);
+    List lista = prov.getListTabs(s: scrollController,callb: panelController.close);
     lista.add(TabWidgetColor(scrollController: scrollController));
 
     return DefaultTabController(
@@ -180,7 +180,7 @@ class _AvatarPageState extends State<AvatarPage> {
           title: Icon(Icons.drag_handle),
           centerTitle: true,
           titleSpacing: sizeW * Constants.SPACING_BAR_SIZE,
-          bottom: TabBar(isScrollable: true, tabs: prov.getListTabs()),
+          bottom: TabBar(isScrollable: true, tabs: prov.getListTabs(callb: onClicked)),
         ),
         
       ),

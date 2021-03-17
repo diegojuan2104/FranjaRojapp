@@ -316,6 +316,9 @@ class Constants {
     dict["ojos"][0].numFranjas = 0;
     dict["nariz"][0].numFranjas = 0;
     dict["boca"][0].numFranjas = 0;
+    for (var item in dict["especiales"]) {
+      item.numFranjas = 0;
+    }
     return dict;
   }
 
@@ -354,13 +357,11 @@ class Constants {
     return ret;
   }
 
-  static createListTabs(List<String> parameters, ScrollController s) {
+  static createListTabs(
+      List<String> parameters, ScrollController s, Function c) {
     List<Widget> tabsW = [];
     for (int i = 0; i < parameters.length; i++) {
-      tabsW.add(TabWidget(
-        parameter: parameters[i],
-        scrollController: s,
-      ));
+      tabsW.add(TabWidget(parameter: parameters[i], scrollController: s, c: c));
     }
     return tabsW;
   }

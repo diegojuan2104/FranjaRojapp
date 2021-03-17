@@ -115,7 +115,7 @@ class Data with ChangeNotifier {
     notifyListeners();
   }
 
-  List<dynamic> getListTabs({ScrollController s}) {
+  List<dynamic> getListTabs({ScrollController s,Function callb}) {
     final parameters = [
       'ojos',
       'boca',
@@ -140,7 +140,7 @@ class Data with ChangeNotifier {
       "Colores",
     ];
     if (s != null)
-      return Constants.createListTabs(parameters, s);
+      return Constants.createListTabs(parameters, s,callb);
     else
       return Constants.createListWTabs(names);
   }

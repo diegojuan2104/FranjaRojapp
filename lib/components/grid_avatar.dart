@@ -12,19 +12,24 @@ import 'package:provider/provider.dart';
 
 class TabWidget extends StatelessWidget {
   const TabWidget(
-      {Key key, @required this.scrollController, @required this.parameter})
+      {Key key,
+      @required this.scrollController,
+      @required this.parameter,
+      @required this.c})
       : super(key: key);
   final ScrollController scrollController;
   final String parameter;
+  final Function c;
   @override
   Widget build(BuildContext context) {
     final prov = Provider.of<Data>(context);
     final prov2 = Provider.of<ProviderInfo>(context);
-    return buildColumn(prov, prov2, parameter, scrollController);
+    return buildColumn(prov, prov2, parameter, scrollController, c);
   }
 }
 
-Column buildColumn(Data prov, ProviderInfo prov2, String parameter, scrol) {
+Column buildColumn(
+    Data prov, ProviderInfo prov2, String parameter, scrol, Function c) {
   final list = prov.mapItems[parameter];
   return Column(
     children: [
@@ -59,9 +64,17 @@ Column buildColumn(Data prov, ProviderInfo prov2, String parameter, scrol) {
                       MaterialPageRoute(builder: (context) => Question()),
                     );
                     if (answered) {
-                      prov.addElementList(av);
-                      DatabaseService()
-                          .addFranjas(context, numF, -list[index].numFranjas);
+                      if (!exist) {
+                        c();
+                        prov.addElementList(av);
+                      } else {
+                        Constants.Dialog(
+                            context,
+                            " Mensaje ",
+                            "Ya tienes un elmento de este tipo, por favor eliminalo y podrás escoger uno nuevo",
+                            () {},
+                            () {});
+                      }
                     }
                   }, () {});
                 } else {
@@ -73,12 +86,11 @@ Column buildColumn(Data prov, ProviderInfo prov2, String parameter, scrol) {
                         prov.addElementList(av);
                         DatabaseService()
                             .addFranjas(context, numF, -list[index].numFranjas);
-                        Constants.Dialog(
-                            context,
-                            'Mensaje',
+                        Constants.Dialog(context, 'Mensaje',
                             'Item exitosamente comprado, ahora puedes moverlo como quieras',
-                            () {},
-                            () {});
+                            () {
+                          c();
+                        }, () {});
                       }, () {});
                     } else {
                       Constants.Dialog(context, 'Mensaje',
