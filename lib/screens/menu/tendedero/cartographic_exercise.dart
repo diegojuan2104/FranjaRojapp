@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:franja_rojapp/components/main_appbar.dart';
+import 'package:franja_rojapp/constants/constants.dart';
 import 'package:franja_rojapp/providers/Providerinfo.dart';
 import 'package:provider/provider.dart';
 
@@ -17,9 +18,14 @@ ProviderInfo prov;
 class _CartographicExerciseState extends State<CartographicExercise> {
   @override
   void initState() {
+
+    if(this.mounted){
+      validateAdvise();
+    }
     super.initState();
   }
 
+  bool advise = false;
   @override
   Widget build(BuildContext context) {
     prov = Provider.of<ProviderInfo>(context);
@@ -95,7 +101,11 @@ class _CartographicExerciseState extends State<CartographicExercise> {
                     padding: const EdgeInsets.symmetric(vertical: 5),
                     textColor: Colors.white,
                     onPressed: () {
-                      prov..setSelectedPlace(valueChoosed.toString());
+                      if (valueChoosed == null) {
+                        simpleAlert(context, "Aviso", "Selecciona un bloque");
+                        return;
+                      }
+                      prov.setSelectedPlace(valueChoosed.toString());
                       Navigator.of(context).pushNamed("/place_description");
                     },
                     child: Row(
@@ -114,10 +124,7 @@ class _CartographicExerciseState extends State<CartographicExercise> {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.redAccent,
-                  width: 2
-                  ),
-                  
+                  border: Border.all(color: Colors.redAccent, width: 2),
                   image: DecorationImage(
                     fit: BoxFit.fill,
                     image: AssetImage("assets/images/UdemMap.png"),
@@ -143,5 +150,15 @@ class _CartographicExerciseState extends State<CartographicExercise> {
     );
   }
 
-  void showDescribreThePlace() {}
+  void validateAdvise() {
+    Future.delayed(Duration(milliseconds: 200), () async {
+      if (!advise) {
+        simpleAlert(context, "Te damos la bienvenida al ejercicio cartográfico",
+            "Selecciona un lugar en el que te hayas sentido insegurx");
+        setState(() {
+          advise = true;
+        });
+      }
+    });
+  }
 }

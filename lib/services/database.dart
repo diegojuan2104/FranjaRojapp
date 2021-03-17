@@ -78,6 +78,13 @@ class DatabaseService {
     });
   }
 
+  saveTendederoOpened(bool tendederoOpened) async {
+    if (Auth().firebaseUser == null) return;
+    await profilesCollection.doc(Auth().firebaseUser.uid).update({
+      'tendedero_opened': tendederoOpened,
+    });
+  }
+
   Future<ProfileModel> getCurrentProfile() async {
     if (Auth().firebaseUser != null) {
       DocumentSnapshot user =
@@ -91,7 +98,8 @@ class DatabaseService {
       bool glossary_opened = user.data()["glossary_opened"];
       Timestamp timestamp = user.data()["timestamp"];
       bool isNewUser = user.data()["is_new_user"];
-      bool tenderoOpened = user.data()["tendero_opened"];
+      bool tenderoOpened = user.data()["tendedero_opened"];
+      print(tenderoOpened);
       return new ProfileModel(
           email,
           franjas,
@@ -148,11 +156,7 @@ class DatabaseService {
     Timestamp time = Timestamp.now();
     var datetime =
         DateTime.fromMicrosecondsSinceEpoch(time.microsecondsSinceEpoch);
-    await FirebaseDatabase.instance
-        .reference()
-        .child("Registro_de_Preguntas")
-        .push()
-        .set({
+    await FirebaseDatabase.instance.reference().child("Preguntas").push().set({
       'respuesta': answer,
       'fecha': datetime.toString(),
       'userId': Auth().firebaseUser.uid,
@@ -170,21 +174,23 @@ class DatabaseService {
         questionId, questions_answered_by_the_user);
   }
 
-  createTendederoRegister(String answer, String questionId, String questionText,
-      List questions_answered_by_the_user) async {
+  createTendederoRegister(
+      {String place,
+      String placeDetails,
+      String story,
+      bool publicStory}) async {
     if (Auth().firebaseUser == null) return;
     Timestamp time = Timestamp.now();
     var datetime =
         DateTime.fromMicrosecondsSinceEpoch(time.microsecondsSinceEpoch);
-    await FirebaseDatabase.instance
-        .reference()
-        .child("Registro_del_Tendedero")
-        .push()
-        .set({
-      'respuesta': answer,
-      'fecha': datetime.toString(),
+    await FirebaseDatabase.instance.reference().child("Tendedero").push().set({
+      'Lugar': place,
+      'Fecha': datetime.toString(),
       'userId': Auth().firebaseUser.uid,
-      'pregunta': questionText
+      'Detalles_Lugar': placeDetails,
+      'Historia': story == null ? "No hay historia" : story,
+      'Privacidad':
+          publicStory == null ? "N/A" : publicStory ? "Pública" : "Privada"
     });
   }
 

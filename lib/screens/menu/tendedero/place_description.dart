@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:franja_rojapp/components/main_appbar.dart';
+import 'package:franja_rojapp/constants/constants.dart';
 import 'package:franja_rojapp/providers/Providerinfo.dart';
+import 'package:franja_rojapp/services/database.dart';
 import 'package:provider/provider.dart';
 
 class PlaceDescription extends StatefulWidget {
@@ -12,10 +14,10 @@ class PlaceDescription extends StatefulWidget {
 
 class _PlaceDescriptionState extends State<PlaceDescription> {
   ProviderInfo prov;
-  TextEditingController desriptionController = new TextEditingController();
+  TextEditingController descriptionController = new TextEditingController();
   bool tellStory = false;
   String placeDetails;
-  int selectedRadio = 0;
+  int selectedRadio = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +46,9 @@ class _PlaceDescriptionState extends State<PlaceDescription> {
                             child: RichText(
                               textAlign: TextAlign.center,
                               text: TextSpan(
-                                text: "LA UDEM YA NO CALLA",
+                                text: tellStory
+                                    ? "DESCRIBE TU HISTORIA"
+                                    : "DESCRIPCIÓN DEL LUGAR",
                                 style: TextStyle(
                                   fontSize: 30,
                                   color: Colors.black,
@@ -79,9 +83,8 @@ class _PlaceDescriptionState extends State<PlaceDescription> {
                                   Radio(
                                     value: 1,
                                     groupValue: selectedRadio,
-                                    activeColor: Colors.green,
+                                    activeColor: Colors.red,
                                     onChanged: (val) {
-                                      print("Radio $val");
                                       setSelectedRadio(val);
                                     },
                                   ),
@@ -89,9 +92,8 @@ class _PlaceDescriptionState extends State<PlaceDescription> {
                                   Radio(
                                     value: 2,
                                     groupValue: selectedRadio,
-                                    activeColor: Colors.blue,
+                                    activeColor: Colors.red,
                                     onChanged: (val) {
-                                      print("Radio $val");
                                       setSelectedRadio(val);
                                     },
                                   ),
@@ -108,7 +110,7 @@ class _PlaceDescriptionState extends State<PlaceDescription> {
                     Container(
                       width: queryData.size.width * 0.8,
                       child: TextField(
-                        controller: desriptionController,
+                        controller: descriptionController,
                         maxLines: 5,
                         decoration: InputDecoration(
                             hintText: tellStory
@@ -142,7 +144,7 @@ class _PlaceDescriptionState extends State<PlaceDescription> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text("Continuar"),
+                      Text(tellStory ? "Enviar Historia" : "Continuar"),
                     ],
                   ),
                 ),
@@ -154,29 +156,104 @@ class _PlaceDescriptionState extends State<PlaceDescription> {
     ));
   }
 
-  void submitDescription() {
-    showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-              title: Text("¿Deseas contarnos tu historia? "),
-              content: SingleChildScrollView(
-                  child: Container(
-                      child: Text(
-                          "Cuentanos tu historia: Puedes contarnos tu historia más en detalle"))),
-              actions: [
-                FlatButton(
-                  child: Text("No"),
-                  onPressed: () {
-                    setState(() {});
-                    Navigator.pop(context);
-                  },
-                ),
-                FlatButton(
-                  child: Text("Si"),
-                  onPressed: () {},
-                ),
-              ],
-            ));
+  void submitDescription() async {
+    if (descriptionController.text.trim() == "") {
+      simpleAlert(context, "Aviso", "Ingresa detalles sobre el lugar");
+      return;
+    }
+    if (!tellStory) {
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: Text("¿Deseas contarnos tu historia? "),
+                content: SingleChildScrollView(
+                    child: Container(
+                        child: Text(
+                            "Puedes contarnos tu historia más en detalle"))),
+                actions: [
+                  FlatButton(
+                    child: Text("No"),
+                    onPressed: () async {
+                      await DatabaseService().createTendederoRegister(
+                          place: prov.placeSelected,
+                          placeDetails: descriptionController.text,
+                          story: null,
+                          publicStory: null);
+                      Navigator.pop(context);
+                      showDialog(
+                          barrierDismissible: false,
+                          context: context,
+                          builder: (context) => AlertDialog(
+                                title: Text("Aviso"),
+                                content: SingleChildScrollView(
+                                    child: Container(
+                                        child: Text(
+                                            "Has terminado el ejercicio cartográfico"))),
+                                actions: [
+                                  FlatButton(
+                                    child: Text("Aceptar"),
+                                    onPressed: () {
+                                      prov.selectedAnswer = null;
+                                      Navigator.of(context)
+                                          .pushReplacementNamed("/home");
+                                    },
+                                  ),
+                                ],
+                              ));
+                    },
+                  ),
+                  FlatButton(
+                    child: Text("Si"),
+                    onPressed: () {
+                      setState(() {
+                        placeDetails = descriptionController.text.toString();
+                        tellStory = true;
+                      });
+                      descriptionController.text = "";
+                      Navigator.pop(context);
+                      simpleAlert(
+                          context,
+                          "Ten en cuenta de que prodrás seleccionar la privacidad de tu historia",
+                          "PÚBLICA: \nTodas las personas que ingresen a FranjaRojaApp, podrán leer tu historia. \n\nPRIVADA:\nNadie podrá visualizar tu historia, a excepción del proyecto: Franja Roja: una propuesta para mitigar la violencia basada en género en el contexto de la Univerdiad de Medellín");
+                    },
+                  ),
+                ],
+              ));
+    } else {
+      if (descriptionController.text.trim() == "") {
+        simpleAlert(context, "Aviso", "Ingresa tu historia");
+        return;
+      }
+
+      bool publicStory = selectedRadio == 1 ? true : false;
+
+      await DatabaseService().createTendederoRegister(
+          place: prov.placeSelected,
+          placeDetails: placeDetails,
+          story: descriptionController.text,
+          publicStory: publicStory);
+      await DatabaseService().saveTendederoOpened(true);
+
+      showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) => AlertDialog(
+                title: Text("Aviso"),
+                content: SingleChildScrollView(
+                    child:
+                        Container(child: Text("Has terminado el ejercicio cartográfico"))),
+                actions: [
+                  FlatButton(
+                    child: Text("Aceptar"),
+                    onPressed: () {
+                      descriptionController.text = "";
+                      prov.selectedAnswer = null;
+                      Navigator.of(context).pushReplacementNamed("/home");
+                    },
+                  ),
+                ],
+              ));
+    }
   }
 
   setSelectedRadio(int val) {

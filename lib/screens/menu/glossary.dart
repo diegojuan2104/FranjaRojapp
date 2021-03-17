@@ -125,7 +125,7 @@ class _GlossaryState extends State<Glossary> {
                         child: Container(
                             child: Column(children: <Widget>[
                       RichText(
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.start,
                         text: TextSpan(
                           text:
                               'Es una introducción al reconocimiento de las violencias basadas en género. Acá encontrarás 5 términos bases: sexo, género, identidad de género, perspectiva de género y violencia de género, cada una de ellos acompañado de un ejemplo. \n \nPuedes desplazarte por el glosario con este gesto:',
