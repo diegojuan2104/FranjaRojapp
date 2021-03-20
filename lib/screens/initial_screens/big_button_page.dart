@@ -44,10 +44,10 @@ class _BigButtonPageState extends State<BigButtonPage>
                       text: TextSpan(
                         text: "Franja Roja",
                         style: TextStyle(
-                          fontSize: 80,
+                          fontSize: 60,
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.bold,
-                          fontFamily: 'Silvertone',
+                          fontFamily: 'DancingScript',
                         ),
                       ),
                     )),
@@ -65,9 +65,9 @@ class _BigButtonPageState extends State<BigButtonPage>
                   ),
                   SizedBox(height: 20,),
                   Text(
-                    "Presiona el botón para continuar >>",
+                    "Deja presionado el botón para continuar >>",
                     style: TextStyle(
-                      color: Colors.black,
+                      color: Colors.black54,
                       fontStyle: FontStyle.italic
                     ),
                   ),

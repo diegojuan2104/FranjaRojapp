@@ -19,10 +19,10 @@ class BannerFranjaRoja extends StatelessWidget {
                 text: TextSpan(
                   text: "Franja Roja",
                   style: TextStyle(
-                    fontSize: 60,
+                    fontSize: 40,
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontFamily: 'Silvertone',
+                    fontFamily: 'DancingScript',
                   ),
                 ),
               )),

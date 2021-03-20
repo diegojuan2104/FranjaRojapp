@@ -35,7 +35,7 @@ class _SplashScreeenState extends State<SplashScreeen> {
                   fontSize: 80,
                   color: Theme.of(context).primaryColor,
                   fontWeight: FontWeight.bold,
-                  fontFamily: 'Silvertone',
+                  fontFamily: 'DancingScript',
                 ),
               ),
             )),

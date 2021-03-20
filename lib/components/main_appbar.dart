@@ -27,8 +27,8 @@ class _MainAppBarState extends State<MainAppBar> {
       title: Text(
         "Franja Roja",
         style: TextStyle(
-            fontSize: 40,
-            fontFamily: 'Silvertone',
+            fontSize: 25,
+            fontFamily: 'DancingScript',
             color: Colors.white,
             fontWeight: FontWeight.bold),
       ),
@@ -43,8 +43,8 @@ class _MainAppBarState extends State<MainAppBar> {
                     ? 'Cargando...'
                     : prov.currentProfile.franjas.toString() + ' F',
                 style: TextStyle(
-                    fontSize: 30,
-                    fontFamily: 'Silvertone',
+                    fontSize: 20,
+                    fontFamily: 'DancingScript',
                     color: Colors.white,
                     fontWeight: FontWeight.bold),
               ),

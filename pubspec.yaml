@@ -37,6 +37,7 @@ dependencies:
   sliding_up_panel: ^1.0.2
   url_launcher: ^5.4.2
   firebase_database: ^4.0.0
+  photo_view: 
 
 dev_dependencies:
   flutter_test:
@@ -91,3 +92,7 @@ flutter:
     - family: Silvertone
       fonts:
         - asset: fonts/Silvertone.ttf
+
+    - family: DancingScript
+      fonts:
+        - asset: fonts/DancingScript.ttf

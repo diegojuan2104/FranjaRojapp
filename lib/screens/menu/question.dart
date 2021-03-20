@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:franja_rojapp/components/answer_button.dart';
 import 'package:franja_rojapp/components/loading.dart';
 import 'package:franja_rojapp/constants/constants.dart';
+import 'package:franja_rojapp/providers/data.dart';
 
 import 'package:franja_rojapp/services/database.dart';
 import 'package:provider/provider.dart';
@@ -51,8 +52,8 @@ class _QuestionState extends State<Question> {
         title: Text(
           "Franja Roja",
           style: TextStyle(
-              fontSize: 40,
-              fontFamily: 'Silvertone',
+              fontSize: 25,
+              fontFamily: 'DancingScript',
               color: Colors.white,
               fontWeight: FontWeight.bold),
         ),
@@ -66,8 +67,8 @@ class _QuestionState extends State<Question> {
                       ? 'Cargando...'
                       : prov.currentProfile.franjas.toString() + ' F',
                   style: TextStyle(
-                      fontSize: 30,
-                      fontFamily: 'Silvertone',
+                      fontSize: 20,
+                      fontFamily: 'DancingScript',
                       color: Colors.white,
                       fontWeight: FontWeight.bold),
                 ),
@@ -88,12 +89,12 @@ class _QuestionState extends State<Question> {
                           child: RichText(
                             textAlign: TextAlign.center,
                             text: TextSpan(
-                              text: "Cuentanos!",
+                              text: "Cuéntanos!",
                               style: TextStyle(
-                                fontSize: 80,
+                                fontSize: 55,
                                 color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.bold,
-                                fontFamily: 'Silvertone',
+                                fontFamily: 'DancingScript',
                               ),
                             ),
                           )),
@@ -235,6 +236,7 @@ class _QuestionState extends State<Question> {
                   setState(() {
                     answerSelected = answer;
                   });
+                 
                   submitAnswer(context);
                 }),
           );
@@ -254,6 +256,7 @@ class _QuestionState extends State<Question> {
         }
       }
       moreQuestions(context, franjas);
+
       await DatabaseService().createAnswerRegister(
         openQuestion ? openAnswerController.text : answers[answerSelected],
         questionId,

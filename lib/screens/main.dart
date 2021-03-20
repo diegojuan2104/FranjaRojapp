@@ -12,6 +12,7 @@ import 'package:franja_rojapp/screens/authentication/login.dart';
 import 'package:franja_rojapp/screens/menu/question.dart';
 import 'package:franja_rojapp/screens/menu/tendedero/cartographic_exercise.dart';
 import 'package:franja_rojapp/screens/menu/tendedero/place_description.dart';
+import 'package:franja_rojapp/screens/menu/tendedero/tendedero.dart';
 import 'package:franja_rojapp/services/auth.dart';
 import 'package:franja_rojapp/screens/initial_screens/splash_screen.dart';
 import 'package:flutter/services.dart';
@@ -98,9 +99,11 @@ class MyApp extends StatelessWidget {
                 case "/about":
                   return AboutFranjaRoja();
                 case "/tendedero":
-                  return CartographicExercise();
+                  return Tendedero();
                 case "/place_description":
                   return PlaceDescription();
+                case "/cartographic_exercise":
+                  return CartographicExercise();
               }
             });
           }),

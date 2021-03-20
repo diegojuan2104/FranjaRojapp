@@ -23,6 +23,7 @@ class Data with ChangeNotifier {
   Map<String, List<AvatarModel>> mapItems = {};
   List<Color> _colorList = [];
   Uint8List imgAv = null;
+  bool alreadyAnsered = false;
   int cont = 1;
   Color _avColor = Colors.black;
 
@@ -114,7 +115,7 @@ class Data with ChangeNotifier {
     notifyListeners();
   }
 
-  List<dynamic> getListTabs({ScrollController s}) {
+  List<dynamic> getListTabs({ScrollController s,Function callb}) {
     final parameters = [
       'ojos',
       'boca',
@@ -122,24 +123,24 @@ class Data with ChangeNotifier {
       'orejas',
       'mascotas',
       'figuras',
-      'cuerpo',
       'plantas',
-      'cabellos'
+      'cabellos',
+      'especiales'
     ];
     final names = [
       "Ojos",
-      "Boca",
-      "Nariz",
+      "Bocas",
+      "Narices",
       "Orejas",
       "Mascotas",
       "Figuras",
-      "Partes Cuerpo",
       "Plantas",
-      "Cabello",
+      "Cabellos",
+      "Sorpresas",
       "Colores",
     ];
     if (s != null)
-      return Constants.createListTabs(parameters, s);
+      return Constants.createListTabs(parameters, s,callb);
     else
       return Constants.createListWTabs(names);
   }

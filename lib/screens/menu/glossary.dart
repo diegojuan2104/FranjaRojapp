@@ -50,34 +50,36 @@ class _GlossaryState extends State<Glossary> {
                 //1st Image of Slider
                 GlosaryCard(
                   title: "Sexo",
+                  example: "Femenino \nMasculino \nIntersexual",
                   content:
                       "Reúne la configuración de las corporalidades de cada individuo en razón de cinco características fisiológicas: genes, gónadas, hormonas, órganos reproductivos internos y genitales",
                   index: 1,
                   total: total,
                 ),
                 GlosaryCard(
-                  title: "Ge'nero",
+                  title: "Género",
                   content:
                       "Es una categoría que analiza cómo se definen, representan y simbolizan las diferencias sexuales de una sociedad \nLo que determina la identidad y el comportamiento de casa ser no es el sexo biológico, sino las expectativas sociales, los ritos, costumbres y experiencias",
                   index: 2,
                   total: total,
                 ),
                 GlosaryCard(
-                  title: "Identidad de Ge'nero",
+                  title: "Identidad de Género",
+                  example: "Mujer \nHombreTrans \nMujer Trans \nHombre Binario \nGénero Fluido",
                   content:
                       "La identidad designa aquello que es propio de un individuo o grupo y singulariza. Las expresiones de la identidad varían en función de las referencias culturales, profesionales, religiosas, geográficas y lingüísticas, entre otras. A pesar de su vaguedad semántica, el concepto de identidad permite esclarecer las relaciones entre el individuo y su entorno",
                   index: 3,
                   total: total,
                 ),
                 GlosaryCard(
-                  title: "Violencia de Ge'nero",
+                  title: "Violencia de Género",
                   content:
                       "La violencia de género es todo acto de violencia directa o sutil producido en la vida pública o en la privada, que pretende maltratar, lesionar y agredir basado en el género o la preferencia sexual de la víctima ",
                   index: 4,
                   total: total,
                 ),
                 GlosaryCard(
-                  title: "Perspectiva de Ge'nero",
+                  title: "Perspectiva de Género",
                   content:
                       "La perspectiva de género es una herramienta conceptual que busca mostrar que las diferencias entre mujeres y hombres se dan no sólo por su determinación biológica, sino también por las diferencias culturales asignadas a los seres humanos",
                   index: 5,

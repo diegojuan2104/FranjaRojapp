@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:franja_rojapp/constants/constants.dart';
 
 class GlosaryCard extends StatelessWidget {
   final String title;
@@ -43,7 +42,7 @@ class GlosaryCard extends StatelessWidget {
                         fontSize: 70,
                         color: Theme.of(context).primaryColor,
                         fontWeight: FontWeight.bold,
-                        fontFamily: 'Silvertone',
+                        fontFamily: 'DancingScript',
                       ),
                     ),
                   )),
@@ -70,7 +69,41 @@ class GlosaryCard extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 15),
                       textColor: Colors.white,
                       onPressed: () {
-                        simpleAlert(context, "Ejemplo", "Ejemplo");
+                        showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (context) => AlertDialog(
+                                  title: Text(
+                                    "Ejemplo",
+                                    style: TextStyle(
+                                      fontSize: 25,
+                                      fontFamily: 'BigShouldersDisplay',
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  content: SingleChildScrollView(
+                                      child: Container(
+                                    child: RichText(
+                                      textAlign: TextAlign.center,
+                                      text: TextSpan(
+                                        text: this.example,
+                                        style: TextStyle(
+                                          fontSize: 25,
+                                          fontFamily: 'BigShouldersDisplay',
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                  )),
+                                  actions: [
+                                    FlatButton(
+                                      child: Text("Aceptar"),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                ));
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -104,6 +137,7 @@ class GlosaryCard extends StatelessWidget {
                     "Puedes deslizar >>",
                     style: TextStyle(
                       color: Colors.grey,
+                      fontStyle: FontStyle.italic
                     ),
                   ),
                   SizedBox(

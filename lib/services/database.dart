@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:franja_rojapp/models/ProfileModel.dart';
-import 'package:franja_rojapp/models/QuestionModel.dart';
+import 'package:franja_rojapp/models/questionModel.dart';
 import 'package:franja_rojapp/services/auth.dart';
 
 class DatabaseService {
@@ -99,7 +99,6 @@ class DatabaseService {
       Timestamp timestamp = user.data()["timestamp"];
       bool isNewUser = user.data()["is_new_user"];
       bool tenderoOpened = user.data()["tendedero_opened"];
-      print(tenderoOpened);
       return new ProfileModel(
           email,
           franjas,
@@ -162,7 +161,6 @@ class DatabaseService {
       'userId': Auth().firebaseUser.uid,
       'pregunta': questionText
     });
-
     //   await questionLogsCollection.doc().set({
     //     'quesitonId': questionId,
     //     'answer': answer,
@@ -178,7 +176,9 @@ class DatabaseService {
       {String place,
       String placeDetails,
       String story,
-      bool publicStory}) async {
+      bool publicStory,
+      dynamic avatarImg
+      }) async {
     if (Auth().firebaseUser == null) return;
     Timestamp time = Timestamp.now();
     var datetime =
@@ -190,8 +190,11 @@ class DatabaseService {
       'Detalles_Lugar': placeDetails,
       'Historia': story == null ? "No hay historia" : story,
       'Privacidad':
-          publicStory == null ? "N/A" : publicStory ? "Pública" : "Privada"
+          publicStory == null ? "N/A" : publicStory ? "Pública" : "Privada",
+     
     });
+
+    // 'avatar_img': avatarImg
   }
 
   updateQuestionsAnsweredByUser(

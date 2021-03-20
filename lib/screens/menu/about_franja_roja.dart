@@ -23,10 +23,10 @@ class AboutFranjaRoja extends StatelessWidget {
                     text: TextSpan(
                       text: "Franja Roja",
                       style: TextStyle(
-                        fontSize: 80,
+                        fontSize: 55,
                         color: Theme.of(context).primaryColor,
                         fontWeight: FontWeight.bold,
-                        fontFamily: 'Silvertone',
+                        fontFamily: 'DancingScript',
                       ),
                     ),
                   )),
@@ -46,10 +46,11 @@ class AboutFranjaRoja extends StatelessWidget {
                   text: TextSpan(
                     text:
                         '''¡Nuestro proyecto se enmarca como un precedente en los procesos de atención a las Violencias Basadas en Género de la Universidad de Medellín!\n 
-Está direccionado a construir un diagnóstico que será base para la creación de una propuesta de Política, Protocolo y Ruta de atención a las violencias basadas en género\n
+Está direccionado a construir un diagnóstico que será base para la creación de una propuesta de Política, Protocolo y Ruta de atención a las violencias basadas en género.
 \n Esta aplicación se construyó con la finalidad reunir y medir información acerca de las violencias basadas en género en el contexto de la Universidad de Medellín.                  
-                    
                     \n¡Por una UdeM sin VIOLENCIAS!
+                    \n CONTACTO:
+                    \nfranja.roja2020@gmail.com
                     \n Redes Sociales:
                     ''',
                     style: TextStyle(

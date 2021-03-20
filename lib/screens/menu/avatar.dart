@@ -94,8 +94,9 @@ class _AvatarPageState extends State<AvatarPage> {
       double sizeH,
       double sizeW,
       ProviderInfo prov2}) {
-    List lista = prov.getListTabs(s: scrollController);
+    List lista = prov.getListTabs(s: scrollController,callb: panelController.close);
     lista.add(TabWidgetColor(scrollController: scrollController));
+
     return DefaultTabController(
         length: 10,
         child: Scaffold(
@@ -115,8 +116,9 @@ class _AvatarPageState extends State<AvatarPage> {
       double sizeH,
       double sizeW,
       ProviderInfo prov2}) {
+      double sizeS = (sizeH * Constants.TAB_BAR_SIZE);
     return PreferredSize(
-      preferredSize: Size.fromHeight(sizeH * Constants.TAB_BAR_SIZE),
+      preferredSize: Size.fromHeight(sizeS+ (sizeH < 520 ? 30 : 0)) ,
       child: GestureDetector(
         onTap: onClicked,
         child: AppBar(
@@ -178,7 +180,7 @@ class _AvatarPageState extends State<AvatarPage> {
           title: Icon(Icons.drag_handle),
           centerTitle: true,
           titleSpacing: sizeW * Constants.SPACING_BAR_SIZE,
-          bottom: TabBar(isScrollable: true, tabs: prov.getListTabs()),
+          bottom: TabBar(isScrollable: true, tabs: prov.getListTabs(callb: onClicked)),
         ),
         
       ),
@@ -198,7 +200,7 @@ class _AvatarPageState extends State<AvatarPage> {
             DatabaseService().saveFirstReward(true);
 
             simpleAlert(context, "Franjarojizate! y crea tu ávatar",
-                "Acá podrás personalizar tu silueta de la manera que desees y como te identifiques! para ello podras elegir cualquiera de los elementos del panel y comprarlos con franjitas, si no te alcanza puedes responder una pregunta, ganar más franjitas y seguir personalizando! \n Cuando creas que hayas terminado pulsa en guardar para continuar por tu recorrido en la app");
+                "Acá podrás personalizar tu silueta de la manera que desees y como te identifiques! para ello podras elegir cualquiera de los elementos del panel y comprarlos con franjitas, si no te alcanza puedes responder una pregunta, ganar más franjitas y seguir personalizando! \nCuando creas que hayas terminado pulsa en guardar para continuar por tu recorrido en la app");
             simpleAlert(context, "Felicidades",
                 "Has ganado 10 franjitas por registrarte!");
           }

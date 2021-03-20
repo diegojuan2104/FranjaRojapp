@@ -6,24 +6,30 @@ import 'package:franja_rojapp/models/avatar_grid_part.dart';
 import 'package:franja_rojapp/models/avatar_stack_part.dart';
 import 'package:franja_rojapp/providers/Providerinfo.dart';
 import 'package:franja_rojapp/providers/data.dart';
+import 'package:franja_rojapp/screens/menu/question.dart';
 import 'package:franja_rojapp/services/database.dart';
 import 'package:provider/provider.dart';
 
 class TabWidget extends StatelessWidget {
   const TabWidget(
-      {Key key, @required this.scrollController, @required this.parameter})
+      {Key key,
+      @required this.scrollController,
+      @required this.parameter,
+      @required this.c})
       : super(key: key);
   final ScrollController scrollController;
   final String parameter;
+  final Function c;
   @override
   Widget build(BuildContext context) {
     final prov = Provider.of<Data>(context);
     final prov2 = Provider.of<ProviderInfo>(context);
-    return buildColumn(prov,prov2, parameter, scrollController);
+    return buildColumn(prov, prov2, parameter, scrollController, c);
   }
 }
 
-Column buildColumn(Data prov,ProviderInfo prov2, String parameter, scrol) {
+Column buildColumn(
+    Data prov, ProviderInfo prov2, String parameter, scrol, Function c) {
   final list = prov.mapItems[parameter];
   return Column(
     children: [
@@ -42,42 +48,65 @@ Column buildColumn(Data prov,ProviderInfo prov2, String parameter, scrol) {
               avatar: list[index],
               press: () {
                 final numF = prov2.currentProfile.franjas;
-                final canI = prov.validateFranjas(list[index],numF);
+                final canI = prov.validateFranjas(list[index], numF);
                 final av = AvatarP(
                     path: list[index].image,
                     type: parameter,
                     sizeh: list[index].sizeh,
                     sizew: list[index].sizew);
                 final exist = prov.validateTypeExist(av);
-                bool wantIt = false;
-                if (!exist) {
-                  if (canI) {
-                    Constants.Dialog(context, "¡Atención!",
-                        "¿Está seguro en comprar este item?, recuerde que no tendrá devoluciones",
-                        () {
-                      prov.addElementList(av);
-                      DatabaseService().addFranjas(context, numF, -list[index].numFranjas);
-                      Constants.Dialog(
-                          context,
-                          'Mensaje',
-                          'Item exitosamente comprado, ahora puedes moverlo como quieras',
-                          () {},
-                          () {});
-                    }, () {});
-                  } else {
-                    Constants.Dialog(context, 'Mensaje',
-                        'No tiene las franjas necesarias para comprar este ixtem',
-                        () {
-                      Navigator.pushNamed(context, "/question");
-                    }, () {});
-                  }
-                } else {
-                  Constants.Dialog(
+                if (parameter == 'especiales') {
+                  Constants.Dialog(context, 'Mensaje',
+                      'Para elegir alguno de estos items debe responder una pregunta, ¿estás listo?. ',
+                      () async {
+                    bool answered = await Navigator.push(
                       context,
-                      " Mensaje ",
-                      "Ya tienes un elmento de este tipo, por favor eliminalo y podrás escoger uno nuevo",
-                      () {},
-                      () {});
+                      MaterialPageRoute(builder: (context) => Question()),
+                    );
+                    if (answered) {
+                      if (!exist) {
+                        c();
+                        prov.addElementList(av);
+                      } else {
+                        Constants.Dialog(
+                            context,
+                            " Mensaje ",
+                            "Ya tienes un elmento de este tipo, por favor eliminalo y podrás escoger uno nuevo",
+                            () {},
+                            () {});
+                      }
+                    }
+                  }, () {});
+                } else {
+                  if (!exist) {
+                    if (canI) {
+                      Constants.Dialog(context, "¡Atención!",
+                          "¿Está seguro en comprar este item?, recuerde que no tendrá devoluciones",
+                          () {
+                        prov.addElementList(av);
+                        DatabaseService()
+                            .addFranjas(context, numF, -list[index].numFranjas);
+                        Constants.Dialog(context, 'Mensaje',
+                            'Item exitosamente comprado, ahora puedes moverlo como quieras',
+                            () {
+                          c();
+                        }, () {});
+                      }, () {});
+                    } else {
+                      Constants.Dialog(context, 'Mensaje',
+                          'No tiene las franjas necesarias para comprar este ixtem',
+                          () {
+                        Navigator.pushNamed(context, "/question");
+                      }, () {});
+                    }
+                  } else {
+                    Constants.Dialog(
+                        context,
+                        " Mensaje ",
+                        "Ya tienes un elmento de este tipo, por favor eliminalo y podrás escoger uno nuevo",
+                        () {},
+                        () {});
+                  }
                 }
               },
               width: prov.sizeW,

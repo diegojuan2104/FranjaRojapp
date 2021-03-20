@@ -30,7 +30,7 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    if(this.mounted){
+    if (this.mounted) {
       validateNewUser();
     }
     super.initState();
@@ -39,7 +39,8 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     prov = Provider.of<ProviderInfo>(context);
-    final provD = Provider.of<Data>(context);    prov2 = Provider.of<Data>(context);
+    final provD = Provider.of<Data>(context);
+    prov2 = Provider.of<Data>(context);
     setCurrentProfileData();
 
     return _loading || prov.currentProfile == null
@@ -103,7 +104,7 @@ class _HomeState extends State<Home> {
                                                 context, "/glossary")
                                           }),
                                   GridMenu(
-                                      title: "Gana Franjas!",
+                                      title: "Gana Franjitas!",
                                       icon: Icons.line_weight,
                                       warna: Colors.red,
                                       action: () => {
@@ -131,7 +132,9 @@ class _HomeState extends State<Home> {
                             ),
                             Text(
                               "FranjaRojApp Versión " + VERSION,
-                              style: TextStyle(color: Colors.black54),
+                              style: TextStyle(
+                                  color: Colors.black54,
+                                  fontStyle: FontStyle.italic),
                             ),
                             SizedBox(
                               height: 20,
@@ -161,16 +164,29 @@ class _HomeState extends State<Home> {
       if (prov.currentProfile == null) return;
       if (prov.currentProfile.avatar_created == false) return;
       if (prov.currentProfile.glossary_opened == false) return;
-      if (false) {
+      if (prov.currentProfile.isNewUser) {
         showDialog(
             barrierDismissible: false,
             context: context,
             builder: (context) => AlertDialog(
-                  title: Text("Te damos la bienvenida al panel"),
+                  title:
+                      Text("Te damos la bienvenida al panel de FranjaRojApp"),
                   content: SingleChildScrollView(
                       child: Container(
                     child: Column(
-                      children: <Widget>[],
+                      children: <Widget>[
+                        RichText(
+                          textAlign: TextAlign.start,
+                          text: TextSpan(
+                            text:
+                                '''Puedes volver a acceder cuando desees a las diferentes carácteristicas del app ya sea volver a editar tu ávatar, ver el glosario o enviarnos una historia''',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   )),
                   actions: [
@@ -205,7 +221,7 @@ class _HomeState extends State<Home> {
   }
 
   _showAvatar() {
-    Navigator.of(context).pushNamed(
+    Navigator.of(context).pushReplacementNamed(
       '/avatar',
     );
   }
