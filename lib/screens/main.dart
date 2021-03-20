@@ -10,6 +10,7 @@ import 'package:franja_rojapp/screens/menu/home.dart';
 import 'package:franja_rojapp/screens/initial_screens/big_button_page.dart';
 import 'package:franja_rojapp/screens/authentication/login.dart';
 import 'package:franja_rojapp/screens/menu/question.dart';
+import 'package:franja_rojapp/screens/menu/tendedero/StoriesList.dart';
 import 'package:franja_rojapp/screens/menu/tendedero/cartographic_exercise.dart';
 import 'package:franja_rojapp/screens/menu/tendedero/place_description.dart';
 import 'package:franja_rojapp/screens/menu/tendedero/tendedero.dart';
@@ -104,6 +105,8 @@ class MyApp extends StatelessWidget {
                   return PlaceDescription();
                 case "/cartographic_exercise":
                   return CartographicExercise();
+                case "/stories":
+                  return Stories();
               }
             });
           }),

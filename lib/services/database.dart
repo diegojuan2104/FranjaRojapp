@@ -19,6 +19,8 @@ class DatabaseService {
   final questionLogsCollection =
       FirebaseFirestore.instance.collection('questionLogs');
 
+  final tendederoCollection =
+      FirebaseFirestore.instance.collection('tendedero');
   //Collection reference
   Future setInitialUserAttributes(String email) async {
     stamp = Timestamp.now();
@@ -161,13 +163,7 @@ class DatabaseService {
       'userId': Auth().firebaseUser.uid,
       'pregunta': questionText
     });
-    //   await questionLogsCollection.doc().set({
-    //     'quesitonId': questionId,
-    //     'answer': answer,
-    //     'timestamp': stamp,
-    //     'userId': Auth().firebaseUser.uid,
-    //     'question': questionText
-    //   });
+
     await updateQuestionsAnsweredByUser(
         questionId, questions_answered_by_the_user);
   }
@@ -177,8 +173,7 @@ class DatabaseService {
       String placeDetails,
       String story,
       bool publicStory,
-      dynamic avatarImg
-      }) async {
+      dynamic avatarImg}) async {
     if (Auth().firebaseUser == null) return;
     Timestamp time = Timestamp.now();
     var datetime =
@@ -191,10 +186,31 @@ class DatabaseService {
       'Historia': story == null ? "No hay historia" : story,
       'Privacidad':
           publicStory == null ? "N/A" : publicStory ? "Pública" : "Privada",
-     
     });
-
     // 'avatar_img': avatarImg
+
+    await tendederoCollection.doc().set({
+      'Lugar': place,
+      'Fecha': datetime.toString(),
+      'userId': Auth().firebaseUser.uid,
+      'Detalles_Lugar': placeDetails,
+      'Historia': story == null ? "No hay historia" : story,
+      'Privacidad':
+          publicStory == null ? "N/A" : publicStory ? "Pública" : "Privada",
+    });
+  }
+
+  Future<List> getTendedero(String bloque) async {
+    QuerySnapshot snap = await tendederoCollection.orderBy("Fecha").get();
+    List<QueryDocumentSnapshot> tendederoList = snap.docs;
+    List storiesList = [];
+    for (int i = 0; i < tendederoList.length; i++) {
+      //Verify if the user had answer that question
+      dynamic date = tendederoList[i].data()["Fecha"];
+      String story = tendederoList[i].data()["Historia"];
+      storiesList.add({"date": date, "story": story});
+    }
+    return storiesList;
   }
 
   updateQuestionsAnsweredByUser(

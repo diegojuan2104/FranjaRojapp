@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:franja_rojapp/components/grid_menu.dart';
 import 'package:franja_rojapp/components/main_appbar.dart';
+import 'package:franja_rojapp/services/database.dart';
 
 class Tendedero extends StatefulWidget {
   Tendedero({Key key}) : super(key: key);
@@ -51,7 +52,8 @@ class _TendederoState extends State<Tendedero> {
                       icon: Icons.map,
                       warna: Colors.red,
                       action: () {
-                        Navigator.of(context).pushNamed("/cartographic_exercise");
+                        Navigator.of(context)
+                            .pushNamed("/cartographic_exercise");
                       },
                     ),
                     GridMenu(
@@ -59,7 +61,7 @@ class _TendederoState extends State<Tendedero> {
                       icon: Icons.library_books,
                       warna: Colors.red,
                       action: () {
-                        
+                        Navigator.of(context).pushNamed("/stories");
                       },
                     ),
                   ],
