@@ -147,7 +147,8 @@ class _AvatarPageState extends State<AvatarPage> {
                       dynamic listaItems =
                           Constants.changeUserModelToList(prov.items);
                       listaToSave.add(
-                          {"ImgUser": base64String, "DataAvatar": listaItems});
+                          {"ImgUser": base64String, "DataAvatar": listaItems,"Color":prov.getavColor.value.toString()});
+                      print(listaItems);
                       DatabaseService().saveAvatarData(listaToSave);
                       Navigator.pushReplacementNamed(context, '/home');
                     }, () {});

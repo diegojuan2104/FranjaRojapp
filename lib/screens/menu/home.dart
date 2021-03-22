@@ -154,8 +154,11 @@ class _HomeState extends State<Home> {
   }
 
   setCurrentProfileData() {
-    DatabaseService().getCurrentProfile().then(
-        (value) => {prov.setCurrentProfile(value), prov2.currentProf = value});
+    DatabaseService().getCurrentProfile().then((value) => {
+          prov.setCurrentProfile(value),
+          prov2.currentProf = value,
+        
+        });
   }
 
   validateNewUser() {

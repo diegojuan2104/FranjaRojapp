@@ -293,7 +293,7 @@ class Constants {
       "figuras": [witdh * 0.254, height * 0.1315],
       "plantas": [witdh * 0.254, height * 0.1315],
       "cuerpo": [witdh * 0.254, height * 0.1315],
-      "cabellos": [witdh * 0.636, 0.184 * height],
+      "cabellos": [witdh * 0.8, 0.284 * height],
       'especiales': [witdh * 0.4, height * 0.2]
     };
     return dict;
@@ -310,7 +310,7 @@ class Constants {
       "cuerpo":
           fillList(getImgPaths('bodypart', 'partescuerpoapp', 12), 1.0, 1.0, 0),
       "plantas": fillList(getImgPaths('planta', 'plantasapp', 17), 1.0, 1.0, 0),
-      "cabellos": fillList(getImgPaths('pelo', 'pelosapp', 2), 1.0, 1.0, 0),
+      "cabellos": fillList(getImgPaths('pelo', 'pelosapp', 8), 1.0, 1.0, 0),
       "especiales": fillList(getImgPaths('ojos', 'ojosapp', 42), 1.0, 1.0, 0),
     };
     dict["ojos"][0].numFranjas = 0;
@@ -330,14 +330,14 @@ class Constants {
       double auxW = i >= a ? sizew : 1;
       double auxH = i >= a ? sizeh : 1;
       if (flag) {
-        ret.add(createAv(lista[i], Colors.red[50], auxH, auxH));
+        ret.add(createAv(lista[i], Colors.red[50], auxH, auxH,numF: 0));
         if (i + 1 < lista.length)
-          ret.add(createAv(lista[i + 1], Colors.white, auxH, auxH));
+          ret.add(createAv(lista[i + 1], Colors.white, auxH, auxH,numF: 8));
         flag = false;
       } else {
-        ret.add(createAv(lista[i], Colors.white, auxH, auxH));
+        ret.add(createAv(lista[i], Colors.white, auxH, auxH,numF: 0));
         if (i + 1 < lista.length)
-          ret.add(createAv(lista[i + 1], Colors.red[50], auxH, auxH));
+          ret.add(createAv(lista[i + 1], Colors.red[50], auxH, auxH,numF: 8));
         flag = true;
       }
     }
@@ -345,8 +345,8 @@ class Constants {
     return ret;
   }
 
-  static AvatarModel createAv(String s, Color c, double w, double h) {
-    return AvatarModel(image: s, color: c, sizew: w, sizeh: h);
+  static AvatarModel createAv(String s, Color c, double w, double h,{int numF}) {
+    return AvatarModel(image: s, color: c, sizew: w, sizeh: h,numFranjas: numF);
   }
 
   static List<String> getImgPaths(String pal, String dir, int numImg) {

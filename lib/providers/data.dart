@@ -29,11 +29,13 @@ class Data with ChangeNotifier {
 
   set currentProf(ProfileModel p) {
     if (p == null) return;
+
     this.currentProfile = p;
     dynamic lista = p.avatar_position;
     if (lista != null) {
       if (lista.length > 0) {
         if (cont == 1) {
+          avColor(Color(int.parse(lista[0]['Color'])));
           dynamic img = lista[0]["ImgUser"];
           dynamic list = lista[0]["DataAvatar"];
           final _byteImage = Base64Decoder().convert(img);
@@ -68,8 +70,10 @@ class Data with ChangeNotifier {
     this._avColor = color;
     notifyListeners();
   }
-
-  get getavColor => _avColor;
+  
+  get getavColor => 
+    _avColor
+    ;
   set sizeTrah(double value) {
     this._sizeTrash = value;
     notifyListeners();
@@ -150,6 +154,7 @@ class Data with ChangeNotifier {
     items = [];
     this.mapItems = Constants.initializMap();
     this._colorList = Constants.initializMapColors();
+    
   }
 
   void setValueListTop(int i, double value) {

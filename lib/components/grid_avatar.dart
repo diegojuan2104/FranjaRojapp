@@ -49,13 +49,14 @@ Column buildColumn(
               press: () {
                 final numF = prov2.currentProfile.franjas;
                 final canI = prov.validateFranjas(list[index], numF);
+                AvatarModel avAux = list[index];
                 final av = AvatarP(
-                    path: list[index].image,
+                    path: avAux.image,
                     type: parameter,
-                    sizeh: list[index].sizeh,
-                    sizew: list[index].sizew);
+                    sizeh: avAux.sizeh,
+                    sizew: avAux.sizew);
                 final exist = prov.validateTypeExist(av);
-                if (parameter == 'especiales') {
+                if (avAux.numFranjas == 0) {
                   Constants.Dialog(context, 'Mensaje',
                       'Para elegir alguno de estos items debe responder una pregunta, ¿estás listo?. ',
                       () async {
