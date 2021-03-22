@@ -12,6 +12,14 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+
+  @override
+  void initState() {
+    this.setState(() {
+      _loading = false;
+    });
+    super.initState();
+  }
   final MaterialColor kPrimaryColor = const MaterialColor(
     0xFFfC2c2C,
     const <int, Color>{
@@ -30,7 +38,6 @@ class _LoginState extends State<Login> {
   var termsAndConditions = false;
   bool _loading = false;
   bool _showPassword = false;
-
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String email = "";
@@ -79,8 +86,9 @@ class _LoginState extends State<Login> {
                                   Text(
                                     "Iniciar Sesión",
                                     style: TextStyle(
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.bold,),
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -242,7 +250,7 @@ class _LoginState extends State<Login> {
         });
       } else {
         setState(() {
-        _loading = false;
+          _loading = false;
         });
         if (!Auth().emailIsVerified()) {
           //Email verification
@@ -266,9 +274,7 @@ class _LoginState extends State<Login> {
           //         ));
           // Auth().signOutUser();
           _errorMessage = "El email no ha sido verificado revise su correo";
-        }else{
-          
-        }
+        } else {}
         _showHomePage();
       }
     }
@@ -295,15 +301,13 @@ class _LoginState extends State<Login> {
   }
 
   _loginWithGoogle() async {
-      setState(() {
-        _loading = true;
-      });
-      await Auth().signInUserWithGoogle();
-      //_showHomePage();
-      if(this.mounted)
-        setState(() {
-          _loading = true;
-        });
+    setState(() {
+      _loading = true;
+    });
+    await Auth().signInUserWithGoogle().then((value) => setState(() {
+          _loading = false;
+        }));
+    _showHomePage();
   }
 
   void _showTermsAndConditions() {
@@ -340,13 +344,12 @@ class _LoginState extends State<Login> {
   }
 
   void _showHomePage() {
-     Navigator.of(context).pushReplacementNamed(
-      '/',
+    Navigator.of(context).pushReplacementNamed(
+      '/home',
     );
   }
 
   void _forgotMyPassword() {
-
     Navigator.of(context).pushNamed(
       '/reset_password',
     );

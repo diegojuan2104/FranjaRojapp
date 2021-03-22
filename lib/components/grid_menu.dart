@@ -12,32 +12,40 @@ class GridMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Card(
-        shape: RoundedRectangleBorder(
-    side: BorderSide(color: Colors.white70, width: 1),
-    borderRadius: BorderRadius.circular(15),
-  ),
-        child: InkWell(
-          onTap: () {
-            action();
-          },
-          child: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Icon(
-                  icon,
-                  size: 60,
-                  color: warna,
-                ),
-                Text(title,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Card(
+          shape: RoundedRectangleBorder(
+            side: BorderSide(color: Colors.white70, width: 1),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: InkWell(
+            onTap: () {
+              action();
+            },
+            child: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Icon(
+                    icon,
+                    size: 60,
+                    color: warna,
+                  ),
+                  RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      text: title,
+                      style: TextStyle(
                         fontSize: 17,
-                        color: Colors.black87,
-                        fontStyle: FontStyle.normal))
-              ],
-            ),  
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       ),

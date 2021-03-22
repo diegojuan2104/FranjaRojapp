@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:franja_rojapp/models/userModel.dart';
 import 'package:franja_rojapp/services/database.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+// import 'package:google_sign_in/google_sign_in.dart';
 
 class Auth {
   FirebaseAuth _auth = FirebaseAuth.instance;

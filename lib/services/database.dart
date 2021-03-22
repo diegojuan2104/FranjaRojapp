@@ -4,6 +4,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:franja_rojapp/models/ProfileModel.dart';
 import 'package:franja_rojapp/models/questionModel.dart';
 import 'package:franja_rojapp/services/auth.dart';
+import 'package:intl/intl.dart';
 
 class DatabaseService {
   User firebaseUser = FirebaseAuth.instance.currentUser;
@@ -175,9 +176,7 @@ class DatabaseService {
       bool publicStory,
       dynamic avatarImg}) async {
     if (Auth().firebaseUser == null) return;
-    Timestamp time = Timestamp.now();
-    var datetime =
-        DateTime.fromMicrosecondsSinceEpoch(time.microsecondsSinceEpoch);
+     Timestamp datetime = Timestamp.now();
     await FirebaseDatabase.instance.reference().child("Tendedero").push().set({
       'Lugar': place,
       'Fecha': datetime.toString(),
@@ -191,7 +190,7 @@ class DatabaseService {
 
     await tendederoCollection.doc().set({
       'Lugar': place,
-      'Fecha': datetime.toString(),
+      'Fecha': datetime,
       'userId': Auth().firebaseUser.uid,
       'Detalles_Lugar': placeDetails,
       'Historia': story == null ? "No hay historia" : story,
@@ -201,14 +200,20 @@ class DatabaseService {
   }
 
   Future<List> getTendedero(String bloque) async {
-    QuerySnapshot snap = await tendederoCollection.orderBy("Fecha").get();
+    QuerySnapshot snap = await tendederoCollection.orderBy("Fecha",descending: true).get();
     List<QueryDocumentSnapshot> tendederoList = snap.docs;
     List storiesList = [];
     for (int i = 0; i < tendederoList.length; i++) {
       //Verify if the user had answer that question
+
       dynamic date = tendederoList[i].data()["Fecha"];
       String story = tendederoList[i].data()["Historia"];
-      storiesList.add({"date": date, "story": story});
+      String place = tendederoList[i].data()["Lugar"];
+      String privacy = tendederoList[i].data()["Privacidad"];
+
+      date  = DateFormat('yyyy-MM-dd  kk:mm').format(date.toDate());
+      if (privacy == "Pública")
+        storiesList.add({"date": date, "story": story, "place": place});
     }
     return storiesList;
   }

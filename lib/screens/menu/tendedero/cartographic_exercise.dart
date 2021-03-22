@@ -17,6 +17,8 @@ dynamic valueChoosed;
 bool valueChoosedAndAcepted = false;
 ProviderInfo prov;
 
+List<String> items = ['Bloque 1','Bloque 2','Bloque 3','Bloque 4','Bloque 5','Bloque 6','Bloque 7','Bloque 8','Bloque 9','Bloque 10','Bloque 11','Bloque 12','Bloque 13','Bloque 14','Bloque 15','Bloque 16','Bloque 17','Bloque 18','Bloque 19','Bloque 20','Bloque 21'];
+
 class _CartographicExerciseState extends State<CartographicExercise> {
   @override
   void initState() {
@@ -49,7 +51,7 @@ class _CartographicExerciseState extends State<CartographicExercise> {
                     child: RichText(
                       textAlign: TextAlign.center,
                       text: TextSpan(
-                        text: "LA UDEM YA NO CALLA",
+                        text: "Ejercicio Cartográfico",
                         style: TextStyle(
                           fontSize: 32,
                           color: Colors.black,
@@ -59,6 +61,22 @@ class _CartographicExerciseState extends State<CartographicExercise> {
                       ),
                     )),
               ],
+            ),
+            Container(
+              child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      text: "La udem ya no calla",
+                      style: TextStyle(
+                        fontSize: 45,
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'DancingScript',
+                      ),
+                    ),
+                  )),
             ),
             Padding(
                 padding: const EdgeInsets.all(10.0),
@@ -78,12 +96,7 @@ class _CartographicExerciseState extends State<CartographicExercise> {
               children: [
                 DropdownButton<String>(
                   hint: Text("Selecciona un bloque"),
-                  items: <String>[
-                    'Bloque 1',
-                    'Bloque 2',
-                    'Bloque 3',
-                    'Bloque 4',
-                  ].map((String value) {
+                  items: items.map((String value) {
                     return new DropdownMenuItem<String>(
                       value: value,
                       child: new Text(value),
@@ -108,7 +121,7 @@ class _CartographicExerciseState extends State<CartographicExercise> {
                         return;
                       }
                       prov.setSelectedPlace(valueChoosed.toString());
-                      
+
                       Navigator.of(context).pushNamed("/place_description");
                     },
                     child: Row(
@@ -179,9 +192,12 @@ class _CartographicExerciseState extends State<CartographicExercise> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20,),
-                    Icon(Icons.zoom_in,
-                    size: 60,
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Icon(
+                      Icons.zoom_in,
+                      size: 60,
                     ),
                   ]))),
                   actions: [

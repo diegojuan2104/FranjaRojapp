@@ -24,15 +24,30 @@ class _TendederoState extends State<Tendedero> {
                 height: queryData.size.height * 0.15,
               ),
               Container(
-                color: Colors.white,
                 child: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: RichText(
                       textAlign: TextAlign.center,
                       text: TextSpan(
-                        text: "Tendedero ¿Qué putas Estás Callando?",
+                        text: "Tendedero",
                         style: TextStyle(
-                          fontSize: 35,
+                          fontSize: 45,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'BigShouldersDisplay',
+                        ),
+                      ),
+                    )),
+              ),
+              Container(
+                child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                        text: "¿Qué putas Estás Callando?",
+                        style: TextStyle(
+                          fontSize: 45,
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'DancingScript',

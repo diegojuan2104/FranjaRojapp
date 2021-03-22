@@ -215,6 +215,9 @@ class _HomeState extends State<Home> {
       setState(() {
         _loading = false;
       });
+      Navigator.of(context).pushReplacementNamed(
+        '/login',
+      );
     } catch (e) {
       simpleAlert(context, "Aviso", "Ha ocurrido un error");
     }

@@ -58,21 +58,21 @@ class _QuestionState extends State<Question> {
               fontWeight: FontWeight.bold),
         ),
         actions: <Widget>[
-          FlatButton.icon(
-              icon: Icon(null),
-              label: RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                  text: prov.currentProfile == null
-                      ? 'Cargando...'
-                      : prov.currentProfile.franjas.toString() + ' F',
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: 'DancingScript',
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold),
-                ),
-              ))
+          FlatButton(
+            onPressed: () {},
+            child: RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                text: prov.currentProfile == null
+                    ? 'Cargando...'
+                    : prov.currentProfile.franjas.toString() + ' F',
+                style: TextStyle(
+                    fontSize: 20,
+                    fontFamily: 'DancingScript',
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
+              ),
+            ))
         ],
       ),
       body: question != "noquestions"
