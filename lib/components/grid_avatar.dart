@@ -84,6 +84,8 @@ Column buildColumn(
                           "¿Está seguro en comprar este item?, recuerde que no tendrá devoluciones",
                           () {
                         prov.addElementList(av);
+                        prov2.currentProfile
+                            .setFranjas(-list[index].numFranjas);
                         DatabaseService()
                             .addFranjas(context, numF, -list[index].numFranjas);
                         Constants.Dialog(context, 'Mensaje',

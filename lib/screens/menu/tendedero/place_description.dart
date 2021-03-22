@@ -197,6 +197,7 @@ class _PlaceDescriptionState extends State<PlaceDescription> {
                       setState(() {
                         loading = false;
                       });
+                      await DatabaseService().saveTendederoOpened(true);
                       showDialog(
                           barrierDismissible: false,
                           context: context,
