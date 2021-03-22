@@ -15,6 +15,7 @@ class ProviderInfo with ChangeNotifier {
     this.selectedAnswer = selectedAnswer;
   }
 
+
   void setSelectedPlace(String placeSelected) {
     this.placeSelected = placeSelected;
   }

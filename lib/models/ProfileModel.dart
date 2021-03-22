@@ -12,12 +12,19 @@ class ProfileModel {
   bool isNewUser;
   bool tendedero_opened;
 
-  
-  ProfileModel(this.email, this.franjas, this.first_reward, this.avatar_created,
-      this.questionsAnswered, this.avatar_position, this.glossary_opened,
-       this.timestamp, this.isNewUser, this.tendedero_opened);
+  ProfileModel(
+      this.email,
+      this.franjas,
+      this.first_reward,
+      this.avatar_created,
+      this.questionsAnswered,
+      this.avatar_position,
+      this.glossary_opened,
+      this.timestamp,
+      this.isNewUser,
+      this.tendedero_opened);
 
   void setFranjas(int franjas) {
-    this.franjas = franjas;
+    this.franjas = this.franjas + franjas;
   }
 }
