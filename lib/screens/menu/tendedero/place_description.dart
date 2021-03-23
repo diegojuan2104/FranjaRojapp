@@ -262,7 +262,6 @@ class _PlaceDescriptionState extends State<PlaceDescription> {
           avatarImg: base64String);
       if (!prov.currentProfile.tendedero_opened)
         await DatabaseService().saveTendederoOpened(true);
-
       setState(() {
         loading = false;
       });
