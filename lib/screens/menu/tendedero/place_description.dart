@@ -197,7 +197,7 @@ class _PlaceDescriptionState extends State<PlaceDescription> {
                       setState(() {
                         loading = false;
                       });
-                      await DatabaseService().saveTendederoOpened(true);
+
                       showDialog(
                           barrierDismissible: false,
                           context: context,
@@ -212,12 +212,17 @@ class _PlaceDescriptionState extends State<PlaceDescription> {
                                     child: Text("Aceptar"),
                                     onPressed: () {
                                       prov.selectedAnswer = null;
+
                                       Navigator.of(context)
-                                          .pushNamed('/home');
+                                          .pushNamedAndRemoveUntil('/home',
+                                              (Route<dynamic> route) => false);
                                     },
                                   ),
                                 ],
                               ));
+
+                      if (!prov.currentProfile.tendedero_opened)
+                        await DatabaseService().saveTendederoOpened(true);
                     },
                   ),
                   FlatButton(
@@ -255,7 +260,8 @@ class _PlaceDescriptionState extends State<PlaceDescription> {
           story: descriptionController.text,
           publicStory: publicStory,
           avatarImg: base64String);
-      await DatabaseService().saveTendederoOpened(true);
+      if (!prov.currentProfile.tendedero_opened)
+        await DatabaseService().saveTendederoOpened(true);
 
       setState(() {
         loading = false;

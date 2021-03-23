@@ -192,7 +192,7 @@ class DatabaseService {
     });
   }
 
-  createTendederoRegister(
+  Future createTendederoRegister(
       {String place,
       String placeDetails,
       String story,
