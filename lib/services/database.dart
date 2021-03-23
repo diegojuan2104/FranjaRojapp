@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -22,10 +24,12 @@ class DatabaseService {
 
   final tendederoCollection =
       FirebaseFirestore.instance.collection('tendedero');
+
   //Collection reference
   Future setInitialUserAttributes(String email) async {
     stamp = Timestamp.now();
     return await profilesCollection.doc(uid).set({
+      'base64': '',
       'franjas': 0,
       'email': email,
       'avatar_created': false,
@@ -44,6 +48,13 @@ class DatabaseService {
     await profilesCollection
         .doc(Auth().firebaseUser.uid)
         .update({'franjas': franjas});
+  }
+
+  saveBase64(String base64) async {
+    if (Auth().firebaseUser == null) return;
+    await profilesCollection.doc(Auth().firebaseUser.uid).update({
+      'base64': base64,
+    });
   }
 
   saveFirstReward(bool firstReward) async {
@@ -67,8 +78,9 @@ class DatabaseService {
     });
   }
 
-  saveAvatarData(List avatar_position) async {
+  saveAvatarData(List avatar_position, String base64) async {
     if (Auth().firebaseUser == null) return;
+    await saveBase64(base64);
     await profilesCollection.doc(Auth().firebaseUser.uid).update({
       'avatar_position': avatar_position,
     });
@@ -101,6 +113,7 @@ class DatabaseService {
       bool glossary_opened = user.data()["glossary_opened"];
       Timestamp timestamp = user.data()["timestamp"];
       bool isNewUser = user.data()["is_new_user"];
+      String base64 = user.data()['base64'];
       bool tenderoOpened = user.data()["tendedero_opened"];
       return new ProfileModel(
           email,
@@ -112,7 +125,8 @@ class DatabaseService {
           glossary_opened,
           timestamp,
           isNewUser,
-          tenderoOpened);
+          tenderoOpened,
+          base64);
     }
   }
 
@@ -169,6 +183,15 @@ class DatabaseService {
         questionId, questions_answered_by_the_user);
   }
 
+  createAnswerRegister2(String answer) async {
+    if (Auth().firebaseUser == null) return;
+    await FirebaseDatabase.instance.reference().child("tumamaputocanson").push().set({
+      'respuesta': answer,
+    
+      
+    });
+  }
+
   createTendederoRegister(
       {String place,
       String placeDetails,
@@ -176,15 +199,18 @@ class DatabaseService {
       bool publicStory,
       dynamic avatarImg}) async {
     if (Auth().firebaseUser == null) return;
-     Timestamp datetime = Timestamp.now();
+    Timestamp datetime = Timestamp.now();
     await FirebaseDatabase.instance.reference().child("Tendedero").push().set({
       'Lugar': place,
       'Fecha': datetime.toString(),
       'userId': Auth().firebaseUser.uid,
       'Detalles_Lugar': placeDetails,
       'Historia': story == null ? "No hay historia" : story,
-      'Privacidad':
-          publicStory == null ? "N/A" : publicStory ? "Pública" : "Privada",
+      'Privacidad': publicStory == null
+          ? "N/A"
+          : publicStory
+              ? "Pública"
+              : "Privada",
     });
     // 'avatar_img': avatarImg
 
@@ -194,13 +220,17 @@ class DatabaseService {
       'userId': Auth().firebaseUser.uid,
       'Detalles_Lugar': placeDetails,
       'Historia': story == null ? "No hay historia" : story,
-      'Privacidad':
-          publicStory == null ? "N/A" : publicStory ? "Pública" : "Privada",
+      'Privacidad': publicStory == null
+          ? "N/A"
+          : publicStory
+              ? "Pública"
+              : "Privada",
     });
   }
 
   Future<List> getTendedero(String bloque) async {
-    QuerySnapshot snap = await tendederoCollection.orderBy("Fecha",descending: true).get();
+    QuerySnapshot snap =
+        await tendederoCollection.orderBy("Fecha", descending: true).get();
     List<QueryDocumentSnapshot> tendederoList = snap.docs;
     List storiesList = [];
     for (int i = 0; i < tendederoList.length; i++) {
@@ -211,7 +241,7 @@ class DatabaseService {
       String place = tendederoList[i].data()["Lugar"];
       String privacy = tendederoList[i].data()["Privacidad"];
 
-      date  = DateFormat('yyyy-MM-dd  kk:mm').format(date.toDate());
+      date = DateFormat('yyyy-MM-dd  kk:mm').format(date.toDate());
       if (privacy == "Pública")
         storiesList.add({"date": date, "story": story, "place": place});
     }

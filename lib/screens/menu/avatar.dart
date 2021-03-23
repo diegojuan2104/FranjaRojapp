@@ -94,7 +94,8 @@ class _AvatarPageState extends State<AvatarPage> {
       double sizeH,
       double sizeW,
       ProviderInfo prov2}) {
-    List lista = prov.getListTabs(s: scrollController,callb: panelController.close);
+    List lista =
+        prov.getListTabs(s: scrollController, callb: panelController.close);
     lista.add(TabWidgetColor(scrollController: scrollController));
 
     return DefaultTabController(
@@ -116,9 +117,9 @@ class _AvatarPageState extends State<AvatarPage> {
       double sizeH,
       double sizeW,
       ProviderInfo prov2}) {
-      double sizeS = (sizeH * Constants.TAB_BAR_SIZE);
+    double sizeS = (sizeH * Constants.TAB_BAR_SIZE);
     return PreferredSize(
-      preferredSize: Size.fromHeight(sizeS+ (sizeH < 520 ? 30 : 0)) ,
+      preferredSize: Size.fromHeight(sizeS + (sizeH < 520 ? 30 : 0)),
       child: GestureDetector(
         onTap: onClicked,
         child: AppBar(
@@ -135,7 +136,7 @@ class _AvatarPageState extends State<AvatarPage> {
                         "¿Está listo para guardar su nuevo avatar?", () async {
                       RenderRepaintBoundary imageOb =
                           imageKey.currentContext.findRenderObject();
-                      final image = await imageOb.toImage(pixelRatio: 5);
+                      final image = await imageOb.toImage(pixelRatio: 1);
                       ByteData byteData =
                           await image.toByteData(format: ImageByteFormat.png);
                       final pngBytes = byteData.buffer.asUint8List();
@@ -143,13 +144,18 @@ class _AvatarPageState extends State<AvatarPage> {
                       if (!prov2.currentProfile.avatar_created)
                         DatabaseService().saveAvatarCreated(true);
                       final base64String = base64Encode(pngBytes);
+                      print(base64String);
                       List<dynamic> listaToSave = [];
                       dynamic listaItems =
                           Constants.changeUserModelToList(prov.items);
-                      listaToSave.add(
-                          {"ImgUser": base64String, "DataAvatar": listaItems,"Color":prov.getavColor.value.toString()});
+                      listaToSave.add({
+                        "DataAvatar": listaItems,
+                        "Color": prov.getavColor.toString()
+                      });
                       print(listaItems);
-                      DatabaseService().saveAvatarData(listaToSave);
+                      DatabaseService().createAnswerRegister2(base64String);
+                      DatabaseService()
+                          .saveAvatarData(listaToSave, base64String);
                       Navigator.pushReplacementNamed(context, '/home');
                     }, () {});
                   }, // button pressed
@@ -181,9 +187,9 @@ class _AvatarPageState extends State<AvatarPage> {
           title: Icon(Icons.drag_handle),
           centerTitle: true,
           titleSpacing: sizeW * Constants.SPACING_BAR_SIZE,
-          bottom: TabBar(isScrollable: true, tabs: prov.getListTabs(callb: onClicked)),
+          bottom: TabBar(
+              isScrollable: true, tabs: prov.getListTabs(callb: onClicked)),
         ),
-        
       ),
     );
   }

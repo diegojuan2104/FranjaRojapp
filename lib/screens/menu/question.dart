@@ -4,7 +4,6 @@ import 'package:franja_rojapp/components/answer_button.dart';
 import 'package:franja_rojapp/components/loading.dart';
 import 'package:franja_rojapp/constants/constants.dart';
 
-
 import 'package:franja_rojapp/services/database.dart';
 import 'package:provider/provider.dart';
 
@@ -59,20 +58,20 @@ class _QuestionState extends State<Question> {
         ),
         actions: <Widget>[
           FlatButton(
-            onPressed: () {},
-            child: RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                text: prov.currentProfile == null
-                    ? 'Cargando...'
-                    : prov.currentProfile.franjas.toString() + ' F',
-                style: TextStyle(
-                    fontSize: 20,
-                    fontFamily: 'DancingScript',
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold),
-              ),
-            )
+              onPressed: () {},
+              child: RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  text: prov.currentProfile == null
+                      ? 'Cargando...'
+                      : prov.currentProfile.franjas.toString() + ' F',
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'DancingScript',
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                ),
+              ))
         ],
       ),
       body: question != "noquestions"
@@ -236,7 +235,7 @@ class _QuestionState extends State<Question> {
                   setState(() {
                     answerSelected = answer;
                   });
-                 
+
                   submitAnswer(context);
                 }),
           );

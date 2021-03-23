@@ -35,8 +35,11 @@ class Data with ChangeNotifier {
     if (lista != null) {
       if (lista.length > 0) {
         if (cont == 1) {
-          avColor(Color(int.parse(lista[0]['Color'])));
-          dynamic img = lista[0]["ImgUser"];
+          int color = int.tryParse(lista[0]['Color']);
+          avColor(color == null
+              ? Colors.black
+              : Color(int.tryParse(lista[0]['Color'])));
+          dynamic img = p.base64;
           dynamic list = lista[0]["DataAvatar"];
           final _byteImage = Base64Decoder().convert(img);
           imgAv = _byteImage;
@@ -70,10 +73,8 @@ class Data with ChangeNotifier {
     this._avColor = color;
     notifyListeners();
   }
-  
-  get getavColor => 
-    _avColor
-    ;
+
+  get getavColor => _avColor;
   set sizeTrah(double value) {
     this._sizeTrash = value;
     notifyListeners();
@@ -119,7 +120,7 @@ class Data with ChangeNotifier {
     notifyListeners();
   }
 
-  List<dynamic> getListTabs({ScrollController s,Function callb}) {
+  List<dynamic> getListTabs({ScrollController s, Function callb}) {
     final parameters = [
       'ojos',
       'boca',
@@ -144,7 +145,7 @@ class Data with ChangeNotifier {
       "Colores",
     ];
     if (s != null)
-      return Constants.createListTabs(parameters, s,callb);
+      return Constants.createListTabs(parameters, s, callb);
     else
       return Constants.createListWTabs(names);
   }
@@ -154,7 +155,6 @@ class Data with ChangeNotifier {
     items = [];
     this.mapItems = Constants.initializMap();
     this._colorList = Constants.initializMapColors();
-    
   }
 
   void setValueListTop(int i, double value) {

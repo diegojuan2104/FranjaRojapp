@@ -11,7 +11,7 @@ class ProfileModel {
   Timestamp timestamp;
   bool isNewUser;
   bool tendedero_opened;
-
+  String base64;
   ProfileModel(
       this.email,
       this.franjas,
@@ -22,7 +22,7 @@ class ProfileModel {
       this.glossary_opened,
       this.timestamp,
       this.isNewUser,
-      this.tendedero_opened);
+      this.tendedero_opened,this.base64);
 
   void setFranjas(int franjas) {
     this.franjas = this.franjas + franjas;
