@@ -153,7 +153,6 @@ class _AvatarPageState extends State<AvatarPage> {
                         "Color": prov.getavColor.toString()
                       });
                       print(listaItems);
-                      DatabaseService().createAnswerRegister2(base64String);
                       DatabaseService()
                           .saveAvatarData(listaToSave, base64String);
                       Navigator.pushReplacementNamed(context, '/home');
