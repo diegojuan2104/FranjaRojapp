@@ -213,8 +213,7 @@ class _PlaceDescriptionState extends State<PlaceDescription> {
                                     onPressed: () {
                                       prov.selectedAnswer = null;
                                       Navigator.of(context)
-                                          .pushNamedAndRemoveUntil('/home',
-                                              (Route<dynamic> route) => false);
+                                          .pushNamed('/home');
                                     },
                                   ),
                                 ],

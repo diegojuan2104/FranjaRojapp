@@ -322,7 +322,7 @@ class _LoginState extends State<Login> {
               ))),
               actions: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     FlatButton(
                       child: Text("Cancelar"),
