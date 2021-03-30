@@ -294,16 +294,16 @@ class Constants {
       "plantas": [witdh * 0.254, height * 0.1315],
       "cuerpo": [witdh * 0.254, height * 0.1315],
       "cabellos": [witdh * 0.8, 0.284 * height],
-      'especiales': [witdh * 0.4, height * 0.2]
+      'especiales': [witdh * 0.55, height * 0.17]
     };
     return dict;
   }
 
   static Map<String, List<AvatarModel>> initializMap() {
     final dict = {
-      "ojos": fillList(getImgPaths('ojos', 'ojosapp', 42), 1.0, 1.0, 0),
+      "ojos": fillList(getImgPaths('ojos', 'ojosapp', 37), 1.0, 1.0, 0),
       "boca": fillList(getImgPaths('boca', 'bocasapp', 31), 1.0, 1.0, 0),
-      "nariz": fillList(getImgPaths('nariz', 'naricesapp', 28), 3, 2.3, 13),
+      "nariz": fillList(getImgPaths('nariz', 'naricesapp', 33), 2.5, 2.0, 19),
       "orejas": fillList(getImgPaths('oreja', 'orejasapp', 15), 1.0, 1.0, 0),
       "mascotas": fillList(getImgPaths('pet', 'petsapp', 20), 1.0, 1.0, 0),
       "figuras": fillList(getImgPaths('fig', 'figapp', 6), 1.0, 1.0, 0),
@@ -311,12 +311,27 @@ class Constants {
           fillList(getImgPaths('bodypart', 'partescuerpoapp', 12), 1.0, 1.0, 0),
       "plantas": fillList(getImgPaths('planta', 'plantasapp', 17), 1.0, 1.0, 0),
       "cabellos": fillList(getImgPaths('pelo', 'pelosapp', 8), 1.0, 1.0, 0),
-      "especiales": fillList(getImgPaths('ojos', 'ojosapp', 42), 1.0, 1.0, 0),
+      "especiales":
+          fillList(getImgPaths('special', 'especialesapp', 21), 1.0, 1.0, 0),
     };
     dict["ojos"][0].numFranjas = 0;
     dict["nariz"][0].numFranjas = 0;
     dict["boca"][0].numFranjas = 0;
-    for (var item in dict["especiales"]) {
+    int i = 0;
+    for (AvatarModel item in dict["especiales"]) {
+      if (i > 4 && i < 10) {
+        item.sizeh = 1;
+        item.sizew = 0.7;
+      } else if (i == 10) {
+        item.sizeh = 1;
+        item.sizew = 0.6;
+      } else if (i >= 11 && i <= 15) {
+        item.sizeh = 0.8;
+      } else if (i > 15 && i < dict['especiales'].length) {
+        item.sizew = 0.8;
+        item.sizeh = 0.7;
+      }
+      i++;
       item.numFranjas = 0;
     }
     return dict;
@@ -330,14 +345,14 @@ class Constants {
       double auxW = i >= a ? sizew : 1;
       double auxH = i >= a ? sizeh : 1;
       if (flag) {
-        ret.add(createAv(lista[i], Colors.red[50], auxH, auxH,numF: 0));
+        ret.add(createAv(lista[i], Colors.red[50], auxH, auxH, numF: 0));
         if (i + 1 < lista.length)
-          ret.add(createAv(lista[i + 1], Colors.white, auxH, auxH,numF: 8));
+          ret.add(createAv(lista[i + 1], Colors.white, auxH, auxH, numF: 8));
         flag = false;
       } else {
-        ret.add(createAv(lista[i], Colors.white, auxH, auxH,numF: 0));
+        ret.add(createAv(lista[i], Colors.white, auxH, auxH, numF: 0));
         if (i + 1 < lista.length)
-          ret.add(createAv(lista[i + 1], Colors.red[50], auxH, auxH,numF: 8));
+          ret.add(createAv(lista[i + 1], Colors.red[50], auxH, auxH, numF: 8));
         flag = true;
       }
     }
@@ -345,8 +360,10 @@ class Constants {
     return ret;
   }
 
-  static AvatarModel createAv(String s, Color c, double w, double h,{int numF}) {
-    return AvatarModel(image: s, color: c, sizew: w, sizeh: h,numFranjas: numF);
+  static AvatarModel createAv(String s, Color c, double w, double h,
+      {int numF}) {
+    return AvatarModel(
+        image: s, color: c, sizew: w, sizeh: h, numFranjas: numF);
   }
 
   static List<String> getImgPaths(String pal, String dir, int numImg) {
