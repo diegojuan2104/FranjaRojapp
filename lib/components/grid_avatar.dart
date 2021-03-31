@@ -64,6 +64,7 @@ Column buildColumn(
                       context,
                       MaterialPageRoute(builder: (context) => Question()),
                     );
+                    answered = answered ?? true;
                     if (answered) {
                       if (!exist) {
                         c();

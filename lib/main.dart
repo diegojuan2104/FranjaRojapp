@@ -21,7 +21,7 @@ import 'package:franja_rojapp/screens/authentication/wrapper.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-import '../providers/Providerinfo.dart';
+import 'providers/Providerinfo.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
