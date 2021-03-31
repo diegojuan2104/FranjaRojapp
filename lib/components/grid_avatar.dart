@@ -72,7 +72,7 @@ Column buildColumn(
                         Constants.Dialog(
                             context,
                             " Mensaje ",
-                            "Ya tienes un elmento de este tipo, por favor eliminalo y podrás escoger uno nuevo",
+                            "Ya tienes un elemento de este tipo. Si deseas escoger uno nuevo, debes eliminar el que posees actualmente.",
                             () {},
                             () {});
                       }
@@ -82,7 +82,7 @@ Column buildColumn(
                   if (!exist) {
                     if (canI) {
                       Constants.Dialog(context, "¡Atención!",
-                          "¿Está seguro en comprar este item?, recuerde que no tendrá devoluciones",
+                          "¿Deseas continuar con la compra de este ítem? Recuerda que no tendrá devoluciones ",
                           () {
                         prov.addElementList(av);
                         prov2.currentProfile
@@ -97,7 +97,7 @@ Column buildColumn(
                       }, () {});
                     } else {
                       Constants.Dialog(context, 'Mensaje',
-                          'No tiene las franjas necesarias para comprar este ixtem',
+                          'No tienes las Franjitas necesarias para comprar este elemento. ¿Deseas responder una pregunta para obtener Franjitas?',
                           () {
                         Navigator.pushNamed(context, "/question");
                       }, () {});

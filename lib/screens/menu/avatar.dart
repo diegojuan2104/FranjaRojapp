@@ -132,8 +132,9 @@ class _AvatarPageState extends State<AvatarPage> {
                 child: InkWell(
                   splashColor: Colors.green, // splash color
                   onTap: () {
-                    Constants.Dialog(context, "Mensaje",
-                        "¿Está listo para guardar su nuevo avatar?", () async {
+                    Constants.Dialog(
+                        context, "Mensaje", "¿Deseas guardar tu nuevo avatar?",
+                        () async {
                       RenderRepaintBoundary imageOb =
                           imageKey.currentContext.findRenderObject();
                       final image = await imageOb.toImage(pixelRatio: 1);
@@ -205,8 +206,10 @@ class _AvatarPageState extends State<AvatarPage> {
                 .addFranjas(context, prov2.currentProfile.franjas, 10);
             DatabaseService().saveFirstReward(true);
 
-            simpleAlert(context, "Franjarojizate! y crea tu ávatar",
-                "Acá podrás personalizar tu silueta de la manera que desees y como te identifiques! para ello podras elegir cualquiera de los elementos del panel y comprarlos con franjitas, si no te alcanza puedes responder una pregunta, ganar más franjitas y seguir personalizando! \nCuando creas que hayas terminado pulsa en guardar para continuar por tu recorrido en la app");
+            simpleAlert(context, "¡Franjarojizate! Crea tu propio avatar",
+                '''A continuación, tendrás la posibilidad de personalizar una silueta de la manera que desees, eligiendo cualquiera de los elementos que encuentres en el panel. \n\nPara ello cuentas con dos opciones, comprar alguno de los elementos con Franjitas o en caso de que no te alcancen, responder una pregunta que te otorgará un elemento y al mismo tiempo te dará un incentivo con el que podrás continuar personalizando tu avatar.Recuerda que es indispensable pulsar el botón de guardar, cuando creas que ya hayas terminado de personificar tu avatar.Además, finalizar la personalización te permitirá seguir recorriendo FranjaRojApp.
+
+                ''');
             simpleAlert(context, "Felicidades",
                 "Has ganado 10 franjitas por registrarte!");
           }

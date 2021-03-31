@@ -17,7 +17,29 @@ dynamic valueChoosed;
 bool valueChoosedAndAcepted = false;
 ProviderInfo prov;
 
-List<String> items = ['Bloque 1','Bloque 2','Bloque 3','Bloque 4','Bloque 5','Bloque 6','Bloque 7','Bloque 8','Bloque 9','Bloque 10','Bloque 11','Bloque 12','Bloque 13','Bloque 14','Bloque 15','Bloque 16','Bloque 17','Bloque 18','Bloque 19','Bloque 20','Bloque 21'];
+List<String> items = [
+  'Bloque 1',
+  'Bloque 2',
+  'Bloque 3',
+  'Bloque 4',
+  'Bloque 5',
+  'Bloque 6',
+  'Bloque 7',
+  'Bloque 8',
+  'Bloque 9',
+  'Bloque 10',
+  'Bloque 11',
+  'Bloque 12',
+  'Bloque 13',
+  'Bloque 14',
+  'Bloque 15',
+  'Bloque 16',
+  'Bloque 17',
+  'Bloque 18',
+  'Bloque 19',
+  'Bloque 20',
+  'Bloque 21'
+];
 
 class _CartographicExerciseState extends State<CartographicExercise> {
   @override
@@ -81,10 +103,10 @@ class _CartographicExerciseState extends State<CartographicExercise> {
             Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: RichText(
-                  textAlign: TextAlign.center,
+                  textAlign: TextAlign.justify,
                   text: TextSpan(
                     text:
-                        "Mira el mapa donde te hayas sentido insegurx o un lugar que crees inseguro",
+                        "Observa detenidamente el mapa y luego selecciona un lugar de la Universidad en donde te hayas sentido insegerx por razones de género. En caso de que tu lugar no sea propiamente un bloque, selecciona el más cercano, ya que posteriormente podrás explicarnos más a fondo donde se sitúa.",
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 18,
@@ -185,7 +207,7 @@ class _CartographicExerciseState extends State<CartographicExercise> {
                       textAlign: TextAlign.start,
                       text: TextSpan(
                         text:
-                            "Selecciona un lugar en el que te hayas sentido insegurx. \nPuedes hacer Zoom en el mapa",
+                            "Te invitamos a seleccionar un lugar de la Universidad en donde te hayas sentido insegerx por razones de género. En caso de que tu lugar no sea propiamente un bloque, selecciona el más cercano, ya que posteriormente podrás explicarnos más a fondo donde se sitúa. \nRecuerda que puedes hacer zoom en el mapa.",
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.black,

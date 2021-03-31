@@ -63,13 +63,13 @@ class _BigButtonPageState extends State<BigButtonPage>
                       ),
                     ),
                   ),
-                  SizedBox(height: 20,),
+                  SizedBox(
+                    height: 20,
+                  ),
                   Text(
-                    "Deja presionado el botón para continuar >>",
+                    "Deja presionado el botón para continuar. >>",
                     style: TextStyle(
-                      color: Colors.black54,
-                      fontStyle: FontStyle.italic
-                    ),
+                        color: Colors.black54, fontStyle: FontStyle.italic),
                   ),
                 ])),
                 Padding(
@@ -78,7 +78,7 @@ class _BigButtonPageState extends State<BigButtonPage>
                     textAlign: TextAlign.center,
                     text: TextSpan(
                       text:
-                          'Una propuesta para mitigar la violencia basada en género en el contexto de la Universidad de Medellín',
+                          'Una propuesta para mitigar la violencia basada en género en el contexto de la Universidad de Medellín.',
                       style: TextStyle(
                           fontSize: 20,
                           fontFamily: 'BigShouldersDisplay',
@@ -120,7 +120,7 @@ class _BigButtonPageState extends State<BigButtonPage>
           child: RichText(
             textAlign: TextAlign.center,
             text: TextSpan(
-              text: 'Acompañanos a construir una UdeM que ya no calle',
+              text: 'Acompañanos a construir una UdeM que ya no calle.',
               style: TextStyle(
                   fontSize: 20,
                   fontFamily: 'BigShouldersDisplay',

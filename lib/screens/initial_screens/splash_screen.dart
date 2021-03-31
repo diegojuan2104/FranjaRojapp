@@ -54,7 +54,7 @@ class _SplashScreeenState extends State<SplashScreeen> {
             textAlign: TextAlign.center,
             text: TextSpan(
               text:
-                  'Una propuesta para mitigar la violencia basada en género en el contexto de la Universidad de Medellín',
+                  'Una propuesta para mitigar la violencia basada en género en el contexto de la Universidad de Medellín.',
               style: TextStyle(
                   fontSize: 18,
                   fontFamily: 'BigShouldersDisplay',

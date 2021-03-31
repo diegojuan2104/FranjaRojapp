@@ -42,7 +42,7 @@ class _PlaceDescriptionState extends State<PlaceDescription> {
                   SizedBox(
                     height: queryData.size.height * 0.15,
                   ),
-                  Row(
+                  Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Column(
@@ -83,6 +83,21 @@ class _PlaceDescriptionState extends State<PlaceDescription> {
                                   ),
                                 ),
                               )),
+                          Column(children: <Widget>[
+                            Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: RichText(
+                                  textAlign: TextAlign.justify,
+                                  text: TextSpan(
+                                    text:
+                                        "Por favor, descríbenos más a detalle aquel lugar donde te has sentido insegurx por razones de género. Puedes especificar si es un piso, corredor, salón, baño, zona común, entre otros.",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                )),
+                          ]),
                           tellStory
                               ? Row(
                                   children: [

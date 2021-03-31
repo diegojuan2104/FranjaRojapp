@@ -60,59 +60,59 @@ class GlosaryCard extends StatelessWidget {
               SizedBox(
                 height: 40,
               ),
-              SizedBox(
-                  width: 200,
-                  child: Theme(
-                    data: Theme.of(context).copyWith(accentColor: Colors.white),
-                    child: RaisedButton(
-                      color: Theme.of(context).primaryColor,
-                      padding: const EdgeInsets.symmetric(vertical: 15),
-                      textColor: Colors.white,
-                      onPressed: () {
-                        showDialog(
-                            barrierDismissible: false,
-                            context: context,
-                            builder: (context) => AlertDialog(
-                                  title: Text(
-                                    "Ejemplo",
-                                    style: TextStyle(
-                                      fontSize: 25,
-                                      fontFamily: 'BigShouldersDisplay',
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  content: SingleChildScrollView(
-                                      child: Container(
-                                    child: RichText(
-                                      textAlign: TextAlign.center,
-                                      text: TextSpan(
-                                        text: this.example,
-                                        style: TextStyle(
-                                          fontSize: 25,
-                                          fontFamily: 'BigShouldersDisplay',
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ),
-                                  )),
-                                  actions: [
-                                    FlatButton(
-                                      child: Text("Aceptar"),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                  ],
-                                ));
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text("Ejemplo"),
-                        ],
-                      ),
-                    ),
-                  )),
+              // SizedBox(
+              //     width: 200,
+              //     child: Theme(
+              //       data: Theme.of(context).copyWith(accentColor: Colors.white),
+              //       child: RaisedButton(
+              //         color: Theme.of(context).primaryColor,
+              //         padding: const EdgeInsets.symmetric(vertical: 15),
+              //         textColor: Colors.white,
+              //         onPressed: () {
+              //           showDialog(
+              //               barrierDismissible: false,
+              //               context: context,
+              //               builder: (context) => AlertDialog(
+              //                     title: Text(
+              //                       "Ejemplo",
+              //                       style: TextStyle(
+              //                         fontSize: 25,
+              //                         fontFamily: 'BigShouldersDisplay',
+              //                         color: Colors.black,
+              //                       ),
+              //                     ),
+              //                     content: SingleChildScrollView(
+              //                         child: Container(
+              //                       child: RichText(
+              //                         textAlign: TextAlign.center,
+              //                         text: TextSpan(
+              //                           text: this.example,
+              //                           style: TextStyle(
+              //                             fontSize: 25,
+              //                             fontFamily: 'BigShouldersDisplay',
+              //                             color: Colors.black,
+              //                           ),
+              //                         ),
+              //                       ),
+              //                     )),
+              //                     actions: [
+              //                       FlatButton(
+              //                         child: Text("Aceptar"),
+              //                         onPressed: () {
+              //                           Navigator.of(context).pop();
+              //                         },
+              //                       ),
+              //                     ],
+              //                   ));
+              //         },
+              //         child: Row(
+              //           mainAxisAlignment: MainAxisAlignment.center,
+              //           children: <Widget>[
+              //             Text("Ejemplo"),
+              //           ],
+              //         ),
+              //       ),
+              //     )),
               SizedBox(
                 height: 40,
               ),
@@ -136,9 +136,7 @@ class GlosaryCard extends StatelessWidget {
                   Text(
                     "Puedes deslizar >>",
                     style: TextStyle(
-                      color: Colors.grey,
-                      fontStyle: FontStyle.italic
-                    ),
+                        color: Colors.grey, fontStyle: FontStyle.italic),
                   ),
                   SizedBox(
                     width: 20,

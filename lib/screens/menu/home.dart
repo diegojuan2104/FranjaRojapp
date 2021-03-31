@@ -104,7 +104,7 @@ class _HomeState extends State<Home> {
                                                 context, "/glossary")
                                           }),
                                   GridMenu(
-                                      title: "Gana Franjitas!",
+                                      title: "!Gana Franjitas!",
                                       icon: Icons.line_weight,
                                       warna: Colors.red,
                                       action: () => {
@@ -157,7 +157,6 @@ class _HomeState extends State<Home> {
     DatabaseService().getCurrentProfile().then((value) => {
           prov.setCurrentProfile(value),
           prov2.currentProf = value,
-        
         });
   }
 

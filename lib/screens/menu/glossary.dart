@@ -52,36 +52,37 @@ class _GlossaryState extends State<Glossary> {
                   title: "Sexo",
                   example: "Femenino \nMasculino \nIntersexual",
                   content:
-                      "Reúne la configuración de las corporalidades de cada individuo en razón de cinco características fisiológicas: genes, gónadas, hormonas, órganos reproductivos internos y genitales",
+                      "Reúne la configuración de las corporalidades de cada individuo en razón de cinco características fisiológicas: genes, gónadas, hormonas, órganos reproductivos internos y genitales.",
                   index: 1,
                   total: total,
                 ),
                 GlosaryCard(
                   title: "Género",
                   content:
-                      "Es una categoría que analiza cómo se definen, representan y simbolizan las diferencias sexuales de una sociedad \nLo que determina la identidad y el comportamiento de casa ser no es el sexo biológico, sino las expectativas sociales, los ritos, costumbres y experiencias",
+                      "Es una categoría que analiza cómo se definen, representan y simbolizan las diferencias sexuales de una sociedad. \nLo que determina la identidad y el comportamiento de cada ser no es el sexo biológico, sino las expectativas sociales, los ritos, costumbres y experiencias.",
                   index: 2,
                   total: total,
                 ),
                 GlosaryCard(
                   title: "Identidad de Género",
-                  example: "Mujer \nHombreTrans \nMujer Trans \nHombre Binario \nGénero Fluido",
+                  example:
+                      "Mujer \nHombreTrans \nMujer Trans \nHombre Binario \nGénero Fluido",
                   content:
-                      "La identidad designa aquello que es propio de un individuo o grupo y singulariza. Las expresiones de la identidad varían en función de las referencias culturales, profesionales, religiosas, geográficas y lingüísticas, entre otras. A pesar de su vaguedad semántica, el concepto de identidad permite esclarecer las relaciones entre el individuo y su entorno",
+                      "La identidad designa aquello que es propio de un individuo o grupo, y singulariza. Las expresiones de la identidad varían en función de las referencias culturales, profesionales, religiosas, geográficas y lingüísticas, entre otras. A pesar de su vaguedad semántica, el concepto de identidad permite esclarecer las relaciones entre el individuo y su entorno.",
                   index: 3,
                   total: total,
                 ),
                 GlosaryCard(
-                  title: "Violencia de Género",
+                  title: "Violencia basada en Género",
                   content:
-                      "La violencia de género es todo acto de violencia directa o sutil producido en la vida pública o en la privada, que pretende maltratar, lesionar y agredir basado en el género o la preferencia sexual de la víctima ",
+                      "La violencia basada en género es todo acto de violencia directa o sutil producida en la vida pública o privada, que pretende maltratar, lesionar y agredir basado en el género o la preferencia sexual de la víctima.",
                   index: 4,
                   total: total,
                 ),
                 GlosaryCard(
                   title: "Perspectiva de Género",
                   content:
-                      "La perspectiva de género es una herramienta conceptual que busca mostrar que las diferencias entre mujeres y hombres se dan no sólo por su determinación biológica, sino también por las diferencias culturales asignadas a los seres humanos",
+                      "La perspectiva de género es una herramienta conceptual que busca mostrar que las diferencias entre mujeres y hombres se dan no sólo por su determinación biológica, sino también por las diferencias culturales asignadas a los seres humanos.",
                   index: 5,
                   total: total,
                 ),
@@ -122,7 +123,7 @@ class _GlossaryState extends State<Glossary> {
               barrierDismissible: false,
               context: context,
               builder: (context) => AlertDialog(
-                    title: Text("Te damos la bienvenida al glosario rojo"),
+                    title: Text("Te damos la bienvenida al Glosario Rojo "),
                     content: SingleChildScrollView(
                         child: Container(
                             child: Column(children: <Widget>[
@@ -130,7 +131,7 @@ class _GlossaryState extends State<Glossary> {
                         textAlign: TextAlign.start,
                         text: TextSpan(
                           text:
-                              'Es una introducción al reconocimiento de las violencias basadas en género. Acá encontrarás 5 términos bases: sexo, género, identidad de género, perspectiva de género y violencia de género, cada una de ellos acompañado de un ejemplo. \n \nPuedes desplazarte por el glosario con este gesto:',
+                              'Este espacio te brindará una pequeña introducción terminológica. Es decir, que te permitirá reconocer cinco términos bases transversales a la temática de violencias basadas en género.\n\nPuedes desplazarte por el glosario con el siguiente movimiento:',
                           style: TextStyle(
                             fontSize: 16,
                             color: Colors.black,
@@ -167,11 +168,11 @@ class _GlossaryState extends State<Glossary> {
         barrierDismissible: false,
         context: context,
         builder: (context) => AlertDialog(
-              title: Text("Felicidades!"),
+              title: Text("¡Felicidades!"),
               content: SingleChildScrollView(
                   child: Container(
                       child: Text(
-                          "Has ganado 10 franjitas por haber observado todo el glosario, Continuemos explorando FranjaRojApp"))),
+                          "Has ganado 10 Franjitas por haber observado la totalidad del Glosario Rojo. Te invitamos a continuar explorando FranjARojApp. "))),
               actions: [
                 FlatButton(
                   child: Text("Aceptar"),

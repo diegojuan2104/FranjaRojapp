@@ -63,7 +63,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                                   textAlign: TextAlign.center,
                                   text: TextSpan(
                                     text:
-                                        "Enviaremos un correo de recuperación a tu email registrado, recuerda revisar en spam y/o correos no deseados",
+                                        "Enviaremos un correo de recuperación a tu email registrado, recuerda revisar en spam y/o correos no deseados.",
                                     style: TextStyle(
                                       fontSize: 14,
                                       color: Colors.black,
@@ -81,7 +81,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                                   },
                                   validator: (val) => val.isValidEmail()
                                       ? null
-                                      : 'Ingresa un email válido',
+                                      : 'Ingresa un email válido.',
                                 ),
                                 if (_errorMessage.isNotEmpty)
                                   Padding(
@@ -128,7 +128,7 @@ class _ResetPasswordState extends State<ResetPassword> {
 
   _resetPassword() async {
     if (_formKey.currentState.validate()) {
-      try{
+      try {
         setState(() {
           _loading = true;
         });
@@ -136,25 +136,39 @@ class _ResetPasswordState extends State<ResetPassword> {
         setState(() {
           _loading = false;
         });
-          showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-              title: Text("Aviso"),
-              content: SingleChildScrollView(
-                  child: Container(
-                      child: Text("Recuperación enviada exitosamente a tu email, recuerda revisar bandeja, la lista de correos no deseados y spam"))),
-              actions: [
-                FlatButton(
-                  child: Text("Aceptar"),
-                  onPressed: () {
-                    _formKey.currentState.reset();
-                    _showLogin();
-                  },
-                ),
-              ],
-            ));
-      }catch(e){
-        simpleAlert(context, "Aviso", "El email ingresado no está registrado");
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                  title: Text("Aviso"),
+                  content: SingleChildScrollView(
+                      child: Container(
+                    child: RichText(
+                      textAlign: TextAlign.start,
+                      text: TextSpan(
+                        text:
+                            "Recuperación enviada exitosamente a tu email, recuerda revisar bandeja, la lista de correos no deseados y spam.",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  )),
+                  actions: [
+                    FlatButton(
+                      child: Text("Aceptar"),
+                      onPressed: () {
+                        _formKey.currentState.reset();
+                        _showLogin();
+                      },
+                    ),
+                  ],
+                ));
+      } catch (e) {
+        simpleAlert(context, "Aviso", "El email ingresado no está registrado,");
+        setState(() {
+          _loading = false;
+        });
       }
     }
   }

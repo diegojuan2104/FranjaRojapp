@@ -14,7 +14,8 @@ class DragTargetWidget extends StatelessWidget {
     }, onAccept: (AvatarP data) {
       if (avatar_data.itemsList.length >= 1) {
         print(data.path);
-        Constants.Dialog(context, " ¡Advertencia! ", Constants.MsmRemoveAvatarPart, () {
+        Constants.Dialog(
+            context, " ¡Advertencia!", Constants.MsmRemoveAvatarPart, () {
           avatar_data.deleteFromList(data);
           avatar_data.changeSuccessDrop(true);
           avatar_data.changeAcceptedData(data);

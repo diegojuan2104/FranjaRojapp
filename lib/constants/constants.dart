@@ -1,11 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:franja_rojapp/components/grid_avatar.dart';
 import 'package:franja_rojapp/models/avatar_grid_part.dart';
 import 'package:franja_rojapp/models/avatar_stack_part.dart';
 import 'package:franja_rojapp/models/questionModel.dart';
-import 'dart:math';
-
-import 'package:franja_rojapp/services/database.dart';
 
 const IMAGES_WORD = '-removebg-preview';
 
@@ -15,7 +14,20 @@ simpleAlert(context, title, text) {
       context: context,
       builder: (context) => AlertDialog(
             title: Text(title),
-            content: SingleChildScrollView(child: Container(child: Text(text))),
+            content: SingleChildScrollView(
+                child: Container(
+                    child: Column(children: <Widget>[
+              RichText(
+                textAlign: TextAlign.start,
+                text: TextSpan(
+                  text: text,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ]))),
             actions: [
               FlatButton(
                 child: Text("Aceptar"),
@@ -71,17 +83,17 @@ moreQuestions(context, franjas) {
       context: context,
       builder: (context) => AlertDialog(
             title: Text(
-              "Felicidades!",
+              "¡Felicidades!",
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             content: SingleChildScrollView(
                 child: Container(
                     child: Text("Has ganado " +
                         franjas.toString() +
-                        " franjas para modificar tu ávatar, aún puedes ganar muchas más!  ¿Deseas continuar respondiendo preguntas?"))),
+                        " Franjitas para continuar modificando tu avatar. Recuerda que aún puedes seguir ganando muchas más, ¿Deseas continuar respondiendo algunas preguntas?"))),
             actions: [
               FlatButton(
-                child: Text("Si!"),
+                child: Text("Si"),
                 onPressed: () {
                   Navigator.of(context).pop();
                   Navigator.pushReplacementNamed(context, "/question");
@@ -265,7 +277,7 @@ class Constants {
   static double SPACING_BAR_SIZE = 0.101;
   static String HOME_SCREEN = 'HOME_SCREEN';
   static String MsmRemoveAvatarPart =
-      "¿Está seguro de remover la parte del avatar escogída?, recuerde que no la podrá recuperar a no ser que pague de nuevo por ella. ";
+      "¿Deseas continuar con la remoción de esta parte del avatar? Recuerda que no la podrás recuperar, a menos de que pagues de nuevo por ella.";
 
   static List<Color> initializMapColors() {
     final lista = [
@@ -330,14 +342,14 @@ class Constants {
       double auxW = i >= a ? sizew : 1;
       double auxH = i >= a ? sizeh : 1;
       if (flag) {
-        ret.add(createAv(lista[i], Colors.red[50], auxH, auxH,numF: 0));
+        ret.add(createAv(lista[i], Colors.red[50], auxH, auxH, numF: 0));
         if (i + 1 < lista.length)
-          ret.add(createAv(lista[i + 1], Colors.white, auxH, auxH,numF: 8));
+          ret.add(createAv(lista[i + 1], Colors.white, auxH, auxH, numF: 8));
         flag = false;
       } else {
-        ret.add(createAv(lista[i], Colors.white, auxH, auxH,numF: 0));
+        ret.add(createAv(lista[i], Colors.white, auxH, auxH, numF: 0));
         if (i + 1 < lista.length)
-          ret.add(createAv(lista[i + 1], Colors.red[50], auxH, auxH,numF: 8));
+          ret.add(createAv(lista[i + 1], Colors.red[50], auxH, auxH, numF: 8));
         flag = true;
       }
     }
@@ -345,8 +357,10 @@ class Constants {
     return ret;
   }
 
-  static AvatarModel createAv(String s, Color c, double w, double h,{int numF}) {
-    return AvatarModel(image: s, color: c, sizew: w, sizeh: h,numFranjas: numF);
+  static AvatarModel createAv(String s, Color c, double w, double h,
+      {int numF}) {
+    return AvatarModel(
+        image: s, color: c, sizew: w, sizeh: h, numFranjas: numF);
   }
 
   static List<String> getImgPaths(String pal, String dir, int numImg) {

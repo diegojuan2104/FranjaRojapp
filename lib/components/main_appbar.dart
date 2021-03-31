@@ -33,7 +33,9 @@ class _MainAppBarState extends State<MainAppBar> {
             fontWeight: FontWeight.bold),
       ),
       actions: <Widget>[
-        SizedBox(width: 10,),
+        SizedBox(
+          width: 10,
+        ),
         FlatButton(
             onPressed: () {},
             child: RichText(

@@ -4,7 +4,6 @@ import 'package:franja_rojapp/components/loading.dart';
 import 'package:franja_rojapp/constants/constants.dart';
 import 'package:franja_rojapp/services/auth.dart';
 
-
 class Register extends StatefulWidget {
   Register({Key key}) : super(key: key);
   @override
@@ -49,7 +48,9 @@ class _RegisterState extends State<Register> {
                     key: _formKey,
                     child: Column(
                       children: <Widget>[
-                         SizedBox(height: queryData.size.height*0.05,),
+                        SizedBox(
+                          height: queryData.size.height * 0.05,
+                        ),
                         Container(
                           width: double.infinity,
                           margin: const EdgeInsets.only(
@@ -62,8 +63,9 @@ class _RegisterState extends State<Register> {
                                 Text(
                                   "Registro",
                                   style: TextStyle(
-                                      fontSize: 23,
-                                      fontWeight: FontWeight.bold,),
+                                    fontSize: 23,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                                 TextFormField(
                                   decoration:
@@ -105,7 +107,8 @@ class _RegisterState extends State<Register> {
                                             : Icons.visibility_off),
                                         onPressed: () {
                                           setState(() {
-                                            _showPassword_confirmation = !_showPassword_confirmation;
+                                            _showPassword_confirmation =
+                                                !_showPassword_confirmation;
                                           });
                                         },
                                       )),
@@ -152,10 +155,10 @@ class _RegisterState extends State<Register> {
                                     child: Text(
                                       _errorMessage,
                                       style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontStyle: FontStyle.italic,
-                                          ),
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontStyle: FontStyle.italic,
+                                      ),
                                       textAlign: TextAlign.center,
                                     ),
                                   ),
@@ -228,7 +231,7 @@ class _RegisterState extends State<Register> {
                       content: SingleChildScrollView(
                           child: Container(
                               child: Text(
-                                  "Usuario registrado exitosamente, debes validar tu cuenta con tu email registrado, recuerda revisar la bandeja la lista de correos no deseados o spam"))),
+                                  "Usuario registrado exitosamente, debes validar tu cuenta con tu email registrado, recuerda revisar la bandeja la lista de correos no deseados o spam."))),
                       actions: [
                         FlatButton(
                           child: Text("Aceptar"),
@@ -247,23 +250,23 @@ class _RegisterState extends State<Register> {
                     ));
           } catch (e) {
             simpleAlert(
-                context, "Aviso", "El email es inválido o ya está en uso");
+                context, "Aviso", "El email es inválido o ya está en uso.");
             setState(() {
               _loading = false;
             });
           }
         } else {
           simpleAlert(context, "Aviso",
-              "Debes aceptar los términos y condiciones para continuar con el registro");
+              "Debes aceptar los términos y condiciones para continuar con el registro.");
           setState(() {
             _errorMessage =
-                "Debes aceptar los terminos y condiciones para registrarte";
+                "Debes aceptar los terminos y condiciones para registrarte.";
           });
         }
       } else {
-        simpleAlert(context, "Avisto", "Las contraseñas deben coincidir");
+        simpleAlert(context, "Aviso", "Las contraseñas deben coincidir.");
         setState(() {
-          _errorMessage = "Las contraseñas debende de coincidir";
+          _errorMessage = "Las contraseñas debende de coincidir.";
         });
       }
     }
@@ -276,8 +279,12 @@ class _RegisterState extends State<Register> {
               title: Text("Términos y condiciones"),
               content: SingleChildScrollView(
                   child: Container(
-                      child: Text(
-                        TERMINOS_Y_CONDICIONES
+                      child: RichText(
+                textAlign: TextAlign.justify,
+                text: TextSpan(
+                  text: TERMINOS_Y_CONDICIONES,
+                  style: TextStyle(color: Colors.black),
+                ),
               ))),
               actions: [
                 Row(

@@ -12,7 +12,6 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-
   @override
   void initState() {
     this.setState(() {
@@ -20,6 +19,7 @@ class _LoginState extends State<Login> {
     });
     super.initState();
   }
+
   final MaterialColor kPrimaryColor = const MaterialColor(
     0xFFfC2c2C,
     const <int, Color>{
@@ -273,7 +273,7 @@ class _LoginState extends State<Login> {
           //           ],
           //         ));
           // Auth().signOutUser();
-          _errorMessage = "El email no ha sido verificado revise su correo";
+          _errorMessage = "El email no ha sido verificado revise su correo.";
         } else {}
         _showHomePage();
       }
@@ -317,8 +317,12 @@ class _LoginState extends State<Login> {
               title: Text("Términos y condiciones"),
               content: SingleChildScrollView(
                   child: Container(
-                      child: Text(
-                TERMINOS_Y_CONDICIONES,
+                      child: RichText(
+                textAlign: TextAlign.justify,
+                text: TextSpan(
+                  text: TERMINOS_Y_CONDICIONES,
+                  style: TextStyle(color: Colors.black),
+                ),
               ))),
               actions: [
                 Row(
