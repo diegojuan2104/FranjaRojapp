@@ -58,7 +58,7 @@ Column buildColumn(
                 final exist = prov.validateTypeExist(av);
                 if (avAux.numFranjas == 0) {
                   Constants.Dialog(context, 'Mensaje',
-                      'Para elegir alguno de estos items debe responder una pregunta, ¿estás listo?. ',
+                      'Para elegir alguno de estos items debe responder una pregunta, ¿Deseas responderla? ',
                       () async {
                     bool answered = await Navigator.push(
                       context,
@@ -83,7 +83,7 @@ Column buildColumn(
                   if (!exist) {
                     if (canI) {
                       Constants.Dialog(context, "¡Atención!",
-                          "¿Deseas continuar con la compra de este ítem? Recuerda que no tendrá devoluciones ",
+                          "¿Deseas continuar con la compra de este ítem? Recuerda que no tendrá devoluciones.",
                           () {
                         prov.addElementList(av);
                         prov2.currentProfile
@@ -91,7 +91,7 @@ Column buildColumn(
                         DatabaseService()
                             .addFranjas(context, numF, -list[index].numFranjas);
                         Constants.Dialog(context, 'Mensaje',
-                            'Item exitosamente comprado, ahora puedes moverlo como quieras',
+                            'Item exitosamente comprado, ahora puedes moverlo como quieras.',
                             () {
                           c();
                         }, () {});
@@ -107,7 +107,7 @@ Column buildColumn(
                     Constants.Dialog(
                         context,
                         " Mensaje ",
-                        "Ya tienes un elmento de este tipo, por favor eliminalo y podrás escoger uno nuevo",
+                        "Ya tienes un elmento de este tipo, por favor eliminalo y podrás escoger uno nuevo.",
                         () {},
                         () {});
                   }
