@@ -75,7 +75,8 @@ Column buildColumn(
                             " Mensaje ",
                             "Ya tienes un elemento de este tipo. Si deseas escoger uno nuevo, debes eliminar el que posees actualmente.",
                             () {},
-                            () {});
+                            () {},
+                            x: false);
                       }
                     }
                   }, () {});
@@ -109,7 +110,8 @@ Column buildColumn(
                         " Mensaje ",
                         "Ya tienes un elmento de este tipo, por favor eliminalo y podrás escoger uno nuevo.",
                         () {},
-                        () {});
+                        () {},
+                        x: false);
                   }
                 }
               },

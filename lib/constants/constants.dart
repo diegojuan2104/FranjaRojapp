@@ -426,7 +426,8 @@ class Constants {
   }
 
   static Widget Dialog(BuildContext context, String textTit, String text,
-      Function callA, Function callC) {
+      Function callA, Function callC,
+      {bool x = true}) {
     showDialog(
         context: context,
         builder: (c) => AlertDialog(
@@ -451,10 +452,20 @@ class Constants {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    actions("Cancelar", callC, c),
-                    SizedBox(
-                      width: 10,
-                    ),
+                    x
+                        ? actions("Cancelar", callC, c)
+                        : SizedBox(
+                            width: 0,
+                            height: 0,
+                          ),
+                    x
+                        ? SizedBox(
+                            width: 10,
+                          )
+                        : SizedBox(
+                            width: 0,
+                            height: 0,
+                          ),
                     actions("Aceptar", callA, c)
                   ],
                 ),
