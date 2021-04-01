@@ -90,7 +90,7 @@ class _CartographicExerciseState extends State<CartographicExercise> {
                   child: RichText(
                     textAlign: TextAlign.center,
                     text: TextSpan(
-                      text: "La udem ya no calla",
+                      text: "La UdeM ya no calla",
                       style: TextStyle(
                         fontSize: 45,
                         color: Theme.of(context).primaryColor,
@@ -207,7 +207,7 @@ class _CartographicExerciseState extends State<CartographicExercise> {
                       textAlign: TextAlign.start,
                       text: TextSpan(
                         text:
-                            "Te invitamos a seleccionar un lugar de la Universidad en donde te hayas sentido insegerx por razones de género. En caso de que tu lugar no sea propiamente un bloque, selecciona el más cercano, ya que posteriormente podrás explicarnos más a fondo donde se sitúa. \nRecuerda que puedes hacer zoom en el mapa.",
+                            "Te invitamos a seleccionar un lugar de la Universidad en donde te hayas sentido insegerx por razones de género. En caso de que tu lugar no sea propiamente un bloque, selecciona el más cercano, ya que posteriormente podrás explicarnos más a fondo donde se sitúa. \n\nRecuerda que puedes hacer zoom en el mapa.",
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.black,

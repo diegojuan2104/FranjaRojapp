@@ -88,7 +88,7 @@ class _QuestionState extends State<Question> {
                           child: RichText(
                             textAlign: TextAlign.center,
                             text: TextSpan(
-                              text: "!Cuéntanos!",
+                              text: "¡Cuéntanos!",
                               style: TextStyle(
                                 fontSize: 55,
                                 color: Theme.of(context).primaryColor,
@@ -188,7 +188,7 @@ class _QuestionState extends State<Question> {
                       Column(
                         children: [
                           Text(
-                            "Has contestado todas las preguntas!",
+                            "¡Has contestado todas las preguntas!",
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
                           ),

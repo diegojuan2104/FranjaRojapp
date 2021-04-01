@@ -58,7 +58,7 @@ Column buildColumn(
                 final exist = prov.validateTypeExist(av);
                 if (avAux.numFranjas == 0) {
                   Constants.Dialog(context, 'Mensaje',
-                      'Para elegir alguno de estos items debe responder una pregunta, ¿Deseas responderla? ',
+                      'Para elegir alguno de estos items debes responder una pregunta, ¿Deseas responderla? ',
                       () async {
                     bool answered = await Navigator.push(
                       context,

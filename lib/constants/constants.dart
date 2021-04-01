@@ -93,7 +93,7 @@ moreQuestions(context, franjas) {
                         " Franjitas para continuar modificando tu avatar. Recuerda que aún puedes seguir ganando muchas más, ¿Deseas continuar respondiendo algunas preguntas?"))),
             actions: [
               FlatButton(
-                child: Text("Si"),
+                child: Text("Sí"),
                 onPressed: () {
                   Navigator.of(context).pop();
                   Navigator.pushReplacementNamed(context, "/question");
@@ -110,11 +110,11 @@ moreQuestions(context, franjas) {
           ));
 }
 
-List sino = ["Si", "No"];
+List sino = ["Sí", "No"];
 
-List sinonose = ["Si", "No", "No sé"];
+List sinonose = ["Sí", "No", "No sé"];
 
-List sinona = ["Si", "No", "No aplica"];
+List sinona = ["Sí", "No", "No aplica"];
 
 List<QuestionModel> questions = [
   QuestionModel(

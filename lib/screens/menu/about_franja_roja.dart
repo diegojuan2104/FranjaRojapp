@@ -45,7 +45,7 @@ class AboutFranjaRoja extends StatelessWidget {
                   textAlign: TextAlign.justify,
                   text: TextSpan(
                     text:
-                        '''Una propuesta para mitigar la violencia basada en género en el contexto de la Universidad de Medellín, es un proyecto que le apuesta a articular acciones orientadas a la formación, análisis, visibilización y socialización de las violencias basadas en género en el contexto universitario. Este proyecto surge debido a la deficiencia de las rutas, versiones y/o borradores de rutas y protocolos de atención a las violencias basadas en género en la Universidad de Medellín. Pretende ser un proceso pedagógico en el que se propicie la comprensión por parte de la comunidad universitaria de todo aquello que compone, determina y acarrea las violencias basadas en género dentro y fuera del entorno universitario.''',
+                        '''Una propuesta para mitigar la violencia basada en género en el contexto de la Universidad de Medellín, es un proyecto que le apuesta a articular acciones orientadas a la formación, análisis, visibilización y socialización de las violencias basadas en género en el contexto universitario.\n\nEste proyecto surge debido a la deficiencia de las rutas, versiones y/o borradores de rutas y protocolos de atención a las violencias basadas en género en la Universidad de Medellín. Pretende ser un proceso pedagógico en el que se propicie la comprensión por parte de la comunidad universitaria de todo aquello que compone, determina y acarrea las violencias basadas en género dentro y fuera del entorno universitario.''',
                     style: TextStyle(
                         fontSize: 18,
                         fontFamily: 'BigShouldersDisplay',
